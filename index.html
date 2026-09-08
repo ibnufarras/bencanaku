@@ -13,19 +13,21 @@
 <body>
 
 <div class="demo-banner">
-  Data contoh untuk pratinjau tampilan — belum tersambung ke BMKG / BNPB / InaRISK secara langsung.
+  <strong>Mode pratinjau.</strong> Data saat ini masih contoh, belum tersambung langsung ke sumber resmi.
 </div>
 
 <header class="site-header">
-  <div class="brand">
-    <span class="brand-mark">Bencanaku</span>
-    <span class="brand-sub">Platform informasi kebencanaan</span>
-  </div>
-  <nav class="site-nav">
+  <div class="header-row">
+    <div class="brand">
+      <span class="brand-mark">Bencanaku</span>
+      <span class="brand-sub">Platform informasi kebencanaan</span>
+    </div>
     <button class="region-select" id="regionSelect" aria-haspopup="listbox">
       <span id="regionLabel">Jakarta Timur</span>
       <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
     </button>
+  </div>
+  <nav class="site-nav">
     <a href="gempa.html">Gempa</a>
     <a href="cuaca.html">Cuaca</a>
     <a href="gunung-api.html">Gunung api</a>
@@ -39,27 +41,26 @@
 
   <section class="hero">
     <h1>Indonesia, sekarang</h1>
-    <p class="hero-lead">Situasi kebencanaan hari ini, dirangkum dari sumber resmi.</p>
+    <p class="hero-lead">Ringkasan situasi kebencanaan berdasarkan sumber resmi.</p>
 
-    <div class="status-strip" id="statusStrip">
+    <div class="status-grid" id="statusStrip">
       <!-- filled by script.js -->
     </div>
+    <p class="last-updated" id="lastUpdated"><!-- filled by script.js --></p>
   </section>
 
   <section class="map-section">
     <div class="section-head">
       <h2>Peta kejadian</h2>
-      <span class="section-note">Diperbarui 6 menit lalu</span>
+      <span class="section-note">Pratinjau peta</span>
     </div>
     <div class="map-frame" id="mapFrame">
-      <svg viewBox="0 0 800 260" class="map-svg" id="mapSvg" aria-label="Peta skematik Indonesia dengan titik kejadian">
-        <!-- simplified schematic Indonesia landmass, filled via CSS -->
-        <path class="map-land" d="M20 170 L90 150 L150 165 L140 190 L70 195 Z" />
-        <path class="map-land" d="M170 140 L230 110 L260 150 L210 180 L160 175 Z" />
-        <path class="map-land" d="M300 130 Q340 90 400 100 Q420 140 380 165 Q330 175 300 130 Z" />
-        <path class="map-land" d="M430 150 L480 130 L520 145 L500 175 L450 175 Z" />
-        <path class="map-land" d="M560 140 L650 120 L720 140 L700 175 L600 175 Z" />
-        <!-- event markers, positioned by script.js via data-x/data-y -->
+      <svg viewBox="0 0 800 220" class="map-svg" id="mapSvg" aria-label="Peta skematik Indonesia dengan titik kejadian">
+        <path class="map-land" d="M15 140 L75 128 L125 138 L118 158 L55 162 Z" />
+        <path class="map-land" d="M150 118 L205 98 L235 130 L195 152 L145 148 Z" />
+        <path class="map-land" d="M280 108 Q325 78 385 90 Q405 122 365 142 Q315 150 280 108 Z" />
+        <path class="map-land" d="M415 125 L470 108 L512 122 L495 148 L440 148 Z" />
+        <path class="map-land" d="M550 118 L645 100 L715 118 L695 148 L595 148 Z" />
         <g id="mapMarkers"></g>
       </svg>
       <div class="map-legend">
@@ -92,18 +93,27 @@
 
   </section>
 
-  <p class="global-disclaimer">
-    Bencanaku menampilkan data resmi (BMKG, BNPB/InaRISK), data cuaca dan kualitas udara pihak ketiga, serta — untuk sebagian wilayah — data sensor mandiri. Setiap angka diberi label sumbernya. Bencanaku tidak membuat pernyataan "aman" atau "bahaya"; keputusan keselamatan tetap merujuk pada instansi resmi.
-  </p>
-
 </main>
 
 <footer class="site-footer">
-  <span>Bencanaku</span>
-  <span class="footer-dot">·</span>
-  <span>Founded by Ibnu Farras</span>
+  <div class="footer-brand">Bencanaku</div>
+  <p class="footer-desc">Platform informasi kebencanaan independen.</p>
+
+  <p class="footer-sources">
+    <span class="footer-label">Sumber data</span><br>
+    BMKG · BNPB/InaRISK · PVMBG
+  </p>
+
+  <p class="footer-disclaimer">
+    Bencanaku bukan lembaga pemerintah. Untuk keputusan keselamatan, selalu rujuk informasi resmi dari instansi terkait.
+  </p>
+
+  <p class="footer-credit">Founded by Ibnu Farras</p>
 </footer>
 
+<script src="script.js"></script>
+</body>
+</html>
 <script src="script.js"></script>
 </body>
 </html>
