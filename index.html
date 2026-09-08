@@ -1,181 +1,109 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
-    <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>Bencanaku — Informasi Kebencanaan Indonesia</title>
-
-    <meta
-        name="description"
-        content="Bencanaku menyatukan informasi kebencanaan Indonesia menjadi informasi yang sederhana dan mudah dipahami."
-    >
-
-    <style>
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-
-            font-family:
-                Arial,
-                Helvetica,
-                sans-serif;
-
-            background: #0b0f14;
-
-            color: white;
-
-            min-height: 100vh;
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            padding: 20px;
-
-        }
-
-        .container {
-
-            max-width: 800px;
-
-            text-align: center;
-
-        }
-
-        .badge {
-
-            display: inline-block;
-
-            padding: 8px 14px;
-
-            border-radius: 999px;
-
-            background: #16251d;
-
-            color: #5de38b;
-
-            font-size: 13px;
-
-            margin-bottom: 25px;
-
-        }
-
-        h1 {
-
-            font-size: clamp(
-                48px,
-                10vw,
-                90px
-            );
-
-            letter-spacing: -4px;
-
-            margin-bottom: 15px;
-
-        }
-
-        .tagline {
-
-            font-size: 22px;
-
-            color: #aeb7c2;
-
-            line-height: 1.5;
-
-            margin-bottom: 35px;
-
-        }
-
-        .description {
-
-            max-width: 600px;
-
-            margin: auto;
-
-            color: #727d89;
-
-            line-height: 1.7;
-
-        }
-
-        .founder {
-
-            margin-top: 70px;
-
-            color: #59636f;
-
-            font-size: 12px;
-
-        }
-
-        .founder strong {
-
-            color: #909aa6;
-
-        }
-
-    </style>
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bencanaku — Situasi kebencanaan Indonesia dalam satu layar</title>
+<meta name="description" content="Bencanaku mengumpulkan data gempa, cuaca, gunung api, dan kualitas udara dari sumber resmi Indonesia, lalu menyajikannya dalam bahasa yang sederhana.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
-
-
 <body>
 
-    <main class="container">
+<div class="demo-banner">
+  Data contoh untuk pratinjau tampilan — belum tersambung ke BMKG / BNPB / InaRISK secara langsung.
+</div>
 
-        <div class="badge">
-            INDONESIA DISASTER INFORMATION
-        </div>
+<header class="site-header">
+  <div class="brand">
+    <span class="brand-mark">Bencanaku</span>
+    <span class="brand-sub">Platform informasi kebencanaan</span>
+  </div>
+  <nav class="site-nav">
+    <button class="region-select" id="regionSelect" aria-haspopup="listbox">
+      <span id="regionLabel">Jakarta Timur</span>
+      <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </button>
+    <a href="gempa.html">Gempa</a>
+    <a href="cuaca.html">Cuaca</a>
+    <a href="gunung-api.html">Gunung api</a>
+    <a href="risiko.html">Risiko</a>
+    <a href="udara.html">Udara</a>
+    <a href="tentang.html">Tentang</a>
+  </nav>
+</header>
 
+<main>
 
-        <h1>
-            Bencanaku
-        </h1>
+  <section class="hero">
+    <h1>Indonesia, sekarang</h1>
+    <p class="hero-lead">Situasi kebencanaan hari ini, dirangkum dari sumber resmi.</p>
 
+    <div class="status-strip" id="statusStrip">
+      <!-- filled by script.js -->
+    </div>
+  </section>
 
-        <p class="tagline">
+  <section class="map-section">
+    <div class="section-head">
+      <h2>Peta kejadian</h2>
+      <span class="section-note">Diperbarui 6 menit lalu</span>
+    </div>
+    <div class="map-frame" id="mapFrame">
+      <svg viewBox="0 0 800 260" class="map-svg" id="mapSvg" aria-label="Peta skematik Indonesia dengan titik kejadian">
+        <!-- simplified schematic Indonesia landmass, filled via CSS -->
+        <path class="map-land" d="M20 170 L90 150 L150 165 L140 190 L70 195 Z" />
+        <path class="map-land" d="M170 140 L230 110 L260 150 L210 180 L160 175 Z" />
+        <path class="map-land" d="M300 130 Q340 90 400 100 Q420 140 380 165 Q330 175 300 130 Z" />
+        <path class="map-land" d="M430 150 L480 130 L520 145 L500 175 L450 175 Z" />
+        <path class="map-land" d="M560 140 L650 120 L720 140 L700 175 L600 175 Z" />
+        <!-- event markers, positioned by script.js via data-x/data-y -->
+        <g id="mapMarkers"></g>
+      </svg>
+      <div class="map-legend">
+        <span><i class="dot dot-red"></i>Gempa</span>
+        <span><i class="dot dot-orange"></i>Cuaca ekstrem</span>
+        <span><i class="dot dot-yellow"></i>Gunung api</span>
+      </div>
+    </div>
+  </section>
 
-            Tahu apa yang terjadi.
-            <br>
+  <section class="lower-grid">
 
-            Tahu apa artinya untukmu.
+    <div class="events-panel">
+      <div class="section-head">
+        <h2>Kejadian terbaru</h2>
+      </div>
+      <ol class="event-list" id="eventList">
+        <!-- filled by script.js -->
+      </ol>
+    </div>
 
-        </p>
+    <div class="area-panel">
+      <div class="section-head">
+        <h2>Wilayah kamu</h2>
+      </div>
+      <div class="area-readout" id="areaReadout">
+        <!-- filled by script.js -->
+      </div>
+    </div>
 
+  </section>
 
-        <p class="description">
+  <p class="global-disclaimer">
+    Bencanaku menampilkan data resmi (BMKG, BNPB/InaRISK), data cuaca dan kualitas udara pihak ketiga, serta — untuk sebagian wilayah — data sensor mandiri. Setiap angka diberi label sumbernya. Bencanaku tidak membuat pernyataan "aman" atau "bahaya"; keputusan keselamatan tetap merujuk pada instansi resmi.
+  </p>
 
-            Bencanaku sedang dibangun sebagai
-            platform informasi kebencanaan yang
-            menyatukan berbagai sumber data
-            menjadi informasi yang sederhana,
-            kontekstual, dan mudah dipahami.
+</main>
 
-        </p>
+<footer class="site-footer">
+  <span>Bencanaku</span>
+  <span class="footer-dot">·</span>
+  <span>Founded by Ibnu Farras</span>
+</footer>
 
-
-        <div class="founder">
-
-            Founded by
-            <strong>Ibnu Farras</strong>
-
-        </div>
-
-    </main>
-
+<script src="script.js"></script>
 </body>
-
 </html>
