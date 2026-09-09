@@ -1,7 +1,187 @@
 {
   "Infogempa": {
-    "gempa": []
+    "gempa": [
+      {
+        "Tanggal": "08 Sep 2026",
+        "Jam": "11:40:29 WIB",
+        "DateTime": "2026-09-08T04:40:29+00:00",
+        "Coordinates": "-8.08,120.56",
+        "Lintang": "8.08 LS",
+        "Bujur": "120.56 BT",
+        "Magnitude": "5.2",
+        "Kedalaman": "10 km",
+        "Wilayah": "60 km TimurLaut RUTENG-MANGGARAI-NTT",
+        "Potensi": "Tidak berpotensi tsunami"
+      },
+      {
+        "Tanggal": "04 Sep 2026",
+        "Jam": "12:04:59 WIB",
+        "DateTime": "2026-09-04T05:04:59+00:00",
+        "Coordinates": "-8.42,109.02",
+        "Lintang": "8.42 LS",
+        "Bujur": "109.02 BT",
+        "Magnitude": "5.4",
+        "Kedalaman": "10 km",
+        "Wilayah": "77 km Tenggara CILACAP-JATENG",
+        "Potensi": "Tidak berpotensi tsunami"
+      },
+      {
+        "Tanggal": "02 Sep 2026",
+        "Jam": "07:04:55 WIB",
+        "DateTime": "2026-09-02T00:04:55+00:00",
+        "Coordinates": "-3.15,139.41",
+        "Lintang": "3.15 LS",
+        "Bujur": "139.41 BT",
+        "Magnitude": "5.5",
+        "Kedalaman": "100 km",
+        "Wilayah": "69 km TimurLaut KOBAGMA-PAPUAPGNGN",
+        "Potensi": "Tidak berpotensi tsunami"
+      },
+      {
+        "Tanggal": "01 Sep 2026",
+        "Jam": "15:22:21 WIB",
+        "DateTime": "2026-09-01T08:22:21+00:00",
+        "Coordinates": "0.26,128.92",
+        "Lintang": "0.26 LU",
+        "Bujur": "128.92 BT",
+        "Magnitude": "5.5",
+        "Kedalaman": "10 km",
+        "Wilayah": "65 km Tenggara HALMAHERATENGAH-MALUT",
+        "Potensi": "Tidak berpotensi tsunami"
+      },
+      {
+        "Tanggal": "31 Agu 2026",
+        "Jam": "15:03:29 WIB",
+        "DateTime": "2026-08-31T08:03:29+00:00",
+        "Coordinates": "-8.17,120.58",
+        "Lintang": "8.17 LS",
+        "Bujur": "120.58 BT",
+        "Magnitude": "5.5",
+        "Kedalaman": "10 km",
+        "Wilayah": "50 km TimurLaut RUTENG-MANGGARAI-NTT",
+        "Potensi": "Tidak berpotensi tsunami"
+      },
+      {
+        "Tanggal": "29 Agu 2026",
+        "Jam": "15:08:45 WIB",
+        "DateTime": "2026-08-29T08:08:45+00:00",
+        "Coordinates": "-0.67,126.75",
+        "Lintang": "0.67 LS",
+        "Bujur": "126.75 BT",
+        "Magnitude": "5.1",
+        "Kedalaman": "12 km",
+        "Wilayah": "83 km BaratDaya LABUHA-MALUT",
+        "Potensi": "Tidak berpotensi tsunami"
+      },
+      {
+        "Tanggal": "27 Agu 2026",
+        "Jam": "17:33:25 WIB",
+        "DateTime": "2026-08-27T10:33:25+00:00",
+        "Coordinates": "-8.07,120.09",
+        "Lintang": "8.07 LS",
+        "Bujur": "120.09 BT",
+        "Magnitude": "5.2",
+        "Kedalaman": "10 km",
+        "Wilayah": "52 km TimurLaut LABUANBAJO-NTT",
+        "Potensi": "Tidak berpotensi tsunami"
+      },
+      {
+        "Tanggal": "26 Agu 2026",
+        "Jam": "21:15:32 WIB",
+        "DateTime": "2026-08-26T14:15:32+00:00",
+        "Coordinates": "-8.38,121.54",
+        "Lintang": "8.38 LS",
+        "Bujur": "121.54 BT",
+        "Magnitude": "5.0",
+        "Kedalaman": "10 km",
+        "Wilayah": "41 km TimurLaut MBAY-NAGEKEO-NTT",
+        "Potensi": "Tidak berpotensi tsunami"
+      },
+      {
+        "Tanggal": "25 Agu 2026",
+        "Jam": "13:48:21 WIB",
+        "DateTime": "2026-08-25T06:48:21+00:00",
+        "Coordinates": "3.44,124.53",
+        "Lintang": "3.44 LU",
+        "Bujur": "124.53 BT",
+        "Magnitude": "5.1",
+        "Kedalaman": "295 km",
+        "Wilayah": "108 km BaratDaya TAHUNA-KEP.SANGIHE-SULUT",
+        "Potensi": "Tidak berpotensi tsunami"
+      },
+      {
+        "Tanggal": "24 Agu 2026",
+        "Jam": "21:10:18 WIB",
+        "DateTime": "2026-08-24T14:10:18+00:00",
+        "Coordinates": "-6.67,127.45",
+        "Lintang": "6.67 LS",
+        "Bujur": "127.45 BT",
+        "Magnitude": "6.2",
+        "Kedalaman": "10 km",
+        "Wilayah": "168 km BaratLaut MALUKUBRTDAYA",
+        "Potensi": "Tidak berpotensi tsunami"
+      },
+      {
+        "Tanggal": "24 Agu 2026",
+        "Jam": "17:03:00 WIB",
+        "DateTime": "2026-08-24T10:03:00+00:00",
+        "Coordinates": "-5.01,129.68",
+        "Lintang": "5.01 LS",
+        "Bujur": "129.68 BT",
+        "Magnitude": "5.6",
+        "Kedalaman": "10 km",
+        "Wilayah": "206 km Tenggara MALUKUTENGAH",
+        "Potensi": "Tidak berpotensi tsunami"
+      },
+      {
+        "Tanggal": "24 Agu 2026",
+        "Jam": "04:20:18 WIB",
+        "DateTime": "2026-08-23T21:20:18+00:00",
+        "Coordinates": "-8.30,120.62",
+        "Lintang": "8.30 LS",
+        "Bujur": "120.62 BT",
+        "Magnitude": "5.2",
+        "Kedalaman": "10 km",
+        "Wilayah": "38 km TimurLaut RUTENG-MANGGARAI-NTT",
+        "Potensi": "Tidak berpotensi tsunami"
+      },
+      {
+        "Tanggal": "23 Agu 2026",
+        "Jam": "02:54:08 WIB",
+        "DateTime": "2026-08-22T19:54:08+00:00",
+        "Coordinates": "-0.30,123.06",
+        "Lintang": "0.30 LS",
+        "Bujur": "123.06 BT",
+        "Magnitude": "5.4",
+        "Kedalaman": "86 km",
+        "Wilayah": "57 km TimurLaut PULAUPUAH-SULTENG",
+        "Potensi": "Tidak berpotensi tsunami"
+      },
+      {
+        "Tanggal": "22 Agu 2026",
+        "Jam": "08:31:00 WIB",
+        "DateTime": "2026-08-22T01:31:00+00:00",
+        "Coordinates": "-8.03,120.68",
+        "Lintang": "8.03 LS",
+        "Bujur": "120.68 BT",
+        "Magnitude": "5.2",
+        "Kedalaman": "10 km",
+        "Wilayah": "68 km TimurLaut RUTENG-MANGGARAI-NTT",
+        "Potensi": "Tidak berpotensi tsunami"
+      },
+      {
+        "Tanggal": "22 Agu 2026",
+        "Jam": "00:41:43 WIB",
+        "DateTime": "2026-08-21T17:41:43+00:00",
+        "Coordinates": "-7.72,104.47",
+        "Lintang": "7.72 LS",
+        "Bujur": "104.47 BT",
+        "Magnitude": "5.8",
+        "Kedalaman": "10 km",
+        "Wilayah": "170 km BaratDaya SUMUR-BANTEN",
+        "Potensi": "Tidak berpotensi tsunami"
+      }
+    ]
   },
-  "fetchedAtUTC": null,
-  "note": "Menunggu proses pengambilan data pertama dari BMKG oleh GitHub Actions."
+  "fetchedAtUTC": "2026-09-09T03:41:30Z"
 }
