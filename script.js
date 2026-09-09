@@ -71,18 +71,90 @@ const REGIONS = {
 
 const MOCK_UPDATED_AT = "06:42 WIB";
 
-const MOCK_EVENTS = [
-  { severity: "red", title: "Gempa M5.2", location: "Maluku", detail: "Kedalaman 10 km", time: "10 menit lalu", timeActual: "06:32 WIB", source: "BMKG" },
-  { severity: "orange", title: "Hujan lebat", location: "Jawa Barat", detail: "Potensi genangan di beberapa wilayah", time: "18 menit lalu", timeActual: "06:24 WIB", source: "BMKG" },
-  { severity: "yellow", title: "Peningkatan aktivitas", location: "Gunung Ile Lewotolok", detail: "Level II — Waspada", time: "1 jam lalu", timeActual: "05:40 WIB", source: "PVMBG" },
-  { severity: "red", title: "Gempa M4.1", location: "Selat Sunda", detail: "Kedalaman 24 km", time: "3 jam lalu", timeActual: "03:15 WIB", source: "BMKG" },
+// Dipakai kalau data BMKG belum berhasil diambil (fallback, bukan real-time)
+const FALLBACK_EVENTS = [
+  { severity: "red", title: "Gempa M5.2", location: "Maluku", detail: "Kedalaman 10 km", time: "10 menit lalu", timeActual: "06:32 WIB", source: "BMKG (contoh)" },
+  { severity: "orange", title: "Hujan lebat", location: "Jawa Barat", detail: "Potensi genangan di beberapa wilayah", time: "18 menit lalu", timeActual: "06:24 WIB", source: "BMKG (contoh)" },
+  { severity: "yellow", title: "Peningkatan aktivitas", location: "Gunung Ile Lewotolok", detail: "Level II — Waspada", time: "1 jam lalu", timeActual: "05:40 WIB", source: "PVMBG (contoh)" },
+  { severity: "red", title: "Gempa M4.1", location: "Selat Sunda", detail: "Kedalaman 24 km", time: "3 jam lalu", timeActual: "03:15 WIB", source: "BMKG (contoh)" },
 ];
 
+// Data cuaca & gunung api belum terhubung API resmi — tetap contoh untuk saat ini
+const MOCK_NON_QUAKE_EVENTS = [
+  { severity: "orange", title: "Hujan lebat", location: "Jawa Barat", detail: "Potensi genangan di beberapa wilayah (contoh)", time: "18 menit lalu", timeActual: "06:24 WIB", source: "Contoh — belum live" },
+  { severity: "yellow", title: "Peningkatan aktivitas", location: "Gunung Ile Lewotolok", detail: "Level II — Waspada (contoh)", time: "1 jam lalu", timeActual: "05:40 WIB", source: "Contoh — belum live" },
+];
+
+let ACTIVE_EVENTS = FALLBACK_EVENTS;
+let usingRealQuakeData = false;
+
+function formatRelativeTime(isoString) {
+  try {
+    const then = new Date(isoString).getTime();
+    const diffMin = Math.round((Date.now() - then) / 60000);
+    if (diffMin < 1) return "baru saja";
+    if (diffMin < 60) return `${diffMin} menit lalu`;
+    const diffHour = Math.round(diffMin / 60);
+    if (diffHour < 24) return `${diffHour} jam lalu`;
+    const diffDay = Math.round(diffHour / 24);
+    return `${diffDay} hari lalu`;
+  } catch (err) {
+    return "";
+  }
+}
+
+async function loadRealEarthquakes() {
+  try {
+    const res = await fetch("data/gempa-bmkg.json", { cache: "no-store" });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    const list = data && data.Infogempa && data.Infogempa.gempa;
+    if (!Array.isArray(list) || list.length === 0) {
+      throw new Error("Belum ada data gempa dari BMKG (menunggu run pertama).");
+    }
+
+    const realQuakes = list.slice(0, 4).map(item => ({
+      severity: "red",
+      title: `Gempa M${item.Magnitude}`,
+      location: item.Wilayah || "Lokasi tidak diketahui",
+      detail: `Kedalaman ${item.Kedalaman || "?"}${item.Potensi ? " · " + item.Potensi : ""}`,
+      time: item.DateTime ? formatRelativeTime(item.DateTime) : (item.Jam || ""),
+      timeActual: `${item.Jam || ""} · ${item.Tanggal || ""}`.trim(),
+      source: "BMKG",
+    }));
+
+    ACTIVE_EVENTS = [...realQuakes, ...MOCK_NON_QUAKE_EVENTS];
+    usingRealQuakeData = true;
+
+    const note = document.getElementById("quakeUpdatedNote");
+    if (note && data.fetchedAtUTC) {
+      const fetchedLocal = new Date(data.fetchedAtUTC).toLocaleTimeString("id-ID", {
+        hour: "2-digit", minute: "2-digit", timeZone: "Asia/Jakarta"
+      });
+      note.textContent = `Data gempa diambil ${fetchedLocal} WIB`;
+    }
+  } catch (err) {
+    console.warn("Bencanaku: pakai data contoh, BMKG belum tersedia —", err.message);
+    ACTIVE_EVENTS = FALLBACK_EVENTS;
+    usingRealQuakeData = false;
+  }
+}
+
+function updateDemoBanner() {
+  const banner = document.querySelector(".demo-banner");
+  if (!banner) return;
+  if (usingRealQuakeData) {
+    banner.innerHTML = `<strong>Sebagian data live.</strong> Data gempa langsung dari BMKG, diperbarui otomatis tiap jam. Cuaca, gunung api, dan risiko wilayah masih data contoh.`;
+  } else {
+    banner.innerHTML = `<strong>Mode pratinjau.</strong> Data saat ini masih contoh, belum tersambung langsung ke sumber resmi.`;
+  }
+}
+
 const MOCK_MAP_MARKERS = [
-  { x: 620, y: 130, kind: "red" },
-  { x: 380, y: 118, kind: "orange" },
-  { x: 470, y: 132, kind: "yellow" },
-  { x: 140, y: 148, kind: "red" },
+  { x: 540, y: 105, kind: "red" },   // area Maluku, dekat celah Sulawesi-Papua
+  { x: 195, y: 168, kind: "orange" }, // Jawa Barat
+  { x: 330, y: 178, kind: "yellow" }, // Nusa Tenggara, dekat Ile Lewotolok
+  { x: 100, y: 150, kind: "red" },   // Selat Sunda
 ];
 
 let currentRegion = "Jakarta Timur";
@@ -145,7 +217,7 @@ function renderMapMarkers() {
 
 function renderEvents() {
   safeRender("eventList", (el) => {
-    el.innerHTML = MOCK_EVENTS.map((ev, i) => `
+    el.innerHTML = ACTIVE_EVENTS.map((ev, i) => `
       <li class="event-item sev-${ev.severity}">
         <div class="event-title">${ev.title}</div>
         <div class="event-meta">
@@ -160,7 +232,7 @@ function renderEvents() {
     `).join("");
 
     el.querySelectorAll(".share-btn").forEach(btn => {
-      btn.addEventListener("click", () => shareEvent(MOCK_EVENTS[Number(btn.dataset.eventIndex)]));
+      btn.addEventListener("click", () => shareEvent(ACTIVE_EVENTS[Number(btn.dataset.eventIndex)]));
     });
   });
 }
@@ -258,13 +330,17 @@ function setupStickyHeader() {
   }, { passive: true });
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
   currentRegion = getSavedRegion();
   if (!REGIONS[currentRegion]) currentRegion = "Jakarta Timur";
 
   renderAll(currentRegion);
   renderMapMarkers();
+
+  await loadRealEarthquakes();
+  updateDemoBanner();
   renderEvents();
+
   setupRegionDropdown();
   setupStickyHeader();
 });
