@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gempa terkini — Bencanaku</title>
+<meta name="description" content="Daftar gempa terkini di Indonesia berdasarkan data resmi BMKG, lengkap dengan magnitudo, lokasi, kedalaman, dan potensi tsunami.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="demo-banner">
+  <strong>Data gempa dari BMKG.</strong> Diperbarui otomatis tiap jam lewat GitHub Actions.
+</div>
+
+<header class="site-header">
+  <div class="header-row">
+    <div class="brand">
+      <a href="index.html" style="text-decoration:none; color:inherit;">
+        <span class="brand-mark">Bencanaku</span>
+        <span class="brand-sub">Platform informasi kebencanaan</span>
+      </a>
+    </div>
+  </div>
+  <nav class="site-nav">
+    <a href="gempa.html" style="color:var(--text); font-weight:600;">Gempa</a>
+    <a href="cuaca.html">Cuaca</a>
+    <a href="gunung-api.html">Gunung api</a>
+    <a href="risiko.html">Risiko</a>
+    <a href="udara.html">Udara</a>
+    <a href="tentang.html">Tentang</a>
+  </nav>
+</header>
+
+<main>
+
+  <section class="hero">
+    <h1>Gempa terkini</h1>
+    <p class="hero-lead">Daftar gempa di Indonesia berdasarkan data resmi BMKG.</p>
+    <p class="last-updated" id="quakeFetchedNote"></p>
+  </section>
+
+  <section class="lower-grid" style="grid-template-columns: 1fr;">
+    <div class="events-panel">
+      <div class="section-head">
+        <h2>Semua kejadian</h2>
+      </div>
+      <ol class="event-list" id="quakeFullList">
+        <li class="fallback-text">Memuat data gempa…</li>
+      </ol>
+    </div>
+  </section>
+
+  <p class="footer-disclaimer" style="padding: 0 0 24px;">
+    Bencanaku menampilkan data apa adanya dari BMKG. Untuk informasi resmi dan keputusan keselamatan, selalu rujuk <a href="https://www.bmkg.go.id" style="color:var(--text-dim);">bmkg.go.id</a> atau instansi terkait langsung.
+  </p>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-brand">Bencanaku</div>
+  <p class="footer-desc">Platform informasi kebencanaan independen.</p>
+
+  <p class="footer-sources">
+    <span class="footer-label">Sumber data</span><br>
+    BMKG · BNPB/InaRISK · PVMBG
+  </p>
+
+  <p class="footer-disclaimer">
+    Bencanaku bukan lembaga pemerintah. Untuk keputusan keselamatan, selalu rujuk informasi resmi dari instansi terkait.
+  </p>
+
+  <p class="footer-credit">Founded by Ibnu Farras</p>
+</footer>
+
+<noscript>
+  <p style="text-align:center; padding:16px; color:#DD6363; font-size:0.85rem;">
+    Bencanaku butuh JavaScript aktif untuk menampilkan data. Aktifkan JavaScript di browser kamu.
+  </p>
+</noscript>
+
+<script src="gempa.js"></script>
+</body>
+</html>
+
