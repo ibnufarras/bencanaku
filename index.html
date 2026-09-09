@@ -22,10 +22,13 @@
       <span class="brand-mark">Bencanaku</span>
       <span class="brand-sub">Platform informasi kebencanaan</span>
     </div>
-    <button class="region-select" id="regionSelect" aria-haspopup="listbox">
-      <span id="regionLabel">Jakarta Timur</span>
-      <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-    </button>
+    <div class="region-wrap">
+      <button class="region-select" id="regionSelect" aria-haspopup="listbox" aria-expanded="false">
+        <span id="regionLabel">Jakarta Timur</span>
+        <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+      <ul class="region-dropdown" id="regionDropdown" role="listbox" hidden></ul>
+    </div>
   </div>
   <nav class="site-nav">
     <a href="gempa.html">Gempa</a>
@@ -44,9 +47,9 @@
     <p class="hero-lead">Ringkasan situasi kebencanaan berdasarkan sumber resmi.</p>
 
     <div class="status-grid" id="statusStrip">
-      <!-- filled by script.js -->
+      <p class="fallback-text">Memuat status…</p>
     </div>
-    <p class="last-updated" id="lastUpdated"><!-- filled by script.js --></p>
+    <p class="last-updated" id="lastUpdated"></p>
   </section>
 
   <section class="map-section">
@@ -78,7 +81,7 @@
         <h2>Kejadian terbaru</h2>
       </div>
       <ol class="event-list" id="eventList">
-        <!-- filled by script.js -->
+        <li class="fallback-text">Memuat kejadian terbaru…</li>
       </ol>
     </div>
 
@@ -87,7 +90,7 @@
         <h2>Wilayah kamu</h2>
       </div>
       <div class="area-readout" id="areaReadout">
-        <!-- filled by script.js -->
+        <p class="fallback-text">Memuat data wilayah…</p>
       </div>
     </div>
 
@@ -104,6 +107,22 @@
     BMKG · BNPB/InaRISK · PVMBG
   </p>
 
+  <p class="footer-disclaimer">
+    Bencanaku bukan lembaga pemerintah. Untuk keputusan keselamatan, selalu rujuk informasi resmi dari instansi terkait.
+  </p>
+
+  <p class="footer-credit">Founded by Ibnu Farras</p>
+</footer>
+
+<noscript>
+  <p style="text-align:center; padding:16px; color:#DD6363; font-size:0.85rem;">
+    Bencanaku butuh JavaScript aktif untuk menampilkan data. Aktifkan JavaScript di browser kamu.
+  </p>
+</noscript>
+
+<script src="script.js"></script>
+</body>
+</html>
   <p class="footer-disclaimer">
     Bencanaku bukan lembaga pemerintah. Untuk keputusan keselamatan, selalu rujuk informasi resmi dari instansi terkait.
   </p>
