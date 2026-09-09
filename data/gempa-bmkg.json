@@ -1,0 +1,42 @@
+name: Update BMKG earthquake data
+
+on:
+  schedule:
+    # Jalan tiap jam, di menit ke-5 (kasih jeda dari update BMKG sendiri)
+    - cron: "5 * * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  update-gempa:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Ambil data gempa terkini dari BMKG
+        run: |
+          mkdir -p data
+          curl -sSL -A "Mozilla/5.0 (Bencanaku data fetcher)" \
+            "https://data.bmkg.go.id/DataMKG/TEWS/gempaterkini.json" \
+            -o data/gempa-bmkg.raw.json
+
+      - name: Validasi dan tambahkan timestamp pengambilan
+        run: |
+          if [ -s data/gempa-bmkg.raw.json ] && jq -e . data/gempa-bmkg.raw.json > /dev/null 2>&1; then
+            jq --arg t "$(date -u +%Y-%m-%dT%H:%M:%SZ)" '. + {fetchedAtUTC: $t}' \
+              data/gempa-bmkg.raw.json > data/gempa-bmkg.json
+          else
+            echo "Data dari BMKG tidak valid, file lama dipertahankan."
+          fi
+          rm -f data/gempa-bmkg.raw.json
+
+      - name: Commit jika ada perubahan
+        run: |
+          git config user.name "bencanaku-bot"
+          git config user.email "actions@github.com"
+          git add data/gempa-bmkg.json
+          git diff --cached --quiet || git commit -m "chore: update data gempa BMKG"
+          git push
