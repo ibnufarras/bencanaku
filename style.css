@@ -280,25 +280,53 @@ main {
   position: relative;
 }
 
-.map-svg {
+.map-svg { display: none; } /* deprecated, kept only to avoid layout break if cached */
+
+.leaflet-map {
   width: 100%;
-  height: auto;
-  display: block;
-  background: var(--bg-panel);
+  height: 280px;
   border: 1px solid var(--border-soft);
   border-radius: 8px;
+  background: var(--bg-panel);
 }
 
-.map-land {
-  fill: #1C2027;
-  stroke: var(--border);
-  stroke-width: 1;
+@media (min-width: 769px) {
+  .leaflet-map { height: 420px; }
 }
 
-.map-label {
-  fill: var(--text-faint);
+/* Dark-theme overrides for Leaflet's default light UI */
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+  background: var(--bg-panel);
+  color: var(--text);
+}
+
+.leaflet-popup-content {
   font-family: var(--font-body);
-  font-size: 9px;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.leaflet-popup-content b {
+  font-family: var(--font-display);
+}
+
+.leaflet-container a.leaflet-popup-close-button {
+  color: var(--text-dim);
+}
+
+.leaflet-control-attribution {
+  background: rgba(14,17,20,0.75) !important;
+  color: var(--text-faint) !important;
+  font-size: 0.68rem !important;
+}
+
+.leaflet-control-attribution a { color: var(--text-dim) !important; }
+
+.map-empty-note {
+  padding: 10px 4px 0;
+  font-size: 0.8rem;
+  color: var(--text-faint);
 }
 
 .map-caveat {
@@ -306,17 +334,6 @@ main {
   color: var(--text-faint);
   margin: 10px 0 0;
   line-height: 1.5;
-}
-
-.map-marker circle.ping { animation: ping 2.4s ease-out infinite; }
-
-@keyframes ping {
-  0%   { opacity: 0.45; r: 4; }
-  100% { opacity: 0; r: 13; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .map-marker circle.ping { animation: none; opacity: 0; }
 }
 
 .map-legend {
