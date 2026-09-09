@@ -295,6 +295,19 @@ main {
   stroke-width: 1;
 }
 
+.map-label {
+  fill: var(--text-faint);
+  font-family: var(--font-body);
+  font-size: 9px;
+}
+
+.map-caveat {
+  font-size: 0.72rem;
+  color: var(--text-faint);
+  margin: 10px 0 0;
+  line-height: 1.5;
+}
+
 .map-marker circle.ping { animation: ping 2.4s ease-out infinite; }
 
 @keyframes ping {
