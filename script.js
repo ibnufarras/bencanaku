@@ -1,107 +1,84 @@
 /*
-  Bencanaku — data contoh (mock)
-  Struktur data di bawah sengaja dibuat menyerupai bentuk data yang nanti
-  datang dari BMKG / BNPB-InaRISK / API cuaca & udara. Saat backend asli
-  disambungkan, hanya bagian "ambil data" yang perlu diganti — fungsi
-  render tetap sama.
+  Bencanaku — homepage logic
 
-  Catatan penting: setiap fungsi render dibungkus try/catch. Kalau salah
-  satu gagal, bagian itu menampilkan pesan error yang jelas, bukan kosong
-  diam-diam — supaya kalau ada masalah, gampang ketahuan dari tampilan.
+  Prinsip penting:
+  - Status nasional (banner status 2x2) dan peta gempa SELALU nasional,
+    tidak berubah oleh pilihan dropdown "Wilayah kamu".
+  - Dropdown wilayah HANYA mengubah card "Wilayah kamu" (data lokal).
+  - Data gempa: real dari data/gempa-bmkg.json (hasil GitHub Actions BMKG).
+    Kalau belum tersedia/gagal, tampil fallback yang jelas ditandai contoh,
+    bukan dianggap kosong diam-diam.
+  - Data cuaca/gunung api/risiko wilayah: masih contoh, belum live.
 */
 
-const REGIONS = {
-  "Jakarta Timur": {
-    status: [
-      { level: "red",    count: 2, label: "Peringatan aktif" },
-      { level: "green",  count: 0, label: "Peringatan tsunami" },
-      { level: "orange", count: 8, label: "Peringatan cuaca" },
-      { level: "yellow", count: 1, label: "Update gunung api" },
-    ],
-    area: [
-      { label: "Peringatan resmi", value: "Tidak ada", tone: "green", technical: false, source: "BMKG" },
-      { label: "Kualitas udara", value: "112 — Tidak sehat bagi kelompok sensitif", tone: "orange", technical: true, source: "Data pihak ketiga" },
-      { label: "Risiko banjir", value: "Sedang", tone: "yellow", technical: false, source: "InaRISK · data historis, bukan prediksi hari ini" },
-      { label: "Risiko gempa", value: "Sedang", tone: "yellow", technical: false, source: "InaRISK · data historis, bukan prediksi hari ini" },
-    ],
-  },
-  "Bandung": {
-    status: [
-      { level: "yellow", count: 1, label: "Peringatan aktif" },
-      { level: "green",  count: 0, label: "Peringatan tsunami" },
-      { level: "orange", count: 3, label: "Peringatan cuaca" },
-      { level: "yellow", count: 1, label: "Update gunung api" },
-    ],
-    area: [
-      { label: "Peringatan resmi", value: "Waspada longsor", tone: "yellow", technical: false, source: "BNPB" },
-      { label: "Kualitas udara", value: "68 — Sedang", tone: "yellow", technical: true, source: "Data pihak ketiga" },
-      { label: "Risiko banjir", value: "Rendah", tone: "green", technical: false, source: "InaRISK · data historis, bukan prediksi hari ini" },
-      { label: "Risiko gempa", value: "Tinggi", tone: "orange", technical: false, source: "InaRISK · data historis, bukan prediksi hari ini" },
-    ],
-  },
-  "Surabaya": {
-    status: [
-      { level: "green",  count: 0, label: "Peringatan aktif" },
-      { level: "green",  count: 0, label: "Peringatan tsunami" },
-      { level: "orange", count: 2, label: "Peringatan cuaca" },
-      { level: "green",  count: 0, label: "Update gunung api" },
-    ],
-    area: [
-      { label: "Peringatan resmi", value: "Tidak ada", tone: "green", technical: false, source: "BMKG" },
-      { label: "Kualitas udara", value: "95 — Sedang", tone: "yellow", technical: true, source: "Data pihak ketiga" },
-      { label: "Risiko banjir", value: "Sedang", tone: "yellow", technical: false, source: "InaRISK · data historis, bukan prediksi hari ini" },
-      { label: "Risiko gempa", value: "Rendah", tone: "green", technical: false, source: "InaRISK · data historis, bukan prediksi hari ini" },
-    ],
-  },
-  "Yogyakarta": {
-    status: [
-      { level: "yellow", count: 1, label: "Peringatan aktif" },
-      { level: "green",  count: 0, label: "Peringatan tsunami" },
-      { level: "orange", count: 1, label: "Peringatan cuaca" },
-      { level: "orange", count: 1, label: "Update gunung api" },
-    ],
-    area: [
-      { label: "Peringatan resmi", value: "Tidak ada", tone: "green", technical: false, source: "BMKG" },
-      { label: "Kualitas udara", value: "54 — Baik", tone: "green", technical: true, source: "Data pihak ketiga" },
-      { label: "Risiko banjir", value: "Rendah", tone: "green", technical: false, source: "InaRISK · data historis, bukan prediksi hari ini" },
-      { label: "Risiko gempa", value: "Tinggi", tone: "orange", technical: false, source: "InaRISK · data historis, bukan prediksi hari ini" },
-    ],
-  },
-};
+// Status nasional — masih contoh, belum live (menyusul setelah gempa stabil)
+const NATIONAL_STATUS = [
+  { level: "red",    count: 2, label: "Peringatan aktif (contoh)" },
+  { level: "green",  count: 0, label: "Peringatan tsunami (contoh)" },
+  { level: "orange", count: 8, label: "Peringatan cuaca (contoh)" },
+  { level: "yellow", count: 1, label: "Update gunung api (contoh)" },
+];
 
 const MOCK_UPDATED_AT = "06:42 WIB";
 
-// Dipakai kalau data BMKG belum berhasil diambil (fallback, bukan real-time)
-const FALLBACK_EVENTS = [
-  { severity: "red", title: "Gempa M5.2", location: "Maluku", detail: "Kedalaman 10 km", time: "10 menit lalu", timeActual: "06:32 WIB", source: "BMKG (contoh)" },
-  { severity: "orange", title: "Hujan lebat", location: "Jawa Barat", detail: "Potensi genangan di beberapa wilayah", time: "18 menit lalu", timeActual: "06:24 WIB", source: "BMKG (contoh)" },
-  { severity: "yellow", title: "Peningkatan aktivitas", location: "Gunung Ile Lewotolok", detail: "Level II — Waspada", time: "1 jam lalu", timeActual: "05:40 WIB", source: "PVMBG (contoh)" },
-  { severity: "red", title: "Gempa M4.1", location: "Selat Sunda", detail: "Kedalaman 24 km", time: "3 jam lalu", timeActual: "03:15 WIB", source: "BMKG (contoh)" },
-];
+// Data lokal per wilayah — HANYA dipakai untuk card "Wilayah kamu",
+// tidak memengaruhi status nasional maupun peta gempa.
+const REGIONS = {
+  "Jakarta Timur": [
+    { label: "Peringatan resmi", value: "Tidak ada", tone: "green", technical: false, source: "BMKG" },
+    { label: "Kualitas udara", value: "112 — Tidak sehat bagi kelompok sensitif", tone: "orange", technical: true, source: "Data pihak ketiga" },
+    { label: "Risiko banjir", value: "Sedang", tone: "yellow", technical: false, source: "InaRISK · data historis, bukan prediksi hari ini" },
+    { label: "Risiko gempa", value: "Sedang", tone: "yellow", technical: false, source: "InaRISK · data historis, bukan prediksi hari ini" },
+  ],
+  "Bandung": [
+    { label: "Peringatan resmi", value: "Waspada longsor", tone: "yellow", technical: false, source: "BNPB" },
+    { label: "Kualitas udara", value: "68 — Sedang", tone: "yellow", technical: true, source: "Data pihak ketiga" },
+    { label: "Risiko banjir", value: "Rendah", tone: "green", technical: false, source: "InaRISK · data historis, bukan prediksi hari ini" },
+    { label: "Risiko gempa", value: "Tinggi", tone: "orange", technical: false, source: "InaRISK · data historis, bukan prediksi hari ini" },
+  ],
+  "Surabaya": [
+    { label: "Peringatan resmi", value: "Tidak ada", tone: "green", technical: false, source: "BMKG" },
+    { label: "Kualitas udara", value: "95 — Sedang", tone: "yellow", technical: true, source: "Data pihak ketiga" },
+    { label: "Risiko banjir", value: "Sedang", tone: "yellow", technical: false, source: "InaRISK · data historis, bukan prediksi hari ini" },
+    { label: "Risiko gempa", value: "Rendah", tone: "green", technical: false, source: "InaRISK · data historis, bukan prediksi hari ini" },
+  ],
+  "Yogyakarta": [
+    { label: "Peringatan resmi", value: "Tidak ada", tone: "green", technical: false, source: "BMKG" },
+    { label: "Kualitas udara", value: "54 — Baik", tone: "green", technical: true, source: "Data pihak ketiga" },
+    { label: "Risiko banjir", value: "Rendah", tone: "green", technical: false, source: "InaRISK · data historis, bukan prediksi hari ini" },
+    { label: "Risiko gempa", value: "Tinggi", tone: "orange", technical: false, source: "InaRISK · data historis, bukan prediksi hari ini" },
+  ],
+};
 
-// Data cuaca & gunung api belum terhubung API resmi — tetap contoh untuk saat ini
-const MOCK_NON_QUAKE_EVENTS = [
-  { severity: "orange", title: "Hujan lebat", location: "Jawa Barat", detail: "Potensi genangan di beberapa wilayah (contoh)", time: "18 menit lalu", timeActual: "06:24 WIB", source: "Contoh — belum live" },
-  { severity: "yellow", title: "Peningkatan aktivitas", location: "Gunung Ile Lewotolok", detail: "Level II — Waspada (contoh)", time: "1 jam lalu", timeActual: "05:40 WIB", source: "Contoh — belum live" },
-];
-
-let ACTIVE_EVENTS = FALLBACK_EVENTS;
-let usingRealQuakeData = false;
-
-function formatRelativeTime(isoString) {
-  try {
-    const then = new Date(isoString).getTime();
-    const diffMin = Math.round((Date.now() - then) / 60000);
-    if (diffMin < 1) return "baru saja";
-    if (diffMin < 60) return `${diffMin} menit lalu`;
-    const diffHour = Math.round(diffMin / 60);
-    if (diffHour < 24) return `${diffHour} jam lalu`;
-    const diffDay = Math.round(diffHour / 24);
-    return `${diffDay} hari lalu`;
-  } catch (err) {
-    return "";
-  }
 }
+
+// Ambil arah + nilai dari string BMKG seperti "6.2 LS" atau "106.8 BT"
+function parseDirectionalCoord(str) {
+  if (!str) return NaN;
+  const m = String(str).match(/(-?\d+(?:\.\d+)?)\s*([A-Za-z]+)/);
+  if (!m) return NaN;
+  let val = parseFloat(m[1]);
+  const dir = m[2].toUpperCase();
+  if (dir === "LS" || dir === "BB" || dir === "S" || dir === "W") val = -Math.abs(val);
+  else val = Math.abs(val);
+  return val;
+}
+
+// Koordinat asli tiap gempa. Prioritas: Lintang/Bujur (ada arah mata angin,
+// jadi tidak ambigu). Fallback: field Coordinates, asumsi "lat,lon".
+function parseQuakeCoords(item) {
+  const lat = parseDirectionalCoord(item.Lintang);
+  const lon = parseDirectionalCoord(item.Bujur);
+  if (!isNaN(lat) && !isNaN(lon)) return [lat, lon];
+
+  if (item.Coordinates) {
+    const parts = String(item.Coordinates).split(",").map(s => parseFloat(s.trim()));
+    if (parts.length === 2 && !parts.some(isNaN)) return [parts[0], parts[1]];
+  }
+  return null;
+}
+
+let lastQuakeList = [];
 
 async function loadRealEarthquakes() {
   try {
@@ -113,7 +90,9 @@ async function loadRealEarthquakes() {
       throw new Error("Belum ada data gempa dari BMKG (menunggu run pertama).");
     }
 
-    const realQuakes = list.slice(0, 4).map(item => ({
+    lastQuakeList = list;
+
+    const realQuakes = list.slice(0, 5).map(item => ({
       severity: "red",
       title: `Gempa M${item.Magnitude}`,
       location: item.Wilayah || "Lokasi tidak diketahui",
@@ -123,41 +102,12 @@ async function loadRealEarthquakes() {
       source: "BMKG",
     }));
 
-    ACTIVE_EVENTS = [...realQuakes, ...MOCK_NON_QUAKE_EVENTS];
-    usingRealQuakeData = true;
-
-    const note = document.getElementById("quakeUpdatedNote");
-    if (note && data.fetchedAtUTC) {
-      const fetchedLocal = new Date(data.fetchedAtUTC).toLocaleTimeString("id-ID", {
-        hour: "2-digit", minute: "2-digit", timeZone: "Asia/Jakarta"
-      });
-      note.textContent = `Data gempa diambil ${fetchedLocal} WIB`;
-    }
-  } catch (err) {
-    console.warn("Bencanaku: pakai data contoh, BMKG belum tersedia —", err.message);
-    ACTIVE_EVENTS = FALLBACK_EVENTS;
-    usingRealQuakeData = false;
-  }
-}
-
-function updateDemoBanner() {
-  const banner = document.querySelector(".demo-banner");
-  if (!banner) return;
-  if (usingRealQuakeData) {
+    ACTIVE_EVENTS = realQuakes;
     banner.innerHTML = `<strong>Sebagian data live.</strong> Data gempa langsung dari BMKG, diperbarui otomatis tiap jam. Cuaca, gunung api, dan risiko wilayah masih data contoh.`;
   } else {
-    banner.innerHTML = `<strong>Mode pratinjau.</strong> Data saat ini masih contoh, belum tersambung langsung ke sumber resmi.`;
+    banner.innerHTML = `<strong>Mode pratinjau.</strong> Data gempa BMKG belum tersedia saat ini (menunggu pembaruan). Data lain masih contoh.`;
   }
 }
-
-const MOCK_MAP_MARKERS = [
-  { x: 540, y: 105, kind: "red" },   // area Maluku, dekat celah Sulawesi-Papua
-  { x: 195, y: 168, kind: "orange" }, // Jawa Barat
-  { x: 330, y: 178, kind: "yellow" }, // Nusa Tenggara, dekat Ile Lewotolok
-  { x: 100, y: 150, kind: "red" },   // Selat Sunda
-];
-
-let currentRegion = "Jakarta Timur";
 
 function getSavedRegion() {
   try {
@@ -186,10 +136,10 @@ function safeRender(id, fn) {
   }
 }
 
-function renderStatusStrip(regionName) {
+// Status nasional — dipanggil SEKALI saat load, tidak tergantung dropdown
+function renderNationalStatus() {
   safeRender("statusStrip", (el) => {
-    const data = REGIONS[regionName].status;
-    el.innerHTML = data.map(item => `
+    el.innerHTML = NATIONAL_STATUS.map(item => `
       <div class="status-item">
         <span class="status-dot dot-${item.level}"></span>
         <div>
@@ -202,17 +152,6 @@ function renderStatusStrip(regionName) {
 
   const lu = document.getElementById("lastUpdated");
   if (lu) lu.textContent = `Terakhir diperbarui ${MOCK_UPDATED_AT}`;
-}
-
-function renderMapMarkers() {
-  safeRender("mapMarkers", (el) => {
-    el.innerHTML = MOCK_MAP_MARKERS.map(m => `
-      <g class="map-marker" transform="translate(${m.x}, ${m.y})">
-        <circle class="ping" r="4" fill="var(--${m.kind})" fill-opacity="0.5"></circle>
-        <circle r="4" fill="var(--${m.kind})"></circle>
-      </g>
-    `).join("");
-  });
 }
 
 function renderEvents() {
@@ -242,22 +181,19 @@ function shareEvent(ev) {
   if (navigator.share) {
     navigator.share({ text }).catch(() => {});
   } else if (navigator.clipboard) {
-    navigator.clipboard.writeText(text).then(() => {
-      alert("Disalin ke clipboard.");
-    }).catch(() => {
-      alert(text);
-    });
+    navigator.clipboard.writeText(text).then(() => alert("Disalin ke clipboard.")).catch(() => alert(text));
   } else {
     alert(text);
   }
 }
 
+// Card "Wilayah kamu" — satu-satunya bagian yang berubah karena dropdown
 function renderArea(regionName) {
   const label = document.getElementById("regionLabel");
   if (label) label.textContent = regionName;
 
   safeRender("areaReadout", (el) => {
-    const rows = REGIONS[regionName].area;
+    const rows = REGIONS[regionName];
     el.innerHTML = rows.map(row => `
       <div class="area-row">
         <div class="area-row-label">${row.label}</div>
@@ -268,12 +204,6 @@ function renderArea(regionName) {
       </div>
     `).join("");
   });
-}
-
-function renderAll(regionName) {
-  currentRegion = regionName;
-  renderStatusStrip(regionName);
-  renderArea(regionName);
 }
 
 function setupRegionDropdown() {
@@ -289,7 +219,6 @@ function setupRegionDropdown() {
     dropdown.hidden = true;
     button.setAttribute("aria-expanded", "false");
   }
-
   function openDropdown() {
     dropdown.hidden = false;
     button.setAttribute("aria-expanded", "true");
@@ -303,8 +232,9 @@ function setupRegionDropdown() {
     const li = e.target.closest("[data-region]");
     if (!li) return;
     const name = li.dataset.region;
+    currentRegion = name;
     saveRegion(name);
-    renderAll(name);
+    renderArea(name); // HANYA area lokal — status nasional & peta tidak ikut berubah
     dropdown.querySelectorAll("li").forEach(item => {
       item.setAttribute("aria-selected", String(item.dataset.region === name));
     });
@@ -330,16 +260,69 @@ function setupStickyHeader() {
   }, { passive: true });
 }
 
+// Peta nasional — selalu Indonesia, markernya dari data gempa BMKG asli
+function initLeafletMap(quakeList) {
+  const container = document.getElementById("leafletMap");
+  if (!container || typeof L === "undefined") return;
+
+  if (!mapInstance) {
+    mapInstance = L.map(container, { scrollWheelZoom: false }).setView([-2.5, 118], 5);
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      maxZoom: 18,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    }).addTo(mapInstance);
+  }
+
+  // Bersihkan marker lama sebelum gambar ulang
+  mapInstance.eachLayer(layer => {
+    if (layer instanceof L.CircleMarker) mapInstance.removeLayer(layer);
+  });
+
+  if (!Array.isArray(quakeList) || quakeList.length === 0) {
+    const note = document.createElement("p");
+    note.className = "map-empty-note";
+    note.textContent = "Belum ada data gempa BMKG untuk ditampilkan di peta.";
+    container.parentElement.insertBefore(note, container.nextSibling);
+    return;
+  }
+
+  quakeList.slice(0, 15).forEach(item => {
+    const coords = parseQuakeCoords(item);
+    if (!coords) return;
+
+    const mag = parseFloat(item.Magnitude) || 3;
+    const radius = Math.max(5, mag * 3.2);
+
+    const marker = L.circleMarker(coords, {
+      radius,
+      color: "#DD6363",
+      weight: 1,
+      fillColor: "#DD6363",
+      fillOpacity: 0.55,
+    }).addTo(mapInstance);
+
+    marker.bindPopup(`
+      <b>Magnitudo ${item.Magnitude || "?"}</b><br>
+      ${item.Wilayah || "Lokasi tidak diketahui"}<br>
+      Kedalaman: ${item.Kedalaman || "?"}<br>
+      ${item.Jam || ""} · ${item.Tanggal || ""}<br>
+      ${item.Potensi ? item.Potensi + "<br>" : ""}
+      Sumber: BMKG
+    `);
+  });
+}
+
 document.addEventListener("DOMContentLoaded", async () => {
   currentRegion = getSavedRegion();
   if (!REGIONS[currentRegion]) currentRegion = "Jakarta Timur";
 
-  renderAll(currentRegion);
-  renderMapMarkers();
+  renderNationalStatus();
+  renderArea(currentRegion);
 
   await loadRealEarthquakes();
   updateDemoBanner();
   renderEvents();
+  initLeafletMap(lastQuakeList);
 
   setupRegionDropdown();
   setupStickyHeader();
