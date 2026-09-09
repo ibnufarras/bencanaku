@@ -59,11 +59,21 @@
     </div>
     <div class="map-frame" id="mapFrame">
       <svg viewBox="0 0 800 220" class="map-svg" id="mapSvg" aria-label="Peta skematik Indonesia dengan titik kejadian">
-        <path class="map-land" d="M15 140 L75 128 L125 138 L118 158 L55 162 Z" />
-        <path class="map-land" d="M150 118 L205 98 L235 130 L195 152 L145 148 Z" />
-        <path class="map-land" d="M280 108 Q325 78 385 90 Q405 122 365 142 Q315 150 280 108 Z" />
-        <path class="map-land" d="M415 125 L470 108 L512 122 L495 148 L440 148 Z" />
-        <path class="map-land" d="M550 118 L645 100 L715 118 L695 148 L595 148 Z" />
+        <path class="map-land" d="M35 55 L105 38 L138 88 L118 148 L68 168 L28 128 L20 85 Z" />
+        <text class="map-label" x="60" y="185">Sumatera</text>
+
+        <path class="map-land" d="M120 162 L268 155 L278 172 L132 180 Z" />
+        <text class="map-label" x="165" y="196">Jawa</text>
+
+        <path class="map-land" d="M255 55 Q330 25 400 52 Q422 98 378 128 Q305 148 262 108 Q240 82 255 55 Z" />
+        <text class="map-label" x="290" y="145">Kalimantan</text>
+
+        <path class="map-land" d="M415 65 L448 50 L462 78 L482 70 L472 100 L452 112 L438 92 L418 96 Z" />
+        <text class="map-label" x="405" y="130">Sulawesi</text>
+
+        <path class="map-land" d="M555 50 L680 40 L722 72 L702 118 L608 130 L565 92 Z" />
+        <text class="map-label" x="615" y="148">Papua</text>
+
         <g id="mapMarkers"></g>
       </svg>
       <div class="map-legend">
@@ -71,6 +81,7 @@
         <span><i class="dot dot-orange"></i>Cuaca ekstrem</span>
         <span><i class="dot dot-yellow"></i>Gunung api</span>
       </div>
+      <p class="map-caveat">Posisi titik bersifat ilustratif, bukan koordinat presisi. Untuk lokasi tepat, lihat detail tiap kejadian.</p>
     </div>
   </section>
 
@@ -79,6 +90,7 @@
     <div class="events-panel">
       <div class="section-head">
         <h2>Kejadian terbaru</h2>
+        <span class="section-note" id="quakeUpdatedNote"></span>
       </div>
       <ol class="event-list" id="eventList">
         <li class="fallback-text">Memuat kejadian terbaru…</li>
@@ -120,19 +132,6 @@
   </p>
 </noscript>
 
-<script src="script.js"></script>
-</body>
-</html>
-  <p class="footer-disclaimer">
-    Bencanaku bukan lembaga pemerintah. Untuk keputusan keselamatan, selalu rujuk informasi resmi dari instansi terkait.
-  </p>
-
-  <p class="footer-credit">Founded by Ibnu Farras</p>
-</footer>
-
-<script src="script.js"></script>
-</body>
-</html>
 <script src="script.js"></script>
 </body>
 </html>
