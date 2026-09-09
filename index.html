@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -54,34 +55,15 @@
 
   <section class="map-section">
     <div class="section-head">
-      <h2>Peta kejadian</h2>
-      <span class="section-note">Pratinjau peta</span>
+      <h2>Peta gempa terkini</h2>
+      <span class="section-note" id="mapUpdatedNote">Peta Indonesia</span>
     </div>
     <div class="map-frame" id="mapFrame">
-      <svg viewBox="0 0 800 220" class="map-svg" id="mapSvg" aria-label="Peta skematik Indonesia dengan titik kejadian">
-        <path class="map-land" d="M35 55 L105 38 L138 88 L118 148 L68 168 L28 128 L20 85 Z" />
-        <text class="map-label" x="60" y="185">Sumatera</text>
-
-        <path class="map-land" d="M120 162 L268 155 L278 172 L132 180 Z" />
-        <text class="map-label" x="165" y="196">Jawa</text>
-
-        <path class="map-land" d="M255 55 Q330 25 400 52 Q422 98 378 128 Q305 148 262 108 Q240 82 255 55 Z" />
-        <text class="map-label" x="290" y="145">Kalimantan</text>
-
-        <path class="map-land" d="M415 65 L448 50 L462 78 L482 70 L472 100 L452 112 L438 92 L418 96 Z" />
-        <text class="map-label" x="405" y="130">Sulawesi</text>
-
-        <path class="map-land" d="M555 50 L680 40 L722 72 L702 118 L608 130 L565 92 Z" />
-        <text class="map-label" x="615" y="148">Papua</text>
-
-        <g id="mapMarkers"></g>
-      </svg>
+      <div id="leafletMap" class="leaflet-map" role="img" aria-label="Peta interaktif Indonesia dengan titik gempa terkini dari BMKG"></div>
       <div class="map-legend">
-        <span><i class="dot dot-red"></i>Gempa</span>
-        <span><i class="dot dot-orange"></i>Cuaca ekstrem</span>
-        <span><i class="dot dot-yellow"></i>Gunung api</span>
+        <span><i class="dot dot-red"></i>Gempa (ukuran = magnitudo)</span>
       </div>
-      <p class="map-caveat">Posisi titik bersifat ilustratif, bukan koordinat presisi. Untuk lokasi tepat, lihat detail tiap kejadian.</p>
+      <p class="map-caveat">Sumber: BMKG. Klik titik untuk detail. Peta: OpenStreetMap / Leaflet.</p>
     </div>
   </section>
 
@@ -132,6 +114,7 @@
   </p>
 </noscript>
 
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 <script src="script.js"></script>
 </body>
 </html>
