@@ -1,5 +1,823 @@
 {
-  "fetchedAtUTC": null,
-  "note": "Menunggu WAQI_TOKEN diisi dan GitHub Actions dijalankan pertama kali."
+  "Jakarta Timur": {
+    "status": "ok",
+    "data": {
+      "aqi": 137,
+      "idx": 8294,
+      "attributions": [
+        {
+          "url": "http://www.bmkg.go.id/",
+          "name": "BMKG | Badan Meteorologi, Klimatologi dan Geofisika",
+          "logo": "Indonesia-Badan-Meteorologi-Klimatologi-dan-Geofisika.png"
+        },
+        {
+          "url": "https://waqi.info/",
+          "name": "World Air Quality Index Project"
+        }
+      ],
+      "city": {
+        "geo": [
+          -6.155,
+          106.846
+        ],
+        "name": "Kemayoran, Indonesia",
+        "url": "https://aqicn.org/city/indonesia/kemayoran",
+        "location": ""
+      },
+      "dominentpol": "pm25",
+      "iaqi": {
+        "dew": {
+          "v": 22
+        },
+        "h": {
+          "v": 52
+        },
+        "p": {
+          "v": 1008
+        },
+        "pm25": {
+          "v": 137
+        },
+        "t": {
+          "v": 33
+        },
+        "w": {
+          "v": 6.1
+        }
+      },
+      "time": {
+        "s": "2026-09-10 16:00:00",
+        "tz": "+07:00",
+        "v": 1789056000,
+        "iso": "2026-09-10T16:00:00+07:00"
+      },
+      "forecast": {
+        "daily": {
+          "pm10": [
+            {
+              "avg": 79,
+              "day": "2026-09-08",
+              "max": 97,
+              "min": 47
+            },
+            {
+              "avg": 69,
+              "day": "2026-09-09",
+              "max": 106,
+              "min": 42
+            },
+            {
+              "avg": 75,
+              "day": "2026-09-10",
+              "max": 105,
+              "min": 60
+            },
+            {
+              "avg": 96,
+              "day": "2026-09-11",
+              "max": 128,
+              "min": 75
+            },
+            {
+              "avg": 83,
+              "day": "2026-09-12",
+              "max": 89,
+              "min": 65
+            },
+            {
+              "avg": 72,
+              "day": "2026-09-13",
+              "max": 94,
+              "min": 41
+            },
+            {
+              "avg": 92,
+              "day": "2026-09-14",
+              "max": 142,
+              "min": 62
+            },
+            {
+              "avg": 104,
+              "day": "2026-09-15",
+              "max": 123,
+              "min": 75
+            }
+          ],
+          "pm25": [
+            {
+              "avg": 152,
+              "day": "2026-09-08",
+              "max": 175,
+              "min": 92
+            },
+            {
+              "avg": 125,
+              "day": "2026-09-09",
+              "max": 185,
+              "min": 81
+            },
+            {
+              "avg": 152,
+              "day": "2026-09-10",
+              "max": 165,
+              "min": 103
+            },
+            {
+              "avg": 171,
+              "day": "2026-09-11",
+              "max": 183,
+              "min": 164
+            },
+            {
+              "avg": 167,
+              "day": "2026-09-12",
+              "max": 172,
+              "min": 158
+            },
+            {
+              "avg": 142,
+              "day": "2026-09-13",
+              "max": 176,
+              "min": 99
+            },
+            {
+              "avg": 161,
+              "day": "2026-09-14",
+              "max": 191,
+              "min": 124
+            },
+            {
+              "avg": 166,
+              "day": "2026-09-15",
+              "max": 173,
+              "min": 155
+            }
+          ],
+          "uvi": [
+            {
+              "avg": 1,
+              "day": "2026-09-08",
+              "max": 6,
+              "min": 0
+            },
+            {
+              "avg": 1,
+              "day": "2026-09-09",
+              "max": 6,
+              "min": 0
+            },
+            {
+              "avg": 1,
+              "day": "2026-09-10",
+              "max": 6,
+              "min": 0
+            },
+            {
+              "avg": 2,
+              "day": "2026-09-11",
+              "max": 7,
+              "min": 0
+            },
+            {
+              "avg": 2,
+              "day": "2026-09-12",
+              "max": 8,
+              "min": 0
+            },
+            {
+              "avg": 2,
+              "day": "2026-09-13",
+              "max": 9,
+              "min": 0
+            },
+            {
+              "avg": 3,
+              "day": "2026-09-14",
+              "max": 9,
+              "min": 0
+            }
+          ]
+        }
+      },
+      "debug": {
+        "sync": "2026-09-10T18:23:25+09:00"
+      }
+    }
+  },
+  "Bandung": {
+    "status": "ok",
+    "data": {
+      "aqi": 137,
+      "idx": 8294,
+      "attributions": [
+        {
+          "url": "http://www.bmkg.go.id/",
+          "name": "BMKG | Badan Meteorologi, Klimatologi dan Geofisika",
+          "logo": "Indonesia-Badan-Meteorologi-Klimatologi-dan-Geofisika.png"
+        },
+        {
+          "url": "https://waqi.info/",
+          "name": "World Air Quality Index Project"
+        }
+      ],
+      "city": {
+        "geo": [
+          -6.155,
+          106.846
+        ],
+        "name": "Kemayoran, Indonesia",
+        "url": "https://aqicn.org/city/indonesia/kemayoran",
+        "location": ""
+      },
+      "dominentpol": "pm25",
+      "iaqi": {
+        "dew": {
+          "v": 22
+        },
+        "h": {
+          "v": 52
+        },
+        "p": {
+          "v": 1008
+        },
+        "pm25": {
+          "v": 137
+        },
+        "t": {
+          "v": 33
+        },
+        "w": {
+          "v": 6.1
+        }
+      },
+      "time": {
+        "s": "2026-09-10 16:00:00",
+        "tz": "+07:00",
+        "v": 1789056000,
+        "iso": "2026-09-10T16:00:00+07:00"
+      },
+      "forecast": {
+        "daily": {
+          "pm10": [
+            {
+              "avg": 79,
+              "day": "2026-09-08",
+              "max": 97,
+              "min": 47
+            },
+            {
+              "avg": 69,
+              "day": "2026-09-09",
+              "max": 106,
+              "min": 42
+            },
+            {
+              "avg": 75,
+              "day": "2026-09-10",
+              "max": 105,
+              "min": 60
+            },
+            {
+              "avg": 96,
+              "day": "2026-09-11",
+              "max": 128,
+              "min": 75
+            },
+            {
+              "avg": 83,
+              "day": "2026-09-12",
+              "max": 89,
+              "min": 65
+            },
+            {
+              "avg": 72,
+              "day": "2026-09-13",
+              "max": 94,
+              "min": 41
+            },
+            {
+              "avg": 92,
+              "day": "2026-09-14",
+              "max": 142,
+              "min": 62
+            },
+            {
+              "avg": 104,
+              "day": "2026-09-15",
+              "max": 123,
+              "min": 75
+            }
+          ],
+          "pm25": [
+            {
+              "avg": 152,
+              "day": "2026-09-08",
+              "max": 175,
+              "min": 92
+            },
+            {
+              "avg": 125,
+              "day": "2026-09-09",
+              "max": 185,
+              "min": 81
+            },
+            {
+              "avg": 152,
+              "day": "2026-09-10",
+              "max": 165,
+              "min": 103
+            },
+            {
+              "avg": 171,
+              "day": "2026-09-11",
+              "max": 183,
+              "min": 164
+            },
+            {
+              "avg": 167,
+              "day": "2026-09-12",
+              "max": 172,
+              "min": 158
+            },
+            {
+              "avg": 142,
+              "day": "2026-09-13",
+              "max": 176,
+              "min": 99
+            },
+            {
+              "avg": 161,
+              "day": "2026-09-14",
+              "max": 191,
+              "min": 124
+            },
+            {
+              "avg": 166,
+              "day": "2026-09-15",
+              "max": 173,
+              "min": 155
+            }
+          ],
+          "uvi": [
+            {
+              "avg": 1,
+              "day": "2026-09-08",
+              "max": 6,
+              "min": 0
+            },
+            {
+              "avg": 1,
+              "day": "2026-09-09",
+              "max": 6,
+              "min": 0
+            },
+            {
+              "avg": 1,
+              "day": "2026-09-10",
+              "max": 6,
+              "min": 0
+            },
+            {
+              "avg": 2,
+              "day": "2026-09-11",
+              "max": 7,
+              "min": 0
+            },
+            {
+              "avg": 2,
+              "day": "2026-09-12",
+              "max": 8,
+              "min": 0
+            },
+            {
+              "avg": 2,
+              "day": "2026-09-13",
+              "max": 9,
+              "min": 0
+            },
+            {
+              "avg": 3,
+              "day": "2026-09-14",
+              "max": 9,
+              "min": 0
+            }
+          ]
+        }
+      },
+      "debug": {
+        "sync": "2026-09-10T18:23:25+09:00"
+      }
+    }
+  },
+  "Surabaya": {
+    "status": "ok",
+    "data": {
+      "aqi": 109,
+      "idx": 13647,
+      "attributions": [
+        {
+          "url": "http://www.bmkg.go.id/",
+          "name": "BMKG | Badan Meteorologi, Klimatologi dan Geofisika",
+          "logo": "Indonesia-Badan-Meteorologi-Klimatologi-dan-Geofisika.png"
+        },
+        {
+          "url": "https://waqi.info/",
+          "name": "World Air Quality Index Project"
+        }
+      ],
+      "city": {
+        "geo": [
+          -7.9551897,
+          112.6119383
+        ],
+        "name": "Malang, Indonesia",
+        "url": "https://aqicn.org/city/indonesia/malang",
+        "location": ""
+      },
+      "dominentpol": "pm25",
+      "iaqi": {
+        "dew": {
+          "v": 21.6
+        },
+        "h": {
+          "v": 57.1
+        },
+        "p": {
+          "v": 1008.9
+        },
+        "pm25": {
+          "v": 109
+        },
+        "t": {
+          "v": 31.1
+        },
+        "w": {
+          "v": 3
+        }
+      },
+      "time": {
+        "s": "2026-09-10 16:00:00",
+        "tz": "+07:00",
+        "v": 1789056000,
+        "iso": "2026-09-10T16:00:00+07:00"
+      },
+      "forecast": {
+        "daily": {
+          "pm10": [
+            {
+              "avg": 18,
+              "day": "2026-09-08",
+              "max": 25,
+              "min": 13
+            },
+            {
+              "avg": 15,
+              "day": "2026-09-09",
+              "max": 25,
+              "min": 10
+            },
+            {
+              "avg": 26,
+              "day": "2026-09-10",
+              "max": 35,
+              "min": 22
+            },
+            {
+              "avg": 35,
+              "day": "2026-09-11",
+              "max": 56,
+              "min": 28
+            },
+            {
+              "avg": 39,
+              "day": "2026-09-12",
+              "max": 50,
+              "min": 25
+            },
+            {
+              "avg": 54,
+              "day": "2026-09-13",
+              "max": 72,
+              "min": 35
+            },
+            {
+              "avg": 31,
+              "day": "2026-09-14",
+              "max": 41,
+              "min": 27
+            },
+            {
+              "avg": 27,
+              "day": "2026-09-15",
+              "max": 32,
+              "min": 15
+            }
+          ],
+          "pm25": [
+            {
+              "avg": 45,
+              "day": "2026-09-08",
+              "max": 55,
+              "min": 35
+            },
+            {
+              "avg": 36,
+              "day": "2026-09-09",
+              "max": 54,
+              "min": 24
+            },
+            {
+              "avg": 61,
+              "day": "2026-09-10",
+              "max": 79,
+              "min": 55
+            },
+            {
+              "avg": 80,
+              "day": "2026-09-11",
+              "max": 151,
+              "min": 63
+            },
+            {
+              "avg": 89,
+              "day": "2026-09-12",
+              "max": 109,
+              "min": 69
+            },
+            {
+              "avg": 123,
+              "day": "2026-09-13",
+              "max": 159,
+              "min": 79
+            },
+            {
+              "avg": 72,
+              "day": "2026-09-14",
+              "max": 99,
+              "min": 62
+            },
+            {
+              "avg": 64,
+              "day": "2026-09-15",
+              "max": 70,
+              "min": 45
+            }
+          ],
+          "uvi": [
+            {
+              "avg": 2,
+              "day": "2026-09-08",
+              "max": 7,
+              "min": 0
+            },
+            {
+              "avg": 2,
+              "day": "2026-09-09",
+              "max": 7,
+              "min": 0
+            },
+            {
+              "avg": 2,
+              "day": "2026-09-10",
+              "max": 7,
+              "min": 0
+            },
+            {
+              "avg": 3,
+              "day": "2026-09-11",
+              "max": 10,
+              "min": 0
+            },
+            {
+              "avg": 3,
+              "day": "2026-09-12",
+              "max": 10,
+              "min": 0
+            },
+            {
+              "avg": 3,
+              "day": "2026-09-13",
+              "max": 11,
+              "min": 0
+            },
+            {
+              "avg": 4,
+              "day": "2026-09-14",
+              "max": 12,
+              "min": 0
+            }
+          ]
+        }
+      },
+      "debug": {
+        "sync": "2026-09-10T18:23:26+09:00"
+      }
+    }
+  },
+  "Yogyakarta": {
+    "status": "ok",
+    "data": {
+      "aqi": 134,
+      "idx": 13653,
+      "attributions": [
+        {
+          "url": "http://www.bmkg.go.id/",
+          "name": "BMKG | Badan Meteorologi, Klimatologi dan Geofisika",
+          "logo": "Indonesia-Badan-Meteorologi-Klimatologi-dan-Geofisika.png"
+        },
+        {
+          "url": "https://waqi.info/",
+          "name": "World Air Quality Index Project"
+        }
+      ],
+      "city": {
+        "geo": [
+          -7.731,
+          110.354
+        ],
+        "name": "Sleman, Indonesia",
+        "url": "https://aqicn.org/city/indonesia/sleman",
+        "location": ""
+      },
+      "dominentpol": "pm25",
+      "iaqi": {
+        "dew": {
+          "v": 23.5
+        },
+        "h": {
+          "v": 65.9
+        },
+        "p": {
+          "v": 1008.5
+        },
+        "pm25": {
+          "v": 134
+        },
+        "t": {
+          "v": 30.6
+        },
+        "w": {
+          "v": 4.1
+        }
+      },
+      "time": {
+        "s": "2026-09-10 16:00:00",
+        "tz": "+07:00",
+        "v": 1789056000,
+        "iso": "2026-09-10T16:00:00+07:00"
+      },
+      "forecast": {
+        "daily": {
+          "pm10": [
+            {
+              "avg": 25,
+              "day": "2026-09-08",
+              "max": 31,
+              "min": 13
+            },
+            {
+              "avg": 21,
+              "day": "2026-09-09",
+              "max": 31,
+              "min": 13
+            },
+            {
+              "avg": 26,
+              "day": "2026-09-10",
+              "max": 36,
+              "min": 12
+            },
+            {
+              "avg": 39,
+              "day": "2026-09-11",
+              "max": 67,
+              "min": 20
+            },
+            {
+              "avg": 41,
+              "day": "2026-09-12",
+              "max": 61,
+              "min": 24
+            },
+            {
+              "avg": 46,
+              "day": "2026-09-13",
+              "max": 64,
+              "min": 24
+            },
+            {
+              "avg": 44,
+              "day": "2026-09-14",
+              "max": 69,
+              "min": 19
+            },
+            {
+              "avg": 52,
+              "day": "2026-09-15",
+              "max": 55,
+              "min": 43
+            }
+          ],
+          "pm25": [
+            {
+              "avg": 52,
+              "day": "2026-09-08",
+              "max": 60,
+              "min": 30
+            },
+            {
+              "avg": 47,
+              "day": "2026-09-09",
+              "max": 58,
+              "min": 31
+            },
+            {
+              "avg": 55,
+              "day": "2026-09-10",
+              "max": 65,
+              "min": 31
+            },
+            {
+              "avg": 84,
+              "day": "2026-09-11",
+              "max": 152,
+              "min": 46
+            },
+            {
+              "avg": 87,
+              "day": "2026-09-12",
+              "max": 142,
+              "min": 59
+            },
+            {
+              "avg": 101,
+              "day": "2026-09-13",
+              "max": 152,
+              "min": 60
+            },
+            {
+              "avg": 91,
+              "day": "2026-09-14",
+              "max": 155,
+              "min": 54
+            },
+            {
+              "avg": 100,
+              "day": "2026-09-15",
+              "max": 112,
+              "min": 80
+            }
+          ],
+          "uvi": [
+            {
+              "avg": 1,
+              "day": "2026-09-08",
+              "max": 7,
+              "min": 0
+            },
+            {
+              "avg": 1,
+              "day": "2026-09-09",
+              "max": 7,
+              "min": 0
+            },
+            {
+              "avg": 1,
+              "day": "2026-09-10",
+              "max": 6,
+              "min": 0
+            },
+            {
+              "avg": 2,
+              "day": "2026-09-11",
+              "max": 7,
+              "min": 0
+            },
+            {
+              "avg": 2,
+              "day": "2026-09-12",
+              "max": 9,
+              "min": 0
+            },
+            {
+              "avg": 2,
+              "day": "2026-09-13",
+              "max": 10,
+              "min": 0
+            },
+            {
+              "avg": 4,
+              "day": "2026-09-14",
+              "max": 12,
+              "min": 0
+            }
+          ]
+        }
+      },
+      "debug": {
+        "sync": "2026-09-10T18:23:25+09:00"
+      }
+    }
+  },
+  "fetchedAtUTC": "2026-09-10T09:24:50Z"
 }
-
