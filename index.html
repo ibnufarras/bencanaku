@@ -8,13 +8,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div class="demo-banner">
-  <strong>Mode pratinjau.</strong> Data saat ini masih contoh, belum tersambung langsung ke sumber resmi.
+  <strong>Mode pratinjau.</strong> Data gempa diperbarui otomatis dari BMKG Open Data.
 </div>
 
 <header class="site-header">
@@ -22,13 +22,6 @@
     <div class="brand">
       <span class="brand-mark">Bencanaku</span>
       <span class="brand-sub">Platform informasi kebencanaan</span>
-    </div>
-    <div class="region-wrap">
-      <button class="region-select" id="regionSelect" aria-haspopup="listbox" aria-expanded="false">
-        <span id="regionLabel">Jakarta Timur</span>
-        <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-      </button>
-      <ul class="region-dropdown" id="regionDropdown" role="listbox" hidden></ul>
     </div>
   </div>
   <nav class="site-nav">
@@ -46,24 +39,22 @@
   <section class="hero">
     <h1>Indonesia, sekarang</h1>
     <p class="hero-lead">Ringkasan situasi kebencanaan berdasarkan sumber resmi.</p>
-
-    <div class="status-grid" id="statusStrip">
-      <p class="fallback-text">Memuat status…</p>
-    </div>
+    <p class="status-summary" id="statusSummary">Memuat ringkasan status…</p>
     <p class="last-updated" id="lastUpdated"></p>
   </section>
 
   <section class="map-section">
     <div class="section-head">
-      <h2>Peta gempa terkini</h2>
-      <span class="section-note" id="mapUpdatedNote">Peta Indonesia</span>
+      <h2>Peta kejadian terkini</h2>
+      <span class="section-note" id="mapUpdatedNote">Saat ini: gempa (BMKG)</span>
     </div>
     <div class="map-frame" id="mapFrame">
       <div id="leafletMap" class="leaflet-map" role="img" aria-label="Peta interaktif Indonesia dengan titik gempa terkini dari BMKG"></div>
+      <p id="mapFallbackNote" class="map-empty-note" hidden>Peta tidak bisa dimuat. Cek koneksi internet lalu muat ulang halaman.</p>
       <div class="map-legend">
         <span><i class="dot dot-red"></i>Gempa (ukuran = magnitudo)</span>
       </div>
-      <p class="map-caveat">Sumber: BMKG. Klik titik untuk detail. Peta: OpenStreetMap / Leaflet.</p>
+      <p class="map-caveat">Sumber lain (cuaca ekstrem, gunung api, tsunami) akan tampil di peta ini setelah datanya live. Klik titik untuk detail. Peta: OpenStreetMap / Leaflet.</p>
     </div>
   </section>
 
@@ -82,6 +73,13 @@
     <div class="area-panel">
       <div class="section-head">
         <h2>Wilayah kamu</h2>
+      </div>
+      <div class="area-location">
+        <span class="area-pin">📍 <span id="regionLabel">Jakarta Timur</span></span>
+        <div class="region-wrap">
+          <button class="region-change-btn" id="regionSelect" aria-haspopup="listbox" aria-expanded="false">Ganti wilayah</button>
+          <ul class="region-dropdown" id="regionDropdown" role="listbox" hidden></ul>
+        </div>
       </div>
       <div class="area-readout" id="areaReadout">
         <p class="fallback-text">Memuat data wilayah…</p>
@@ -114,7 +112,7 @@
   </p>
 </noscript>
 
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="script.js"></script>
 </body>
 </html>
