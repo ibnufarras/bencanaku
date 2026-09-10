@@ -1,0 +1,67 @@
+name: Update AQI data (WAQI)
+
+on:
+  schedule:
+    - cron: "10 * * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  update-aqi:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Ambil data AQI per wilayah (WAQI)
+        env:
+          WAQI_TOKEN: ${{ secrets.WAQI_TOKEN }}
+        run: |
+          if [ -z "$WAQI_TOKEN" ]; then
+            echo "::warning::WAQI_TOKEN belum diisi di Settings > Secrets and variables > Actions. Lewati update AQI untuk sekarang."
+            exit 0
+          fi
+
+          mkdir -p data
+
+          declare -A CITIES=(
+            ["Jakarta Timur"]="-6.2250,106.9004"
+            ["Bandung"]="-6.9175,107.6191"
+            ["Surabaya"]="-7.2575,112.7521"
+            ["Yogyakarta"]="-7.7956,110.3695"
+          )
+
+          echo "{}" > data/aqi.json
+
+          for name in "${!CITIES[@]}"; do
+            coords="${CITIES[$name]}"
+            lat="${coords%,*}"
+            lon="${coords#*,}"
+
+            resp=$(curl -sSL "https://api.waqi.info/feed/geo:${lat};${lon}/?token=${WAQI_TOKEN}")
+            status=$(echo "$resp" | jq -r '.status // "error"')
+
+            if [ "$status" = "ok" ]; then
+              tmp=$(mktemp)
+              jq --arg key "$name" --argjson val "$resp" '. + {($key): $val}' data/aqi.json > "$tmp"
+              mv "$tmp" data/aqi.json
+            else
+              echo "::warning::Gagal ambil AQI untuk $name (status: $status)"
+            fi
+          done
+
+          tmp=$(mktemp)
+          jq --arg t "$(date -u +%Y-%m-%dT%H:%M:%SZ)" '. + {fetchedAtUTC: $t}' data/aqi.json > "$tmp"
+          mv "$tmp" data/aqi.json
+
+      - name: Commit jika ada perubahan
+        run: |
+          git config user.name "bencanaku-bot"
+          git config user.email "actions@github.com"
+          if [ -f data/aqi.json ]; then
+            git add data/aqi.json
+            git diff --cached --quiet || git commit -m "chore: update data AQI (WAQI)"
+            git push
+          fi
