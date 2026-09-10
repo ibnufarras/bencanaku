@@ -229,13 +229,55 @@ function shareEvent(ev) {
   }
 }
 
+let realAqiData = null;
+
+async function loadRealAqi() {
+  try {
+    const res = await fetch("data/aqi.json", { cache: "no-store" });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    if (!data.fetchedAtUTC) throw new Error("AQI belum tersedia (token belum diisi / Action belum jalan).");
+    realAqiData = data;
+  } catch (err) {
+    console.warn("Bencanaku: AQI masih contoh —", err.message);
+    realAqiData = null;
+  }
+}
+
+function aqiToneFromValue(aqi) {
+  if (aqi <= 50) return "green";
+  if (aqi <= 100) return "yellow";
+  if (aqi <= 150) return "orange";
+  return "red";
+}
+
+function aqiLabelFromValue(aqi) {
+  if (aqi <= 50) return "Baik";
+  if (aqi <= 100) return "Sedang";
+  if (aqi <= 150) return "Tidak sehat bagi kelompok sensitif";
+  return "Tidak sehat";
+}
+
 // Card "Wilayah kamu" — satu-satunya bagian yang berubah karena dropdown
 function renderArea(regionName) {
   const label = document.getElementById("regionLabel");
   if (label) label.textContent = regionName;
 
   safeRender("areaReadout", (el) => {
-    const rows = REGIONS[regionName];
+    const rows = REGIONS[regionName].map(row => ({ ...row }));
+
+    // Kalau AQI asli tersedia untuk wilayah ini, timpa baris mock-nya
+    const realEntry = realAqiData && realAqiData[regionName];
+    if (realEntry && realEntry.data && typeof realEntry.data.aqi !== "undefined") {
+      const aqiRow = rows.find(r => r.label === "Kualitas udara");
+      if (aqiRow) {
+        const aqiVal = realEntry.data.aqi;
+        aqiRow.value = `${aqiVal} — ${aqiLabelFromValue(aqiVal)}`;
+        aqiRow.tone = aqiToneFromValue(aqiVal);
+        aqiRow.source = "WAQI (live)";
+      }
+    }
+
     el.innerHTML = rows.map(row => `
       <div class="area-row">
         <div class="area-row-label">${row.label}</div>
@@ -315,7 +357,14 @@ function initLeafletMap(quakeList) {
   }
 
   if (!mapInstance) {
-    mapInstance = L.map(container, { scrollWheelZoom: false }).setView([-2.5, 118], 5);
+    const indonesiaBounds = L.latLngBounds([-11.5, 92], [7, 145]);
+    mapInstance = L.map(container, {
+      scrollWheelZoom: false,
+      minZoom: 4,
+      maxBounds: indonesiaBounds.pad(0.25),
+      maxBoundsViscosity: 0.8,
+    }).fitBounds(indonesiaBounds);
+
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       maxZoom: 18,
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
@@ -340,7 +389,9 @@ function initLeafletMap(quakeList) {
     if (!coords) return;
 
     const mag = parseFloat(item.Magnitude) || 3;
-    const radius = Math.max(5, mag * 3.2);
+    // Radius kecil & proporsional. Ini titik lokasi, bukan area dampak —
+    // jadi sengaja dikecilkan supaya tidak terlihat seperti area luas kena.
+    const radius = Math.min(12, Math.max(4, mag * 1.6));
 
     const marker = L.circleMarker(coords, {
       radius,
@@ -367,6 +418,13 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   try { renderNationalStatus(); } catch (e) { console.error("renderNationalStatus gagal", e); }
   try { renderArea(currentRegion); } catch (e) { console.error("renderArea gagal", e); }
+
+  try {
+    await loadRealAqi();
+    renderArea(currentRegion); // render ulang kalau AQI asli berhasil masuk
+  } catch (e) {
+    console.error("loadRealAqi gagal", e);
+  }
 
   try {
     await loadRealEarthquakes();
