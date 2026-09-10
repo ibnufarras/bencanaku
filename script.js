@@ -12,12 +12,12 @@
 */
 
 // Status nasional — masih contoh, belum live (menyusul setelah gempa stabil)
-const NATIONAL_STATUS = [
-  { level: "red",    count: 2, label: "Peringatan aktif (contoh)" },
-  { level: "green",  count: 0, label: "Peringatan tsunami (contoh)" },
-  { level: "orange", count: 8, label: "Peringatan cuaca (contoh)" },
-  { level: "yellow", count: 1, label: "Update gunung api (contoh)" },
-];
+const NATIONAL_STATUS_SUMMARY = {
+  activeAlerts: 2,
+  tsunamiWarning: false,
+  weatherAlerts: 8,
+  volcanoUpdates: 1,
+};
 
 const MOCK_UPDATED_AT = "06:42 WIB";
 
@@ -50,6 +50,30 @@ const REGIONS = {
   ],
 };
 
+// Dipakai kalau data BMKG belum berhasil diambil (fallback, ditandai jelas)
+const FALLBACK_EVENTS = [
+  { severity: "red", title: "Gempa M5.2", location: "Maluku", detail: "Kedalaman 10 km", time: "10 menit lalu", timeActual: "06:32 WIB", source: "BMKG (contoh)" },
+  { severity: "red", title: "Gempa M4.1", location: "Selat Sunda", detail: "Kedalaman 24 km", time: "3 jam lalu", timeActual: "03:15 WIB", source: "BMKG (contoh)" },
+];
+
+let ACTIVE_EVENTS = FALLBACK_EVENTS;
+let usingRealQuakeData = false;
+let currentRegion = "Jakarta Timur";
+let mapInstance = null;
+
+function formatRelativeTime(isoString) {
+  try {
+    const then = new Date(isoString).getTime();
+    const diffMin = Math.round((Date.now() - then) / 60000);
+    if (diffMin < 1) return "baru saja";
+    if (diffMin < 60) return `${diffMin} menit lalu`;
+    const diffHour = Math.round(diffMin / 60);
+    if (diffHour < 24) return `${diffHour} jam lalu`;
+    const diffDay = Math.round(diffHour / 24);
+    return `${diffDay} hari lalu`;
+  } catch (err) {
+    return "";
+  }
 }
 
 // Ambil arah + nilai dari string BMKG seperti "6.2 LS" atau "106.8 BT"
@@ -103,6 +127,30 @@ async function loadRealEarthquakes() {
     }));
 
     ACTIVE_EVENTS = realQuakes;
+    usingRealQuakeData = true;
+
+    const fetchedNote = data.fetchedAtUTC
+      ? new Date(data.fetchedAtUTC).toLocaleTimeString("id-ID", { hour: "2-digit", minute: "2-digit", timeZone: "Asia/Jakarta" }) + " WIB"
+      : null;
+
+    const quakeNote = document.getElementById("quakeUpdatedNote");
+    if (quakeNote && fetchedNote) quakeNote.textContent = `Data diambil ${fetchedNote}`;
+
+    const mapNote = document.getElementById("mapUpdatedNote");
+    if (mapNote && fetchedNote) mapNote.textContent = `Diperbarui ${fetchedNote}`;
+
+  } catch (err) {
+    console.warn("Bencanaku: pakai data contoh, BMKG belum tersedia —", err.message);
+    ACTIVE_EVENTS = FALLBACK_EVENTS;
+    lastQuakeList = [];
+    usingRealQuakeData = false;
+  }
+}
+
+function updateDemoBanner() {
+  const banner = document.querySelector(".demo-banner");
+  if (!banner) return;
+  if (usingRealQuakeData) {
     banner.innerHTML = `<strong>Sebagian data live.</strong> Data gempa langsung dari BMKG, diperbarui otomatis tiap jam. Cuaca, gunung api, dan risiko wilayah masih data contoh.`;
   } else {
     banner.innerHTML = `<strong>Mode pratinjau.</strong> Data gempa BMKG belum tersedia saat ini (menunggu pembaruan). Data lain masih contoh.`;
@@ -138,16 +186,10 @@ function safeRender(id, fn) {
 
 // Status nasional — dipanggil SEKALI saat load, tidak tergantung dropdown
 function renderNationalStatus() {
-  safeRender("statusStrip", (el) => {
-    el.innerHTML = NATIONAL_STATUS.map(item => `
-      <div class="status-item">
-        <span class="status-dot dot-${item.level}"></span>
-        <div>
-          <div class="status-count">${item.count}</div>
-          <div class="status-label">${item.label}</div>
-        </div>
-      </div>
-    `).join("");
+  safeRender("statusSummary", (el) => {
+    const s = NATIONAL_STATUS_SUMMARY;
+    const tsunamiText = s.tsunamiWarning ? "ada peringatan tsunami aktif" : "tidak ada peringatan tsunami";
+    el.textContent = `Saat ini tercatat ${s.activeAlerts} peringatan aktif (contoh), ${tsunamiText}, ${s.weatherAlerts} peringatan cuaca, dan ${s.volcanoUpdates} update gunung api. Data cuaca & gunung api masih contoh.`;
   });
 
   const lu = document.getElementById("lastUpdated");
@@ -263,7 +305,14 @@ function setupStickyHeader() {
 // Peta nasional — selalu Indonesia, markernya dari data gempa BMKG asli
 function initLeafletMap(quakeList) {
   const container = document.getElementById("leafletMap");
-  if (!container || typeof L === "undefined") return;
+  const fallbackNote = document.getElementById("mapFallbackNote");
+  if (!container) return;
+
+  if (typeof L === "undefined") {
+    console.error("Bencanaku: library Leaflet gagal dimuat (cek koneksi/CDN).");
+    if (fallbackNote) fallbackNote.hidden = false;
+    return;
+  }
 
   if (!mapInstance) {
     mapInstance = L.map(container, { scrollWheelZoom: false }).setView([-2.5, 118], 5);
@@ -316,14 +365,18 @@ document.addEventListener("DOMContentLoaded", async () => {
   currentRegion = getSavedRegion();
   if (!REGIONS[currentRegion]) currentRegion = "Jakarta Timur";
 
-  renderNationalStatus();
-  renderArea(currentRegion);
+  try { renderNationalStatus(); } catch (e) { console.error("renderNationalStatus gagal", e); }
+  try { renderArea(currentRegion); } catch (e) { console.error("renderArea gagal", e); }
 
-  await loadRealEarthquakes();
-  updateDemoBanner();
-  renderEvents();
-  initLeafletMap(lastQuakeList);
+  try {
+    await loadRealEarthquakes();
+  } catch (e) {
+    console.error("loadRealEarthquakes gagal", e);
+  }
 
-  setupRegionDropdown();
-  setupStickyHeader();
+  try { updateDemoBanner(); } catch (e) { console.error("updateDemoBanner gagal", e); }
+  try { renderEvents(); } catch (e) { console.error("renderEvents gagal", e); }
+  try { initLeafletMap(lastQuakeList); } catch (e) { console.error("initLeafletMap gagal", e); }
+  try { setupRegionDropdown(); } catch (e) { console.error("setupRegionDropdown gagal", e); }
+  try { setupStickyHeader(); } catch (e) { console.error("setupStickyHeader gagal", e); }
 });
