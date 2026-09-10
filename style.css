@@ -249,11 +249,49 @@ main {
 .dot-orange { background: var(--orange); }
 .dot-red { background: var(--red); }
 
+.status-summary {
+  font-size: 0.95rem;
+  color: var(--text-dim);
+  line-height: 1.6;
+  margin: 0 0 4px;
+  padding: 14px 16px;
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
 .last-updated {
   font-size: 0.75rem;
   color: var(--text-faint);
-  margin: 12px 2px 0;
+  margin: 10px 2px 0;
 }
+
+.area-location {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 2px 0 14px;
+  flex-wrap: wrap;
+}
+
+.area-pin {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.region-change-btn {
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  font-size: 0.8rem;
+  font-family: var(--font-body);
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0;
+}
+
+.region-change-btn:hover { color: var(--text); }
 
 /* Section heads */
 .section-head {
