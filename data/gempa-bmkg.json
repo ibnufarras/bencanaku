@@ -2,6 +2,18 @@
   "Infogempa": {
     "gempa": [
       {
+        "Tanggal": "12 Sep 2026",
+        "Jam": "04:23:56 WIB",
+        "DateTime": "2026-09-11T21:23:56+00:00",
+        "Coordinates": "-5.81,106.56",
+        "Lintang": "5.81 LS",
+        "Bujur": "106.56 BT",
+        "Magnitude": "5.9",
+        "Kedalaman": "376 km",
+        "Wilayah": "6 km Tenggara KEPSERIBU-DKI",
+        "Potensi": "Tidak berpotensi tsunami"
+      },
+      {
         "Tanggal": "11 Sep 2026",
         "Jam": "18:56:24 WIB",
         "DateTime": "2026-09-11T11:56:24+00:00",
@@ -168,20 +180,8 @@
         "Kedalaman": "10 km",
         "Wilayah": "38 km TimurLaut RUTENG-MANGGARAI-NTT",
         "Potensi": "Tidak berpotensi tsunami"
-      },
-      {
-        "Tanggal": "23 Agu 2026",
-        "Jam": "02:54:08 WIB",
-        "DateTime": "2026-08-22T19:54:08+00:00",
-        "Coordinates": "-0.30,123.06",
-        "Lintang": "0.30 LS",
-        "Bujur": "123.06 BT",
-        "Magnitude": "5.4",
-        "Kedalaman": "86 km",
-        "Wilayah": "57 km TimurLaut PULAUPUAH-SULTENG",
-        "Potensi": "Tidak berpotensi tsunami"
       }
     ]
   },
-  "fetchedAtUTC": "2026-09-11T20:41:29Z"
+  "fetchedAtUTC": "2026-09-11T23:04:01Z"
 }
