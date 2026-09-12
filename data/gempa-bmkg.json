@@ -3,6 +3,18 @@
     "gempa": [
       {
         "Tanggal": "12 Sep 2026",
+        "Jam": "13:14:33 WIB",
+        "DateTime": "2026-09-12T06:14:33+00:00",
+        "Coordinates": "-6.03,130.66",
+        "Lintang": "6.03 LS",
+        "Bujur": "130.66 BT",
+        "Magnitude": "5.1",
+        "Kedalaman": "124 km",
+        "Wilayah": "227 km BaratLaut TANIMBAR",
+        "Potensi": "Tidak berpotensi tsunami"
+      },
+      {
+        "Tanggal": "12 Sep 2026",
         "Jam": "04:23:56 WIB",
         "DateTime": "2026-09-11T21:23:56+00:00",
         "Coordinates": "-5.81,106.56",
@@ -168,20 +180,8 @@
         "Kedalaman": "10 km",
         "Wilayah": "206 km Tenggara MALUKUTENGAH",
         "Potensi": "Tidak berpotensi tsunami"
-      },
-      {
-        "Tanggal": "24 Agu 2026",
-        "Jam": "04:20:18 WIB",
-        "DateTime": "2026-08-23T21:20:18+00:00",
-        "Coordinates": "-8.30,120.62",
-        "Lintang": "8.30 LS",
-        "Bujur": "120.62 BT",
-        "Magnitude": "5.2",
-        "Kedalaman": "10 km",
-        "Wilayah": "38 km TimurLaut RUTENG-MANGGARAI-NTT",
-        "Potensi": "Tidak berpotensi tsunami"
       }
     ]
   },
-  "fetchedAtUTC": "2026-09-12T05:36:53Z"
+  "fetchedAtUTC": "2026-09-12T10:20:14Z"
 }
