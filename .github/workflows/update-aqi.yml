@@ -56,8 +56,10 @@ jobs:
           jq --arg t "$(date -u +%Y-%m-%dT%H:%M:%SZ)" '. + {fetchedAtUTC: $t}' data/aqi.json > "$tmp"
           mv "$tmp" data/aqi.json
 
-      - name: Fetch AQI all stations (Indonesia)
+      - name: Commit and push data
         run: |
-          curl -s "https://api.waqi.info/map/bounds/?latlng=-11,92,7,141&token=${{ secrets.WAQI_TOKEN }}" \
-            | jq '[.data[] | select(.aqi != "-" and .aqi != null) | {name: .station.name, lat: .lat, lon: .lon, aqi: (.aqi | tonumber? // 0)}] | map(select(.aqi > 0))' \
-            > data/aqi-stations.json
+          git config user.name "actions-user"
+          git config user.email "actions@github.com"
+          git add data/aqi.json data/aqi-stations.json
+          git diff --staged --quiet || git commit -m "chore: update data AQI (WAQI)"
+          git push
