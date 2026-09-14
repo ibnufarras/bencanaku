@@ -2,6 +2,18 @@
   "Infogempa": {
     "gempa": [
       {
+        "Tanggal": "14 Sep 2026",
+        "Jam": "08:42:08 WIB",
+        "DateTime": "2026-09-14T01:42:08+00:00",
+        "Coordinates": "-9.52,112.85",
+        "Lintang": "9.52 LS",
+        "Bujur": "112.85 BT",
+        "Magnitude": "5.2",
+        "Kedalaman": "10 km",
+        "Wilayah": "156 km Tenggara KAB-MALANG-JATIM",
+        "Potensi": "Tidak berpotensi tsunami"
+      },
+      {
         "Tanggal": "12 Sep 2026",
         "Jam": "13:14:33 WIB",
         "DateTime": "2026-09-12T06:14:33+00:00",
@@ -168,20 +180,8 @@
         "Kedalaman": "10 km",
         "Wilayah": "168 km BaratLaut MALUKUBRTDAYA",
         "Potensi": "Tidak berpotensi tsunami"
-      },
-      {
-        "Tanggal": "24 Agu 2026",
-        "Jam": "17:03:00 WIB",
-        "DateTime": "2026-08-24T10:03:00+00:00",
-        "Coordinates": "-5.01,129.68",
-        "Lintang": "5.01 LS",
-        "Bujur": "129.68 BT",
-        "Magnitude": "5.6",
-        "Kedalaman": "10 km",
-        "Wilayah": "206 km Tenggara MALUKUTENGAH",
-        "Potensi": "Tidak berpotensi tsunami"
       }
     ]
   },
-  "fetchedAtUTC": "2026-09-14T00:49:46Z"
+  "fetchedAtUTC": "2026-09-14T05:55:42Z"
 }
