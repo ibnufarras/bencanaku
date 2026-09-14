@@ -12,11 +12,11 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
+ 
 <div class="demo-banner">
-  <strong>Mode pratinjau.</strong> Data saat ini masih contoh, belum tersambung langsung ke sumber resmi.
+  <strong>Memuat data.</strong> Mengambil data gempa terbaru dari BMKG…
 </div>
-
+ 
 <header class="site-header">
   <div class="header-row">
     <div class="brand">
@@ -27,22 +27,20 @@
   <nav class="site-nav">
     <a href="gempa.html">Gempa</a>
     <a href="cuaca.html">Cuaca</a>
-    <a href="gunung-api.html">Gunung api</a>
-    <a href="risiko.html">Risiko</a>
     <a href="udara.html">Udara</a>
     <a href="tentang.html">Tentang</a>
   </nav>
 </header>
-
+ 
 <main>
-
+ 
   <section class="hero">
     <h1>Indonesia, sekarang</h1>
     <p class="hero-lead">Ringkasan situasi kebencanaan berdasarkan sumber resmi.</p>
     <p class="status-summary" id="statusSummary">Memuat ringkasan status…</p>
     <p class="last-updated" id="lastUpdated"></p>
   </section>
-
+ 
   <section class="map-section">
     <div class="section-head">
       <h2>Peta kejadian terkini</h2>
@@ -54,12 +52,12 @@
       <div class="map-legend">
         <span><i class="dot dot-red"></i>Gempa (ukuran = magnitudo)</span>
       </div>
-      <p class="map-caveat">Titik menandai lokasi, ukurannya sekadar mewakili besar magnitudo — bukan area terdampak. Sumber lain (cuaca ekstrem, gunung api, tsunami) akan tampil di peta ini setelah datanya live. Klik titik untuk detail. Peta: OpenStreetMap / Leaflet.</p>
+      <p class="map-caveat">Titik menandai lokasi, ukurannya sekadar mewakili besar magnitudo — bukan area terdampak. Sumber lain (cuaca ekstrem, tsunami) akan tampil di peta ini setelah datanya live. Klik titik untuk detail. Peta: OpenStreetMap / Leaflet.</p>
     </div>
   </section>
-
+ 
   <section class="lower-grid">
-
+ 
     <div class="events-panel">
       <div class="section-head">
         <h2>Kejadian terbaru</h2>
@@ -69,7 +67,7 @@
         <li class="fallback-text">Memuat kejadian terbaru…</li>
       </ol>
     </div>
-
+ 
     <div class="area-panel">
       <div class="section-head">
         <h2>Wilayah kamu</h2>
@@ -85,34 +83,35 @@
         <p class="fallback-text">Memuat data wilayah…</p>
       </div>
     </div>
-
+ 
   </section>
-
+ 
 </main>
-
+ 
 <footer class="site-footer">
   <div class="footer-brand">Bencanaku</div>
   <p class="footer-desc">Platform informasi kebencanaan independen.</p>
-
+ 
   <p class="footer-sources">
     <span class="footer-label">Sumber data</span><br>
-    BMKG · BNPB/InaRISK · PVMBG
+    BMKG · BNPB/InaRISK · WAQI
   </p>
-
+ 
   <p class="footer-disclaimer">
     Bencanaku bukan lembaga pemerintah. Untuk keputusan keselamatan, selalu rujuk informasi resmi dari instansi terkait.
   </p>
-
+ 
   <p class="footer-credit">Founded by Ibnu Farras</p>
 </footer>
-
+ 
 <noscript>
   <p style="text-align:center; padding:16px; color:#DD6363; font-size:0.85rem;">
     Bencanaku butuh JavaScript aktif untuk menampilkan data. Aktifkan JavaScript di browser kamu.
   </p>
 </noscript>
-
+ 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="script.js"></script>
 </body>
 </html>
+ 
