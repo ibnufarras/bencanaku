@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tentang — Bencanaku</title>
+<meta name="description" content="Bencanaku mengumpulkan data kebencanaan dari sumber resmi Indonesia dan menyajikannya dalam bahasa yang sederhana. Kenali cara kerja dan sumber datanya.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+ 
+<header class="site-header">
+  <div class="header-row">
+    <div class="brand">
+      <a href="index.html" class="brand-link">
+        <span class="brand-mark">Bencanaku</span>
+        <span class="brand-sub">Platform informasi kebencanaan</span>
+      </a>
+    </div>
+  </div>
+  <nav class="site-nav">
+    <a href="gempa.html">Gempa</a>
+    <a href="cuaca.html">Cuaca</a>
+    <a href="gunung-api.html">Gunung api</a>
+    <a href="risiko.html">Risiko</a>
+    <a href="udara.html">Udara</a>
+    <a href="tentang.html" style="color:var(--text); font-weight:600;">Tentang</a>
+  </nav>
+</header>
+ 
+<main>
+ 
+  <section class="hero">
+    <h1>Tentang Bencanaku</h1>
+    <p class="hero-lead">Kenapa Bencanaku dibuat, dan bagaimana cara kerjanya.</p>
+  </section>
+ 
+  <section class="lower-grid" style="grid-template-columns: 1fr; gap: 32px;">
+ 
+    <div>
+      <div class="section-head" style="margin-top: 0;">
+        <h2>Masalah yang ingin diselesaikan</h2>
+      </div>
+      <p style="color: var(--text-dim); line-height: 1.7; max-width: 65ch;">
+        Informasi kebencanaan di Indonesia tersebar di banyak sumber — gempa di satu situs, cuaca di situs lain, kualitas udara di aplikasi lain lagi. Masyarakat harus mengecek banyak tempat hanya untuk tahu apa yang sedang terjadi. Bencanaku menyatukan data-data resmi tersebut dalam satu tempat, dengan bahasa yang lebih sederhana dan mudah dipahami.
+      </p>
+    </div>
+ 
+    <div>
+      <div class="section-head">
+        <h2>Cara kerja</h2>
+      </div>
+      <p style="color: var(--text-dim); line-height: 1.7; max-width: 65ch;">
+        Bencanaku mengambil data secara otomatis dari sumber resmi tiap jam menggunakan sistem terjadwal (GitHub Actions), lalu menampilkannya di situs ini. Tidak ada campur tangan manual dalam proses pengambilan data — kalau sumber resminya diperbarui, Bencanaku ikut diperbarui dalam waktu maksimal satu jam.
+      </p>
+    </div>
+ 
+    <div>
+      <div class="section-head">
+        <h2>Status sumber data</h2>
+      </div>
+      <div class="area-readout">
+        <div class="area-row">
+          <div class="area-row-label">Gempa</div>
+          <div class="area-row-value">
+            <span class="value tone-green">Live — BMKG</span>
+            <span class="source">Diperbarui otomatis tiap jam</span>
+          </div>
+        </div>
+        <div class="area-row">
+          <div class="area-row-label">Kualitas udara</div>
+          <div class="area-row-value">
+            <span class="value tone-green">Live — WAQI</span>
+            <span class="source">Diperbarui otomatis tiap jam, 4 kota</span>
+          </div>
+        </div>
+        <div class="area-row">
+          <div class="area-row-label">Cuaca</div>
+          <div class="area-row-value">
+            <span class="value tone-yellow">Dalam pengembangan — BMKG</span>
+            <span class="source">Belum tersambung, menyusul</span>
+          </div>
+        </div>
+        <div class="area-row">
+          <div class="area-row-label">Risiko wilayah</div>
+          <div class="area-row-value">
+            <span class="value tone-yellow">Data historis — InaRISK</span>
+            <span class="source">Dikurasi manual berkala, bukan real-time</span>
+          </div>
+        </div>
+        <div class="area-row">
+          <div class="area-row-label">Gunung api</div>
+          <div class="area-row-value">
+            <span class="value" style="color: var(--text-faint);">Belum tersedia</span>
+            <span class="source">Belum ada API publik resmi dari PVMBG</span>
+          </div>
+        </div>
+      </div>
+    </div>
+ 
+    <div>
+      <div class="section-head">
+        <h2>Batasan & tanggung jawab</h2>
+      </div>
+      <p style="color: var(--text-dim); line-height: 1.7; max-width: 65ch;">
+        Bencanaku bukan lembaga pemerintah dan tidak menggantikan peran BMKG, BNPB, PVMBG, atau instansi resmi lainnya. Bencanaku tidak membuat klaim "aman" atau "bahaya" — situs ini hanya menyajikan ulang data resmi dengan tampilan yang lebih sederhana. Untuk keputusan keselamatan, selalu rujuk informasi resmi dari instansi terkait langsung.
+      </p>
+    </div>
+ 
+    <div>
+      <div class="section-head">
+        <h2>Tentang founder</h2>
+      </div>
+      <p style="color: var(--text-dim); line-height: 1.7; max-width: 65ch;">
+        Bencanaku dibuat dan dikelola secara independen oleh <strong style="color: var(--text);">Ibnu Farras</strong>.
+      </p>
+    </div>
+ 
+  </section>
+ 
+</main>
+ 
+<footer class="site-footer">
+  <div class="footer-brand">Bencanaku</div>
+  <p class="footer-desc">Platform informasi kebencanaan independen.</p>
+ 
+  <p class="footer-sources">
+    <span class="footer-label">Sumber data</span><br>
+    BMKG · BNPB/InaRISK · WAQI
+  </p>
+ 
+  <p class="footer-disclaimer">
+    Bencanaku bukan lembaga pemerintah. Untuk keputusan keselamatan, selalu rujuk informasi resmi dari instansi terkait.
+  </p>
+ 
+  <p class="footer-credit">Founded by Ibnu Farras</p>
+</footer>
+ 
+<noscript>
+  <p style="text-align:center; padding:16px; color:#DD6363; font-size:0.85rem;">
+    Bencanaku butuh JavaScript aktif untuk menampilkan data. Aktifkan JavaScript di browser kamu.
+  </p>
+</noscript>
+ 
+</body>
+</html>
+ 
