@@ -407,6 +407,28 @@ main {
   .lower-grid { grid-template-columns: 1.3fr 1fr; gap: 40px; }
 }
  
+/* Grid kotak untuk halaman Gempa & Udara — otomatis menyesuaikan lebar layar */
+.quake-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 14px;
+}
+ 
+.quake-card {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px 18px;
+}
+ 
+.quake-card .event-title { margin-bottom: 6px; }
+.quake-card .event-meta { margin-bottom: 8px; }
+.quake-card .event-time { flex-direction: column; align-items: flex-start; gap: 6px; }
+ 
+.quake-grid > .fallback-text {
+  grid-column: 1 / -1;
+}
+ 
 /* Events — editorial list, not a card */
 .event-list {
   list-style: none;
