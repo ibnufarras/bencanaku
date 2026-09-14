@@ -41,14 +41,31 @@
     <p class="last-updated" id="aqiFetchedNote"></p>
   </section>
  
-  <section>
-    <div class="section-head">
-      <h2>Per kota</h2>
-    </div>
-    <div class="quake-grid" id="aqiGrid">
-      <p class="fallback-text">Memuat data kualitas udara…</p>
-    </div>
-  </section>
+  <section class="udara-section">
+  <h2>Cari provinsi</h2>
+  <input
+    type="text"
+    id="provinsi-search"
+    placeholder="Ketik nama provinsi, misal: Jawa Barat"
+    autocomplete="off"
+  />
+  <p class="caveat-text">
+    Pencarian ini memakai perkiraan area provinsi, bukan batas administratif resmi —
+    stasiun di dekat perbatasan provinsi mungkin sedikit meleset.
+  </p>
+</section>
+
+<section class="udara-section">
+  <h2>Peta stasiun pemantauan</h2>
+  <div id="aqi-map" style="height: 400px; border-radius: 12px;"></div>
+</section>
+
+<section class="udara-section">
+  <h2 id="grid-title">Semua stasiun</h2>
+  <div id="aqi-grid" class="aqi-grid">
+    <p>Memuat data stasiun...</p>
+  </div>
+</section>
  
   <section>
     <div class="section-head">
