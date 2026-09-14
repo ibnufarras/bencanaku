@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kualitas udara — Bencanaku</title>
+<meta name="description" content="Kualitas udara terkini di beberapa kota besar Indonesia berdasarkan data WAQI (World Air Quality Index).">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+ 
+<div class="demo-banner">
+  <strong>Data kualitas udara dari WAQI.</strong> Diperbarui otomatis tiap jam lewat GitHub Actions.
+</div>
+ 
+<header class="site-header">
+  <div class="header-row">
+    <div class="brand">
+      <a href="index.html" class="brand-link">
+        <span class="brand-mark">Bencanaku</span>
+        <span class="brand-sub">Platform informasi kebencanaan</span>
+      </a>
+    </div>
+  </div>
+  <nav class="site-nav">
+    <a href="gempa.html">Gempa</a>
+    <a href="cuaca.html">Cuaca</a>
+    <a href="gunung-api.html">Gunung api</a>
+    <a href="risiko.html">Risiko</a>
+    <a href="udara.html" style="color:var(--text); font-weight:600;">Udara</a>
+    <a href="tentang.html">Tentang</a>
+  </nav>
+</header>
+ 
+<main>
+ 
+  <section class="hero">
+    <h1>Kualitas udara</h1>
+    <p class="hero-lead">AQI beberapa kota besar Indonesia, berdasarkan data WAQI.</p>
+    <p class="last-updated" id="aqiFetchedNote"></p>
+  </section>
+ 
+  <section>
+    <div class="section-head">
+      <h2>Per kota</h2>
+    </div>
+    <div class="quake-grid" id="aqiGrid">
+      <p class="fallback-text">Memuat data kualitas udara…</p>
+    </div>
+  </section>
+ 
+  <section>
+    <div class="section-head">
+      <h2>Skala AQI</h2>
+    </div>
+    <div class="area-readout">
+      <div class="area-row">
+        <div class="area-row-label">0–50</div>
+        <div class="area-row-value"><span class="value tone-green">Baik</span></div>
+      </div>
+      <div class="area-row">
+        <div class="area-row-label">51–100</div>
+        <div class="area-row-value"><span class="value tone-yellow">Sedang</span></div>
+      </div>
+      <div class="area-row">
+        <div class="area-row-label">101–150</div>
+        <div class="area-row-value"><span class="value tone-orange">Tidak sehat bagi kelompok sensitif</span></div>
+      </div>
+      <div class="area-row">
+        <div class="area-row-label">151+</div>
+        <div class="area-row-value"><span class="value tone-red">Tidak sehat</span></div>
+      </div>
+    </div>
+  </section>
+ 
+  <p class="footer-disclaimer" style="padding: 24px 0;">
+    Data kualitas udara berasal dari <a href="https://aqicn.org" style="color:var(--text-dim);">WAQI (World Air Quality Index)</a>, dikumpulkan dari stasiun pemantauan terdekat tiap kota. Angka bisa berbeda dari pengukuran resmi pemerintah setempat.
+  </p>
+ 
+</main>
+ 
+<footer class="site-footer">
+  <div class="footer-brand">Bencanaku</div>
+  <p class="footer-desc">Platform informasi kebencanaan independen.</p>
+ 
+  <p class="footer-sources">
+    <span class="footer-label">Sumber data</span><br>
+    BMKG · BNPB/InaRISK · WAQI
+  </p>
+ 
+  <p class="footer-disclaimer">
+    Bencanaku bukan lembaga pemerintah. Untuk keputusan keselamatan, selalu rujuk informasi resmi dari instansi terkait.
+  </p>
+ 
+  <p class="footer-credit">Founded by Ibnu Farras</p>
+</footer>
+ 
+<noscript>
+  <p style="text-align:center; padding:16px; color:#DD6363; font-size:0.85rem;">
+    Bencanaku butuh JavaScript aktif untuk menampilkan data. Aktifkan JavaScript di browser kamu.
+  </p>
+</noscript>
+ 
+<script src="udara.js"></script>
+</body>
+</html>
+ 
