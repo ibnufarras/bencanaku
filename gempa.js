@@ -1,4 +1,4 @@
-*
+/*
   Halaman Gempa — menampilkan SEMUA data dari data/gempa-bmkg.json apa adanya.
   Tidak ada data contoh/dummy di halaman ini: kalau data BMKG belum
   tersedia, tampilkan pesan jujur, bukan gempa palsu.
@@ -61,10 +61,10 @@ function renderQuakeList(list) {
  
   if (!Array.isArray(list) || list.length === 0) {
     el.innerHTML = `
-      <li class="fallback-text">
+      <p class="fallback-text">
         Data gempa BMKG belum tersedia saat ini. Halaman ini akan terisi otomatis
         setelah proses pengambilan data berjalan (paling lama 1 jam sekali).
-      </li>`;
+      </p>`;
     return;
   }
  
@@ -72,7 +72,7 @@ function renderQuakeList(list) {
     const relTime = item.DateTime ? formatRelativeTime(item.DateTime) : "";
     const timeActual = `${item.Jam || ""} · ${item.Tanggal || ""}`.trim();
     return `
-      <li class="event-item sev-red">
+      <div class="quake-card sev-red">
         <div class="event-title">Gempa M${item.Magnitude || "?"}</div>
         <div class="event-meta">
           <span>${item.Wilayah || "Lokasi tidak diketahui"}</span>
@@ -80,10 +80,10 @@ function renderQuakeList(list) {
           <span>${item.Potensi || "Potensi tsunami: tidak dilaporkan"}</span>
         </div>
         <div class="event-time">
-          ${relTime ? relTime + " · " : ""}${timeActual} · Sumber: BMKG
+          <span>${relTime ? relTime + " · " : ""}${timeActual} · Sumber: BMKG</span>
           <button class="share-btn" data-quake-index="${i}" type="button">Bagikan</button>
         </div>
-      </li>
+      </div>
     `;
   }).join("");
  
