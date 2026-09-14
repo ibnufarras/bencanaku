@@ -2,7 +2,7 @@
 // Bencanaku — udara.js
 // Peta + grid semua stasiun WAQI + search provinsi (perkiraan area)
 // ============================================================
- 
+
 // Kotak koordinat perkiraan per provinsi (lat_min, lat_max, lon_min, lon_max)
 // CATATAN: ini perkiraan area, bukan batas administratif resmi.
 const PROVINCES = [
@@ -45,7 +45,7 @@ const PROVINCES = [
   { name: "Papua Selatan", box: [-9, -5, 137, 141] },
   { name: "Papua", box: [-5, -2, 136, 141] },
 ];
- 
+
 // Kategori AQI: batas bawah, label, warna, emoji
 const AQI_LEVELS = [
   { max: 50, label: "Baik", color: "#22c55e", emoji: "😊" },
@@ -54,21 +54,36 @@ const AQI_LEVELS = [
   { max: 200, label: "Sangat tidak sehat", color: "#ef4444", emoji: "🤢" },
   { max: Infinity, label: "Berbahaya", color: "#7f1d1d", emoji: "☠️" },
 ];
- 
+
 function getAqiLevel(aqi) {
   return AQI_LEVELS.find((lvl) => aqi <= lvl.max) || AQI_LEVELS[AQI_LEVELS.length - 1];
 }
- 
+
 let map;
 let markers = [];
 let allStations = [];
- 
-async function loadStations() {
-  const res = await fetch("data/aqi-stations.json");
+
+// Data sekarang berbentuk { fetchedAtUTC, stations: [...] } — bukan array
+// langsung — hasil dari workflow update-aqi-stations.yml (WAQI map/bounds).
+async function loadStationsData() {
+  const res = await fetch("data/aqi-stations.json", { cache: "no-store" });
   if (!res.ok) throw new Error("Gagal memuat data stasiun");
   return res.json();
 }
- 
+
+function setFetchedNote(fetchedAtUTC) {
+  const note = document.getElementById("aqiFetchedNote");
+  if (!note) return;
+  if (fetchedAtUTC) {
+    const fetchedLocal = new Date(fetchedAtUTC).toLocaleString("id-ID", {
+      hour: "2-digit", minute: "2-digit", day: "2-digit", month: "short", timeZone: "Asia/Jakarta"
+    });
+    note.textContent = `Data terakhir diambil ${fetchedLocal} WIB`;
+  } else {
+    note.textContent = "Menunggu pengambilan data pertama dari WAQI.";
+  }
+}
+
 function initMap() {
   map = L.map("aqi-map", {
     minZoom: 4,
@@ -77,17 +92,17 @@ function initMap() {
       [8, 142],
     ],
   }).setView([-2.5, 118], 5);
- 
+
   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     attribution: "&copy; OpenStreetMap contributors",
   }).addTo(map);
 }
- 
+
 function clearMarkers() {
   markers.forEach((m) => map.removeLayer(m));
   markers = [];
 }
- 
+
 function renderMap(stations) {
   clearMarkers();
   stations.forEach((s) => {
@@ -105,17 +120,21 @@ function renderMap(stations) {
     markers.push(marker);
   });
 }
- 
+
 function renderGrid(stations, titleSuffix) {
   const grid = document.getElementById("aqi-grid");
   const title = document.getElementById("grid-title");
   title.textContent = titleSuffix ? `Stasiun di ${titleSuffix}` : "Semua stasiun";
- 
+
   if (stations.length === 0) {
-    grid.innerHTML = "<p>Tidak ada stasiun WAQI yang ditemukan di area ini.</p>";
+    if (titleSuffix) {
+      grid.innerHTML = "<p>Tidak ada stasiun WAQI yang ditemukan di area ini.</p>";
+    } else {
+      grid.innerHTML = "<p>Data stasiun belum tersedia saat ini. Coba muat ulang beberapa saat lagi.</p>";
+    }
     return;
   }
- 
+
   grid.innerHTML = stations
     .map((s) => {
       const level = getAqiLevel(s.aqi);
@@ -130,20 +149,20 @@ function renderGrid(stations, titleSuffix) {
     })
     .join("");
 }
- 
+
 function findProvince(query) {
   const q = query.trim().toLowerCase();
   if (!q) return null;
   return PROVINCES.find((p) => p.name.toLowerCase().includes(q));
 }
- 
+
 function filterByBox(stations, box) {
   const [latMin, latMax, lonMin, lonMax] = box;
   return stations.filter(
     (s) => s.lat >= latMin && s.lat <= latMax && s.lon >= lonMin && s.lon <= lonMax
   );
 }
- 
+
 function handleSearch(query) {
   const province = findProvince(query);
   if (!province) {
@@ -164,7 +183,7 @@ function handleSearch(query) {
   }
   renderMap(filtered.length ? filtered : allStations);
 }
- 
+
 document.addEventListener("DOMContentLoaded", () => {
   try {
     initMap();
@@ -173,10 +192,12 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("aqi-map").innerHTML =
       "<p>Peta gagal dimuat.</p>";
   }
- 
+
   try {
-    loadStations()
-      .then((stations) => {
+    loadStationsData()
+      .then((data) => {
+        const stations = Array.isArray(data.stations) ? data.stations : [];
+        setFetchedNote(data.fetchedAtUTC);
         allStations = stations.sort((a, b) => b.aqi - a.aqi);
         renderGrid(allStations, null);
         renderMap(allStations);
@@ -185,11 +206,13 @@ document.addEventListener("DOMContentLoaded", () => {
         console.error(err);
         document.getElementById("aqi-grid").innerHTML =
           "<p>Data stasiun belum tersedia.</p>";
+        const note = document.getElementById("aqiFetchedNote");
+        if (note) note.textContent = "Gagal memuat data. Coba muat ulang halaman.";
       });
   } catch (err) {
     console.error("Gagal memuat data stasiun:", err);
   }
- 
+
   try {
     const searchInput = document.getElementById("provinsi-search");
     let debounceTimer;
@@ -201,4 +224,3 @@ document.addEventListener("DOMContentLoaded", () => {
     console.error("Gagal memasang search:", err);
   }
 });
- 
