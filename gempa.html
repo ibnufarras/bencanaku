@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
@@ -8,18 +8,19 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
+ 
 <div class="demo-banner">
   <strong>Data gempa dari BMKG.</strong> Diperbarui otomatis tiap jam lewat GitHub Actions.
 </div>
-
+ 
 <header class="site-header">
   <div class="header-row">
     <div class="brand">
-      <a href="index.html" style="text-decoration:none; color:inherit;">
+      <a href="index.html" class="brand-link">
         <span class="brand-mark">Bencanaku</span>
         <span class="brand-sub">Platform informasi kebencanaan</span>
       </a>
@@ -28,21 +29,31 @@
   <nav class="site-nav">
     <a href="gempa.html" style="color:var(--text); font-weight:600;">Gempa</a>
     <a href="cuaca.html">Cuaca</a>
-    <a href="gunung-api.html">Gunung api</a>
-    <a href="risiko.html">Risiko</a>
     <a href="udara.html">Udara</a>
     <a href="tentang.html">Tentang</a>
   </nav>
 </header>
-
+ 
 <main>
-
+ 
   <section class="hero">
     <h1>Gempa terkini</h1>
     <p class="hero-lead">Daftar gempa di Indonesia berdasarkan data resmi BMKG.</p>
     <p class="last-updated" id="quakeFetchedNote"></p>
   </section>
-
+ 
+  <section class="map-section">
+    <div class="section-head">
+      <h2>Peta semua gempa</h2>
+      <span class="section-note">Peta Indonesia</span>
+    </div>
+    <div class="map-frame" id="mapFrame">
+      <div id="leafletMap" class="leaflet-map" role="img" aria-label="Peta interaktif seluruh gempa terkini dari BMKG"></div>
+      <p id="mapFallbackNote" class="map-empty-note" hidden>Peta tidak bisa dimuat. Cek koneksi internet lalu muat ulang halaman.</p>
+      <p class="map-caveat">Titik menandai lokasi, ukurannya sekadar mewakili besar magnitudo — bukan area terdampak. Klik titik untuk detail. Peta: OpenStreetMap / Leaflet.</p>
+    </div>
+  </section>
+ 
   <section class="lower-grid" style="grid-template-columns: 1fr;">
     <div class="events-panel">
       <div class="section-head">
@@ -53,36 +64,36 @@
       </ol>
     </div>
   </section>
-
+ 
   <p class="footer-disclaimer" style="padding: 0 0 24px;">
     Bencanaku menampilkan data apa adanya dari BMKG. Untuk informasi resmi dan keputusan keselamatan, selalu rujuk <a href="https://www.bmkg.go.id" style="color:var(--text-dim);">bmkg.go.id</a> atau instansi terkait langsung.
   </p>
-
+ 
 </main>
-
+ 
 <footer class="site-footer">
   <div class="footer-brand">Bencanaku</div>
   <p class="footer-desc">Platform informasi kebencanaan independen.</p>
-
+ 
   <p class="footer-sources">
     <span class="footer-label">Sumber data</span><br>
-    BMKG · BNPB/InaRISK · PVMBG
+    BMKG · BNPB/InaRISK · WAQI
   </p>
-
+ 
   <p class="footer-disclaimer">
     Bencanaku bukan lembaga pemerintah. Untuk keputusan keselamatan, selalu rujuk informasi resmi dari instansi terkait.
   </p>
-
+ 
   <p class="footer-credit">Founded by Ibnu Farras</p>
 </footer>
-
+ 
 <noscript>
   <p style="text-align:center; padding:16px; color:#DD6363; font-size:0.85rem;">
     Bencanaku butuh JavaScript aktif untuk menampilkan data. Aktifkan JavaScript di browser kamu.
   </p>
 </noscript>
-
+ 
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="gempa.js"></script>
 </body>
 </html>
-
