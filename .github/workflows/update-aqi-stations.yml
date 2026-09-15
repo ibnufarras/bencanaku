@@ -1,0 +1,59 @@
+name: Update AQI stations (WAQI map bounds)
+ 
+on:
+  schedule:
+    - cron: "15 * * * *"
+  workflow_dispatch: {}
+ 
+permissions:
+  contents: write
+ 
+jobs:
+  update-aqi-stations:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+ 
+      - name: Ambil semua stasiun WAQI di Indonesia
+        env:
+          WAQI_TOKEN: ${{ secrets.WAQI_TOKEN }}
+        run: |
+          if [ -z "$WAQI_TOKEN" ]; then
+            echo "::warning::WAQI_TOKEN belum diisi di Settings > Secrets. Melewati update stasiun AQI."
+            exit 0
+          fi
+ 
+          mkdir -p data
+ 
+          # Kotak koordinat Indonesia: south,west,north,east
+          resp=$(curl -sSL "https://api.waqi.info/map/bounds/?latlng=-11,92,7,145&token=${WAQI_TOKEN}")
+          status=$(echo "$resp" | jq -r '.status // "error"')
+ 
+          if [ "$status" != "ok" ]; then
+            echo "::warning::Gagal ambil data stasiun WAQI (status: $status)"
+            exit 0
+          fi
+ 
+          # Ambil hanya stasiun dengan angka AQI valid (WAQI kadang kirim "-" kalau data kosong)
+          echo "$resp" | jq '
+            [ .data[]
+              | select(.aqi != "-" and (.aqi | test("^[0-9]+$")))
+              | { name: .station.name, lat: .lat, lon: .lon, aqi: (.aqi | tonumber) }
+            ]
+          ' > /tmp/stations.json
+ 
+          jq -n --slurpfile stations /tmp/stations.json \
+                --arg t "$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
+                '{ fetchedAtUTC: $t, stations: $stations[0] }' > data/aqi-stations.json
+ 
+      - name: Commit jika ada perubahan
+        run: |
+          git config user.name "bencanaku-bot"
+          git config user.email "actions@github.com"
+          if [ -f data/aqi-stations.json ]; then
+            git add data/aqi-stations.json
+            git diff --cached --quiet || git commit -m "chore: update data stasiun AQI (WAQI map bounds)"
+            git push
+          fi
+ 
