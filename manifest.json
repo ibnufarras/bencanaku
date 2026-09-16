@@ -1,0 +1,23 @@
+{
+  "name": "Bencanaku",
+  "short_name": "Bencanaku",
+  "description": "Platform informasi kebencanaan Indonesia — gempa, kualitas udara, dan cuaca dari sumber resmi.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0E1114",
+  "theme_color": "#0E1114",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
