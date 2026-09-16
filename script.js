@@ -349,15 +349,27 @@ function setupStickyHeader() {
 }
  
 // Peta nasional — selalu Indonesia, markernya dari data gempa BMKG asli
-function initLeafletMap(quakeList) {
+let quakeLayer = null;
+let aqiLayer = null;
+ 
+// Warna level AQI — samain persis dengan yang dipakai di udara.js biar konsisten
+function aqiColorFromValue(aqi) {
+  if (aqi <= 50) return "#22c55e";
+  if (aqi <= 100) return "#eab308";
+  if (aqi <= 150) return "#f97316";
+  if (aqi <= 200) return "#ef4444";
+  return "#7f1d1d";
+}
+ 
+function ensureMapReady() {
   const container = document.getElementById("leafletMap");
   const fallbackNote = document.getElementById("mapFallbackNote");
-  if (!container) return;
+  if (!container) return false;
  
   if (typeof L === "undefined") {
     console.error("Bencanaku: library Leaflet gagal dimuat (cek koneksi/CDN).");
     if (fallbackNote) fallbackNote.hidden = false;
-    return;
+    return false;
   }
  
   if (!mapInstance) {
@@ -373,18 +385,27 @@ function initLeafletMap(quakeList) {
       maxZoom: 18,
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(mapInstance);
-  }
  
-  // Bersihkan marker lama sebelum gambar ulang
-  mapInstance.eachLayer(layer => {
-    if (layer instanceof L.CircleMarker) mapInstance.removeLayer(layer);
-  });
+    quakeLayer = L.layerGroup().addTo(mapInstance);
+    aqiLayer = L.layerGroup().addTo(mapInstance);
+  }
+  return true;
+}
+ 
+function initLeafletMap(quakeList) {
+  if (!ensureMapReady()) return;
+ 
+  quakeLayer.clearLayers();
  
   if (!Array.isArray(quakeList) || quakeList.length === 0) {
-    const note = document.createElement("p");
-    note.className = "map-empty-note";
-    note.textContent = "Belum ada data gempa BMKG untuk ditampilkan di peta.";
-    container.parentElement.insertBefore(note, container.nextSibling);
+    const existingNote = document.querySelector(".map-empty-note");
+    if (!existingNote) {
+      const note = document.createElement("p");
+      note.className = "map-empty-note";
+      note.textContent = "Belum ada data gempa BMKG untuk ditampilkan di peta.";
+      const container = document.getElementById("leafletMap");
+      container.parentElement.insertBefore(note, container.nextSibling);
+    }
     return;
   }
  
@@ -403,7 +424,7 @@ function initLeafletMap(quakeList) {
       weight: 1,
       fillColor: "#DD6363",
       fillOpacity: 0.55,
-    }).addTo(mapInstance);
+    });
  
     marker.bindPopup(`
       <b>Magnitudo ${item.Magnitude || "?"}</b><br>
@@ -413,7 +434,60 @@ function initLeafletMap(quakeList) {
       ${item.Potensi ? item.Potensi + "<br>" : ""}
       Sumber: BMKG
     `);
+ 
+    quakeLayer.addLayer(marker);
   });
+}
+ 
+// Layer kedua di peta yang sama — titik kualitas udara dari WAQI
+async function loadAqiMapLayer() {
+  if (!ensureMapReady()) return;
+ 
+  try {
+    const res = await fetch("data/aqi-stations.json", { cache: "no-store" });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    const stations = Array.isArray(data.stations) ? data.stations : [];
+ 
+    aqiLayer.clearLayers();
+ 
+    stations.forEach(s => {
+      if (typeof s.lat !== "number" || typeof s.lon !== "number") return;
+      const color = aqiColorFromValue(s.aqi);
+ 
+      const marker = L.circleMarker([s.lat, s.lon], {
+        radius: 5,
+        color: "#fff",
+        weight: 1,
+        fillColor: color,
+        fillOpacity: 0.85,
+      });
+ 
+      marker.bindPopup(`<b>${s.name}</b><br>AQI ${s.aqi} · Sumber: WAQI`);
+      aqiLayer.addLayer(marker);
+    });
+  } catch (err) {
+    console.warn("Bencanaku: layer AQI di peta belum tersedia —", err.message);
+  }
+}
+ 
+function setupMapLayerToggles() {
+  const quakeToggle = document.getElementById("toggleLayerGempa");
+  const aqiToggle = document.getElementById("toggleLayerUdara");
+  if (!mapInstance) return;
+ 
+  if (quakeToggle) {
+    quakeToggle.addEventListener("change", () => {
+      if (quakeToggle.checked) mapInstance.addLayer(quakeLayer);
+      else mapInstance.removeLayer(quakeLayer);
+    });
+  }
+  if (aqiToggle) {
+    aqiToggle.addEventListener("change", () => {
+      if (aqiToggle.checked) mapInstance.addLayer(aqiLayer);
+      else mapInstance.removeLayer(aqiLayer);
+    });
+  }
 }
  
 document.addEventListener("DOMContentLoaded", async () => {
@@ -439,6 +513,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   try { updateDemoBanner(); } catch (e) { console.error("updateDemoBanner gagal", e); }
   try { renderEvents(); } catch (e) { console.error("renderEvents gagal", e); }
   try { initLeafletMap(lastQuakeList); } catch (e) { console.error("initLeafletMap gagal", e); }
+  try { await loadAqiMapLayer(); } catch (e) { console.error("loadAqiMapLayer gagal", e); }
+  try { setupMapLayerToggles(); } catch (e) { console.error("setupMapLayerToggles gagal", e); }
   try { setupRegionDropdown(); } catch (e) { console.error("setupRegionDropdown gagal", e); }
   try { setupStickyHeader(); } catch (e) { console.error("setupStickyHeader gagal", e); }
 });
