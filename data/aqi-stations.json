@@ -1,95 +1,83 @@
 {
-  "fetchedAtUTC": "2026-09-19T10:53:18Z",
+  "fetchedAtUTC": "2026-09-19T14:22:18Z",
   "stations": [
     {
-      "name": "Petaling Jaya, Selangor, Malaysia",
-      "lat": 3.133169,
-      "lon": 101.608011,
-      "aqi": 100
+      "name": "Indrapuri, Indonesia",
+      "lat": 5.404,
+      "lon": 95.475,
+      "aqi": 91
+    },
+    {
+      "name": "Maros, Indonesia",
+      "lat": -4.997,
+      "lon": 119.57,
+      "aqi": 98
+    },
+    {
+      "name": "Miri",
+      "lat": 4.333131,
+      "lon": 113.99486,
+      "aqi": 155
+    },
+    {
+      "name": "Shah Alam, Selangor, Malaysia",
+      "lat": 3.104717,
+      "lon": 101.556222,
+      "aqi": 154
+    },
+    {
+      "name": "Indera Mahkota, Kuantan, Pahang, Malaysia",
+      "lat": 3.819217,
+      "lon": 103.29655,
+      "aqi": 85
+    },
+    {
+      "name": "Kuala Terengganu, Terengganu, Malaysia",
+      "lat": 5.308094,
+      "lon": 103.120392,
+      "aqi": 68
     },
     {
       "name": "Besut, Terengganu, Malaysia",
       "lat": 5.748449,
       "lon": 102.515632,
-      "aqi": 51
+      "aqi": 54
     },
     {
-      "name": "Tawau, Sabah, Malaysia",
-      "lat": 4.249786,
-      "lon": 117.935864,
-      "aqi": 93
+      "name": "Samarinda, Indonesia",
+      "lat": -0.4825,
+      "lon": 117.1563,
+      "aqi": 97
     },
     {
-      "name": "Bintulu, Sarawak, Malaysia",
-      "lat": 3.177084,
-      "lon": 113.041091,
-      "aqi": 121
+      "name": "Keningau, Sabah, Malaysia",
+      "lat": 5.339317,
+      "lon": 116.163658,
+      "aqi": 66
     },
     {
-      "name": "Labuan, Wilayah Persekutuan, Malaysia",
-      "lat": 5.298107,
-      "lon": 115.232106,
-      "aqi": 67
+      "name": "Sandakan, Sabah, Malaysia",
+      "lat": 5.864467,
+      "lon": 118.091089,
+      "aqi": 71
     },
     {
-      "name": "Central, Singapore",
-      "lat": 1.3666667,
-      "lon": 103.8,
-      "aqi": 153
-    },
-    {
-      "name": "Segamat, Johor, Malaysia",
-      "lat": 2.493914,
-      "lon": 102.862694,
-      "aqi": 86
+      "name": "Batu Pahat, Johor, Malaysia",
+      "lat": 1.919323,
+      "lon": 102.866618,
+      "aqi": 118
     },
     {
       "name": "Seremban, Negeri Sembilan, Malaysia",
       "lat": 2.723381,
       "lon": 101.968497,
-      "aqi": 89
+      "aqi": 93
     },
     {
-      "name": "Perai",
-      "lat": 5.384388,
-      "lon": 100.3896169,
-      "aqi": 59
-    },
-    {
-      "name": "Paka, Terengganu, Malaysia",
-      "lat": 4.598064,
-      "lon": 103.434819,
-      "aqi": 67
-    },
-    {
-      "name": "Malang, Indonesia",
-      "lat": -7.9551897,
-      "lon": 112.6119383,
-      "aqi": 118
-    },
-    {
-      "name": "Sri Aman, Sarawak, Malaysia",
-      "lat": 1.219656,
-      "lon": 111.464792,
-      "aqi": 169
-    },
-    {
-      "name": "Mukah, Sarawak, Malaysia",
-      "lat": 2.883238,
-      "lon": 112.019742,
-      "aqi": 153
-    },
-    {
-      "name": "Rompin, Pahang, Malaysia",
-      "lat": 2.926645,
-      "lon": 103.419198,
-      "aqi": 82
-    },
-    {
-      "name": "Balok Baru, Kuantan, Pahang, Malaysia",
-      "lat": 3.960644,
-      "lon": 103.382158,
-      "aqi": 69
+      "name": "Banting, Selangor, Malaysia",
+      "lat": 2.816689,
+      "lon": 101.623158,
+      "aqi": 81
     },
     {
       "name": "Cheras,Kuala Lumpur, Wilayah Persekutuan, Malaysia",
@@ -98,142 +86,28 @@
       "aqi": 152
     },
     {
-      "name": "Ipoh",
-      "lat": 4.61175,
-      "lon": 101.113506,
-      "aqi": 139
+      "name": "Paka, Terengganu, Malaysia",
+      "lat": 4.598064,
+      "lon": 103.434819,
+      "aqi": 68
     },
     {
-      "name": "Indrapuri, Indonesia",
-      "lat": 5.404,
-      "lon": 95.475,
+      "name": "Malang, Indonesia",
+      "lat": -7.9551897,
+      "lon": 112.6119383,
+      "aqi": 91
+    },
+    {
+      "name": "Limbang, Sarawak, Malaysia",
+      "lat": 4.758891,
+      "lon": 115.013667,
       "aqi": 75
     },
     {
-      "name": "Samarinda, Indonesia",
-      "lat": -0.4825,
-      "lon": 117.1563,
-      "aqi": 150
-    },
-    {
-      "name": "Musi 2 Palembang, Indonesia",
-      "lat": -3.031,
-      "lon": 104.72,
-      "aqi": 173
-    },
-    {
-      "name": "Tanjung Harapan, Indonesia",
-      "lat": 2.83,
-      "lon": 117.36,
-      "aqi": 166
-    },
-    {
-      "name": "Kota Kinabalu, Sabah, Malaysia",
-      "lat": 5.89372,
-      "lon": 116.04327,
-      "aqi": 65
-    },
-    {
-      "name": "Bukit Rambai, Melaka, Malaysia",
-      "lat": 2.258519,
-      "lon": 102.172683,
-      "aqi": 101
-    },
-    {
-      "name": "Kota Bharu, Kelantan, Malaysia",
-      "lat": 6.147431,
-      "lon": 102.249236,
-      "aqi": 53
-    },
-    {
-      "name": "Langkawi, Kedah, Malaysia",
-      "lat": 6.331539,
-      "lon": 99.85846,
-      "aqi": 16
-    },
-    {
-      "name": "Sintang, Indonesia",
-      "lat": 0.066,
-      "lon": 111.477,
-      "aqi": 332
-    },
-    {
-      "name": "Larkin Lama, Johor, Malaysia",
-      "lat": 1.494625,
-      "lon": 103.735975,
-      "aqi": 158
-    },
-    {
-      "name": "Pekanbaru, Indonesia",
-      "lat": 0.46667,
-      "lon": 101.4666,
+      "name": "Mukah, Sarawak, Malaysia",
+      "lat": 2.883238,
+      "lon": 112.019742,
       "aqi": 153
-    },
-    {
-      "name": "Tanah Merah, Kelantan, Malaysia",
-      "lat": 5.811172,
-      "lon": 102.1345,
-      "aqi": 45
-    },
-    {
-      "name": "Batu Pahat, Johor, Malaysia",
-      "lat": 1.919323,
-      "lon": 102.866618,
-      "aqi": 107
-    },
-    {
-      "name": "Sorong, Indonesia",
-      "lat": -0.8634105,
-      "lon": 131.2544805,
-      "aqi": 169
-    },
-    {
-      "name": "Pangkalanbun, Indonesia",
-      "lat": -2.676583,
-      "lon": 111.626448,
-      "aqi": 210
-    },
-    {
-      "name": "Sandakan, Sabah, Malaysia",
-      "lat": 5.864467,
-      "lon": 118.091089,
-      "aqi": 65
-    },
-    {
-      "name": "Banting, Selangor, Malaysia",
-      "lat": 2.816689,
-      "lon": 101.623158,
-      "aqi": 78
-    },
-    {
-      "name": "Kemaman, Terengganu, Malaysia",
-      "lat": 4.262121,
-      "lon": 103.425778,
-      "aqi": 63
-    },
-    {
-      "name": "Kemayoran, Indonesia",
-      "lat": -6.155,
-      "lon": 106.846,
-      "aqi": 100
-    },
-    {
-      "name": "Jambi, Indonesia",
-      "lat": -1.6318964,
-      "lon": 103.6414547,
-      "aqi": 336
-    },
-    {
-      "name": "Kototabang, Indonesia",
-      "lat": -0.251,
-      "lon": 100.382,
-      "aqi": 2
-    },
-    {
-      "name": "Keningau, Sabah, Malaysia",
-      "lat": 5.339317,
-      "lon": 116.163658,
-      "aqi": 67
     },
     {
       "name": "Sibu, Sarawak, Malaysia",
@@ -242,28 +116,208 @@
       "aqi": 156
     },
     {
+      "name": "East, Singapore",
+      "lat": 1.3645924,
+      "lon": 103.9477547,
+      "aqi": 127
+    },
+    {
+      "name": "Minden, Pulau Pinang, Malaysia",
+      "lat": 5.356211,
+      "lon": 100.30792,
+      "aqi": 50
+    },
+    {
+      "name": "Bakar Arang, Sg. Petani, Kedah, Malaysia",
+      "lat": 5.629631,
+      "lon": 100.467771,
+      "aqi": 44
+    },
+    {
+      "name": "Banjarbaru, Indonesia",
+      "lat": -3.475,
+      "lon": 114.856,
+      "aqi": 105
+    },
+    {
+      "name": "Lore Lindu, Indonesia",
+      "lat": -1.5190466,
+      "lon": 120.18524658953586,
+      "aqi": 88
+    },
+    {
+      "name": "Sarikei, Sarawak, Malaysia",
+      "lat": 2.132809,
+      "lon": 111.52287,
+      "aqi": 151
+    },
+    {
+      "name": "Musi 2 Palembang, Indonesia",
+      "lat": -3.031,
+      "lon": 104.72,
+      "aqi": 187
+    },
+    {
+      "name": "Bintulu, Sarawak, Malaysia",
+      "lat": 3.177084,
+      "lon": 113.041091,
+      "aqi": 147
+    },
+    {
+      "name": "ILP Miri, Sarawak, Malaysia",
+      "lat": 4.494791,
+      "lon": 114.043416,
+      "aqi": 77
+    },
+    {
+      "name": "Kototabang, Indonesia",
+      "lat": -0.251,
+      "lon": 100.382,
+      "aqi": 15
+    },
+    {
+      "name": "Port Dickson, Negeri Sembilan, Malaysia",
+      "lat": 2.441383,
+      "lon": 101.866858,
+      "aqi": 83
+    },
+    {
+      "name": "Rompin, Pahang, Malaysia",
+      "lat": 2.926645,
+      "lon": 103.419198,
+      "aqi": 77
+    },
+    {
+      "name": "Segamat, Johor, Malaysia",
+      "lat": 2.493914,
+      "lon": 102.862694,
+      "aqi": 90
+    },
+    {
+      "name": "Tanah Merah, Kelantan, Malaysia",
+      "lat": 5.811172,
+      "lon": 102.1345,
+      "aqi": 47
+    },
+    {
+      "name": "Kg. Air Putih, Taiping, Perak, Malaysia",
+      "lat": 4.89885,
+      "lon": 100.679106,
+      "aqi": 57
+    },
+    {
+      "name": "Perai",
+      "lat": 5.384388,
+      "lon": 100.3896169,
+      "aqi": 77
+    },
+    {
+      "name": "Sintang, Indonesia",
+      "lat": 0.066,
+      "lon": 111.477,
+      "aqi": 269
+    },
+    {
+      "name": "Central, Singapore",
+      "lat": 1.3666667,
+      "lon": 103.8,
+      "aqi": 154
+    },
+    {
+      "name": "Pekanbaru, Indonesia",
+      "lat": 0.46667,
+      "lon": 101.4666,
+      "aqi": 105
+    },
+    {
+      "name": "Larkin Lama, Johor, Malaysia",
+      "lat": 1.494625,
+      "lon": 103.735975,
+      "aqi": 158
+    },
+    {
+      "name": "Pasir Gudang, Johor, Malaysia",
+      "lat": 1.470122,
+      "lon": 103.893456,
+      "aqi": 154
+    },
+    {
+      "name": "Langkawi, Kedah, Malaysia",
+      "lat": 6.331539,
+      "lon": 99.85846,
+      "aqi": 18
+    },
+    {
+      "name": "Ipoh",
+      "lat": 4.61175,
+      "lon": 101.113506,
+      "aqi": 126
+    },
+    {
+      "name": "Betong, Thailand (ต.เบตง อ.เบตง จ.ยะลา)",
+      "lat": 5.763873,
+      "lon": 101.067903,
+      "aqi": 8
+    },
+    {
+      "name": "Kangar, Perlis, Malaysia",
+      "lat": 6.429922,
+      "lon": 100.211069,
+      "aqi": 23
+    },
+    {
+      "name": "Pangkalanbun, Indonesia",
+      "lat": -2.676583,
+      "lon": 111.626448,
+      "aqi": 192
+    },
+    {
+      "name": "Pesawaran, Indonesia",
+      "lat": -5.17,
+      "lon": 105.178,
+      "aqi": 142
+    },
+    {
+      "name": "Kuching, Sarawak, Malaysia",
+      "lat": 1.562229,
+      "lon": 110.388958,
+      "aqi": 172
+    },
+    {
       "name": "Nilai, Negeri Sembilan, Malaysia",
       "lat": 2.821692,
       "lon": 101.811486,
-      "aqi": 133
+      "aqi": 143
     },
     {
-      "name": "Seri Manjung, Perak, Malaysia",
-      "lat": 4.200344,
-      "lon": 100.663358,
-      "aqi": 156
+      "name": "Sleman, Indonesia",
+      "lat": -7.731,
+      "lon": 110.354,
+      "aqi": 88
     },
     {
-      "name": "Jalan Tasek, Ipoh, Perak, Malaysia",
-      "lat": 4.629444,
-      "lon": 101.11665,
-      "aqi": 64
+      "name": "Kimanis, Sabah, Malaysia",
+      "lat": 5.538225,
+      "lon": 115.850556,
+      "aqi": 61
     },
     {
-      "name": "Perai, Pulau Pinang, Malaysia",
-      "lat": 5.329358,
-      "lon": 100.443475,
-      "aqi": 44
+      "name": "Balok Baru, Kuantan, Pahang, Malaysia",
+      "lat": 3.960644,
+      "lon": 103.382158,
+      "aqi": 76
+    },
+    {
+      "name": "Temerloh, Pahang, Malaysia",
+      "lat": 3.471603,
+      "lon": 102.376406,
+      "aqi": 61
+    },
+    {
+      "name": "Kota Bharu, Kelantan, Malaysia",
+      "lat": 6.147431,
+      "lon": 102.249236,
+      "aqi": 57
     },
     {
       "name": "Phiman, Satun, Satun, Thailand (ต.พิมาน อ.เมือง จ.สตูล)",
@@ -275,145 +329,25 @@
       "name": "Alor Setar, Kedah, Malaysia",
       "lat": 6.137244,
       "lon": 100.346815,
-      "aqi": 24
+      "aqi": 25
     },
     {
-      "name": "Semarang, Indonesia",
-      "lat": -6.985,
-      "lon": 110.381,
-      "aqi": 102
+      "name": "Jambi, Indonesia",
+      "lat": -1.6318964,
+      "lon": 103.6414547,
+      "aqi": 205
     },
     {
-      "name": "Samalaju, Sarawak, Malaysia",
-      "lat": 3.537059,
-      "lon": 113.295168,
-      "aqi": 87
+      "name": "Sri Aman, Sarawak, Malaysia",
+      "lat": 1.219656,
+      "lon": 111.464792,
+      "aqi": 167
     },
     {
-      "name": "Tangkak, Johor, Malaysia",
-      "lat": 2.294794,
-      "lon": 102.571595,
-      "aqi": 100
-    },
-    {
-      "name": "Kuala Lumpur",
-      "lat": 3.139003,
-      "lon": 101.686855,
-      "aqi": 128
-    },
-    {
-      "name": "Jerantut, Pahang, Malaysia",
-      "lat": 3.94836,
-      "lon": 102.366632,
-      "aqi": 67
-    },
-    {
-      "name": "White Elephant Park, Yala, Thailand (สนามโรงพิธีช้างเผือก ยะลา)",
-      "lat": 6.546205,
-      "lon": 101.283137,
-      "aqi": 26
-    },
-    {
-      "name": "Port Dickson, Negeri Sembilan, Malaysia",
-      "lat": 2.441383,
-      "lon": 101.866858,
-      "aqi": 78
-    },
-    {
-      "name": "Kg. Air Putih, Taiping, Perak, Malaysia",
-      "lat": 4.89885,
-      "lon": 100.679106,
-      "aqi": 53
-    },
-    {
-      "name": "Pesawaran, Indonesia",
-      "lat": -5.17,
-      "lon": 105.178,
-      "aqi": 154
-    },
-    {
-      "name": "Supadio, Indonesia",
-      "lat": -0.14,
-      "lon": 109.45,
-      "aqi": 600
-    },
-    {
-      "name": "Miri",
-      "lat": 4.333131,
-      "lon": 113.99486,
-      "aqi": 150
-    },
-    {
-      "name": "Mempawah, Indonesia",
-      "lat": 0.124,
-      "lon": 110.456,
-      "aqi": 401
-    },
-    {
-      "name": "Kota Tinggi, Johor, Malaysia",
-      "lat": 1.564056,
-      "lon": 104.225306,
-      "aqi": 98
-    },
-    {
-      "name": "Medan, Indonesia",
-      "lat": 3.59,
-      "lon": 98.85,
-      "aqi": 94
-    },
-    {
-      "name": "Minden, Pulau Pinang, Malaysia",
-      "lat": 5.356211,
-      "lon": 100.30792,
-      "aqi": 44
-    },
-    {
-      "name": "Pasir Gudang, Johor, Malaysia",
-      "lat": 1.470122,
-      "lon": 103.893456,
-      "aqi": 154
-    },
-    {
-      "name": "Tanjung Malim, Perak, Malaysia",
-      "lat": 3.687758,
-      "lon": 101.524494,
-      "aqi": 94
-    },
-    {
-      "name": "Banjarbaru, Indonesia",
-      "lat": -3.475,
-      "lon": 114.856,
-      "aqi": 120
-    },
-    {
-      "name": "Kapit, Sarawak, Malaysia",
-      "lat": 2.014498,
-      "lon": 112.92736,
-      "aqi": 93
-    },
-    {
-      "name": "Kuching, Sarawak, Malaysia",
-      "lat": 1.562229,
-      "lon": 110.388958,
-      "aqi": 172
-    },
-    {
-      "name": "Sarikei, Sarawak, Malaysia",
-      "lat": 2.132809,
-      "lon": 111.52287,
-      "aqi": 152
-    },
-    {
-      "name": "Batam, Indonesia",
-      "lat": 1.124,
-      "lon": 104.126,
-      "aqi": 136
-    },
-    {
-      "name": "East, Singapore",
-      "lat": 1.3645924,
-      "lon": 103.9477547,
-      "aqi": 129
+      "name": "Kluang, Johor, Malaysia",
+      "lat": 2.037882,
+      "lon": 103.312063,
+      "aqi": 89
     },
     {
       "name": "City Hall, Narathiwat, Thailand (ศาลากลางจังหวัดนราธิวาส)",
@@ -422,106 +356,172 @@
       "aqi": 27
     },
     {
-      "name": "Bakar Arang, Sg. Petani, Kedah, Malaysia",
-      "lat": 5.629631,
-      "lon": 100.467771,
-      "aqi": 40
+      "name": "Jalan Tasek, Ipoh, Perak, Malaysia",
+      "lat": 4.629444,
+      "lon": 101.11665,
+      "aqi": 65
     },
     {
-      "name": "Sleman, Indonesia",
-      "lat": -7.731,
-      "lon": 110.354,
+      "name": "Tanjung Harapan, Indonesia",
+      "lat": 2.83,
+      "lon": 117.36,
+      "aqi": 139
+    },
+    {
+      "name": "Tawau, Sabah, Malaysia",
+      "lat": 4.249786,
+      "lon": 117.935864,
+      "aqi": 82
+    },
+    {
+      "name": "Petaling Jaya, Selangor, Malaysia",
+      "lat": 3.133169,
+      "lon": 101.608011,
+      "aqi": 111
+    },
+    {
+      "name": "Labuan, Wilayah Persekutuan, Malaysia",
+      "lat": 5.298107,
+      "lon": 115.232106,
       "aqi": 76
     },
     {
-      "name": "Bengkulu, Indonesia",
-      "lat": -3.865,
-      "lon": 102.312,
-      "aqi": 93
+      "name": "Kuala Lumpur",
+      "lat": 3.139003,
+      "lon": 101.686855,
+      "aqi": 151
     },
     {
-      "name": "Maros, Indonesia",
-      "lat": -4.997,
-      "lon": 119.57,
-      "aqi": 88
+      "name": "Kemaman, Terengganu, Malaysia",
+      "lat": 4.262121,
+      "lon": 103.425778,
+      "aqi": 65
     },
     {
-      "name": "ILP Miri, Sarawak, Malaysia",
-      "lat": 4.494791,
-      "lon": 114.043416,
-      "aqi": 71
+      "name": "Supadio, Indonesia",
+      "lat": -0.14,
+      "lon": 109.45,
+      "aqi": 479
     },
     {
-      "name": "Kluang, Johor, Malaysia",
-      "lat": 2.037882,
-      "lon": 103.312063,
-      "aqi": 92
+      "name": "Samalaju, Sarawak, Malaysia",
+      "lat": 3.537059,
+      "lon": 113.295168,
+      "aqi": 89
     },
     {
-      "name": "Temerloh, Pahang, Malaysia",
-      "lat": 3.471603,
-      "lon": 102.376406,
-      "aqi": 58
+      "name": "Medan, Indonesia",
+      "lat": 3.59,
+      "lon": 98.85,
+      "aqi": 162
     },
     {
-      "name": "Lore Lindu, Indonesia",
-      "lat": -1.5190466,
-      "lon": 120.18524658953586,
-      "aqi": 76
+      "name": "Bukit Rambai, Melaka, Malaysia",
+      "lat": 2.258519,
+      "lon": 102.172683,
+      "aqi": 98
     },
     {
-      "name": "Shah Alam, Selangor, Malaysia",
-      "lat": 3.104717,
-      "lon": 101.556222,
-      "aqi": 153
+      "name": "Tanjung Malim, Perak, Malaysia",
+      "lat": 3.687758,
+      "lon": 101.524494,
+      "aqi": 90
+    },
+    {
+      "name": "White Elephant Park, Yala, Thailand (สนามโรงพิธีช้างเผือก ยะลา)",
+      "lat": 6.546205,
+      "lon": 101.283137,
+      "aqi": 26
+    },
+    {
+      "name": "Batam, Indonesia",
+      "lat": 1.124,
+      "lon": 104.126,
+      "aqi": 96
+    },
+    {
+      "name": "Kemayoran, Indonesia",
+      "lat": -6.155,
+      "lon": 106.846,
+      "aqi": 85
+    },
+    {
+      "name": "Semarang, Indonesia",
+      "lat": -6.985,
+      "lon": 110.381,
+      "aqi": 62
+    },
+    {
+      "name": "Kapit, Sarawak, Malaysia",
+      "lat": 2.014498,
+      "lon": 112.92736,
+      "aqi": 90
+    },
+    {
+      "name": "Kota Kinabalu, Sabah, Malaysia",
+      "lat": 5.89372,
+      "lon": 116.04327,
+      "aqi": 68
+    },
+    {
+      "name": "Mempawah, Indonesia",
+      "lat": 0.124,
+      "lon": 110.456,
+      "aqi": 408
+    },
+    {
+      "name": "Kota Tinggi, Johor, Malaysia",
+      "lat": 1.564056,
+      "lon": 104.225306,
+      "aqi": 103
+    },
+    {
+      "name": "Tangkak, Johor, Malaysia",
+      "lat": 2.294794,
+      "lon": 102.571595,
+      "aqi": 102
     },
     {
       "name": "Kuala Selangor, Selangor, Malaysia",
       "lat": 3.321308,
       "lon": 101.256242,
-      "aqi": 80
-    },
-    {
-      "name": "Kangar, Perlis, Malaysia",
-      "lat": 6.429922,
-      "lon": 100.211069,
-      "aqi": 19
+      "aqi": 81
     },
     {
       "name": "Palangka Raya, Indonesia",
       "lat": -2.22611,
       "lon": 113.945,
-      "aqi": 896
+      "aqi": 608
     },
     {
-      "name": "Kimanis, Sabah, Malaysia",
-      "lat": 5.538225,
-      "lon": 115.850556,
-      "aqi": 59
+      "name": "Sorong, Indonesia",
+      "lat": -0.8634105,
+      "lon": 131.2544805,
+      "aqi": 113
     },
     {
-      "name": "Limbang, Sarawak, Malaysia",
-      "lat": 4.758891,
-      "lon": 115.013667,
-      "aqi": 70
+      "name": "Bengkulu, Indonesia",
+      "lat": -3.865,
+      "lon": 102.312,
+      "aqi": 71
     },
     {
-      "name": "Indera Mahkota, Kuantan, Pahang, Malaysia",
-      "lat": 3.819217,
-      "lon": 103.29655,
-      "aqi": 76
+      "name": "Jerantut, Pahang, Malaysia",
+      "lat": 3.94836,
+      "lon": 102.366632,
+      "aqi": 64
     },
     {
-      "name": "Kuala Terengganu, Terengganu, Malaysia",
-      "lat": 5.308094,
-      "lon": 103.120392,
-      "aqi": 67
+      "name": "Seri Manjung, Perak, Malaysia",
+      "lat": 4.200344,
+      "lon": 100.663358,
+      "aqi": 152
     },
     {
-      "name": "Betong, Thailand (ต.เบตง อ.เบตง จ.ยะลา)",
-      "lat": 5.763873,
-      "lon": 101.067903,
-      "aqi": 25
+      "name": "Perai, Pulau Pinang, Malaysia",
+      "lat": 5.329358,
+      "lon": 100.443475,
+      "aqi": 51
     }
   ]
 }
