@@ -6,24 +6,24 @@
   --text: #E6E8EB;
   --text-dim: #9BA1A9;
   --text-faint: #6B7178;
- 
+
   --green: #4CC989;
   --yellow: #E3B94F;
   --orange: #E38F4F;
   --red: #DD6363;
- 
+
   --font-display: "Space Grotesk", sans-serif;
   --font-body: "IBM Plex Sans", sans-serif;
   --font-data: "IBM Plex Mono", monospace;
 }
- 
+
 * { box-sizing: border-box; }
- 
+
 html, body {
   overflow-x: hidden;
   max-width: 100%;
 }
- 
+
 body {
   margin: 0;
   background: var(--bg);
@@ -33,16 +33,16 @@ body {
   font-size: 15px;
   -webkit-font-smoothing: antialiased;
 }
- 
+
 a { color: inherit; }
- 
+
 :focus-visible {
   outline: 2px solid var(--green);
   outline-offset: 2px;
 }
- 
+
 img, svg { max-width: 100%; }
- 
+
 /* Demo banner */
 .demo-banner {
   background: #14181C;
@@ -52,15 +52,15 @@ img, svg { max-width: 100%; }
   padding: 8px 16px;
   border-bottom: 1px solid var(--border);
 }
- 
+
 .demo-banner strong { color: var(--text); font-weight: 600; }
- 
+
 /* Header */
 .site-header {
   border-bottom: 1px solid var(--border);
   padding: 14px 16px 0;
 }
- 
+
 .header-row {
   display: flex;
   align-items: center;
@@ -68,23 +68,23 @@ img, svg { max-width: 100%; }
   gap: 12px;
   padding-bottom: 10px;
 }
- 
+
 .brand { display: flex; flex-direction: column; line-height: 1.2; min-width: 0; }
- 
+
 .brand-link {
   display: flex;
   flex-direction: column;
   text-decoration: none;
   color: inherit;
 }
- 
+
 .brand-mark {
   font-family: var(--font-display);
   font-weight: 700;
   font-size: 1.9rem;
   letter-spacing: -0.02em;
 }
- 
+
 .brand-sub {
   font-size: 0.7rem;
   color: var(--text-faint);
@@ -93,7 +93,7 @@ img, svg { max-width: 100%; }
   overflow: hidden;
   text-overflow: ellipsis;
 }
- 
+
 .region-select {
   display: flex;
   align-items: center;
@@ -108,13 +108,13 @@ img, svg { max-width: 100%; }
   cursor: pointer;
   flex-shrink: 0;
 }
- 
+
 .region-select svg { color: var(--text-faint); transition: transform 0.15s ease; }
- 
+
 .region-select[aria-expanded="true"] svg { transform: rotate(180deg); }
- 
+
 .region-wrap { position: relative; flex-shrink: 0; }
- 
+
 .region-dropdown {
   position: absolute;
   top: calc(100% + 6px);
@@ -131,7 +131,7 @@ img, svg { max-width: 100%; }
   z-index: 20;
   box-shadow: 0 8px 24px rgba(0,0,0,0.35);
 }
- 
+
 .region-dropdown li {
   padding: 9px 12px;
   font-size: 0.85rem;
@@ -139,17 +139,17 @@ img, svg { max-width: 100%; }
   cursor: pointer;
   color: var(--text-dim);
 }
- 
+
 .region-dropdown li:hover,
 .region-dropdown li:focus {
   background: var(--border-soft);
   color: var(--text);
 }
- 
+
 .region-dropdown li[aria-selected="true"] {
   color: var(--green);
 }
- 
+
 .fallback-text {
   color: var(--text-faint);
   font-size: 0.85rem;
@@ -157,7 +157,7 @@ img, svg { max-width: 100%; }
   margin: 0;
   grid-column: 1 / -1;
 }
- 
+
 .site-header.is-stuck {
   position: sticky;
   top: 0;
@@ -165,7 +165,7 @@ img, svg { max-width: 100%; }
   backdrop-filter: blur(6px);
   z-index: 30;
 }
- 
+
 .site-nav {
   display: flex;
   gap: 18px;
@@ -177,16 +177,16 @@ img, svg { max-width: 100%; }
   padding-bottom: 10px;
   white-space: nowrap;
 }
- 
+
 .site-nav::-webkit-scrollbar { display: none; }
- 
+
 .site-nav a {
   text-decoration: none;
   flex-shrink: 0;
 }
- 
+
 .site-nav a:hover { color: var(--text); }
- 
+
 /* Main container */
 main {
   max-width: 1100px;
@@ -194,27 +194,27 @@ main {
   padding: 0 16px;
   width: 100%;
 }
- 
+
 /* Hero */
 .hero {
   padding: 28px 0 24px;
   border-bottom: 1px solid var(--border);
 }
- 
+
 .hero h1 {
   font-family: var(--font-display);
   font-weight: 600;
   font-size: clamp(1.75rem, 6vw, 2.5rem);
   margin: 0 0 6px;
 }
- 
+
 .hero-lead {
   color: var(--text-dim);
   font-size: 0.95rem;
   margin: 0 0 20px;
   max-width: 46ch;
 }
- 
+
 .status-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -224,7 +224,7 @@ main {
   border-radius: 8px;
   overflow: hidden;
 }
- 
+
 .status-item {
   display: flex;
   align-items: center;
@@ -232,31 +232,31 @@ main {
   padding: 14px 14px;
   background: var(--bg-panel);
 }
- 
+
 .status-dot {
   width: 8px;
   height: 8px;
   border-radius: 50%;
   flex-shrink: 0;
 }
- 
+
 .status-count {
   font-family: var(--font-data);
   font-weight: 600;
   font-size: 1rem;
 }
- 
+
 .status-label {
   color: var(--text-dim);
   font-size: 0.78rem;
   line-height: 1.3;
 }
- 
+
 .dot-green { background: var(--green); }
 .dot-yellow { background: var(--yellow); }
 .dot-orange { background: var(--orange); }
 .dot-red { background: var(--red); }
- 
+
 .status-summary {
   font-size: 0.95rem;
   color: var(--text-dim);
@@ -267,13 +267,13 @@ main {
   border: 1px solid var(--border);
   border-radius: 8px;
 }
- 
+
 .last-updated {
   font-size: 0.75rem;
   color: var(--text-faint);
   margin: 10px 2px 0;
 }
- 
+
 .area-location {
   display: flex;
   align-items: center;
@@ -282,12 +282,12 @@ main {
   padding: 2px 0 14px;
   flex-wrap: wrap;
 }
- 
+
 .area-pin {
   font-size: 0.95rem;
   font-weight: 600;
 }
- 
+
 .region-change-btn {
   background: none;
   border: none;
@@ -298,9 +298,9 @@ main {
   cursor: pointer;
   padding: 0;
 }
- 
+
 .region-change-btn:hover { color: var(--text); }
- 
+
 /* Section heads */
 .section-head {
   display: flex;
@@ -308,19 +308,19 @@ main {
   justify-content: space-between;
   margin: 28px 0 14px;
 }
- 
+
 .section-head h2 {
   font-family: var(--font-display);
   font-weight: 600;
   font-size: 1.05rem;
   margin: 0;
 }
- 
+
 .section-note {
   font-size: 0.78rem;
   color: var(--text-faint);
 }
- 
+
 /* Map — plain section, not a heavy card */
 .map-layer-toggles {
   display: flex;
@@ -329,20 +329,20 @@ main {
   font-size: 0.85rem;
   color: var(--text-dim);
 }
- 
+
 .map-layer-toggles label {
   display: flex;
   align-items: center;
   gap: 6px;
   cursor: pointer;
 }
- 
+
 .map-frame {
   position: relative;
 }
- 
+
 .map-svg { display: none; } /* deprecated, kept only to avoid layout break if cached */
- 
+
 .leaflet-map {
   width: 100%;
   height: 280px;
@@ -350,53 +350,53 @@ main {
   border-radius: 8px;
   background: var(--bg-panel);
 }
- 
+
 @media (min-width: 769px) {
   .leaflet-map { height: 420px; }
 }
- 
+
 /* Dark-theme overrides for Leaflet's default light UI */
 .leaflet-popup-content-wrapper,
 .leaflet-popup-tip {
   background: var(--bg-panel);
   color: var(--text);
 }
- 
+
 .leaflet-popup-content {
   font-family: var(--font-body);
   font-size: 0.85rem;
   line-height: 1.5;
 }
- 
+
 .leaflet-popup-content b {
   font-family: var(--font-display);
 }
- 
+
 .leaflet-container a.leaflet-popup-close-button {
   color: var(--text-dim);
 }
- 
+
 .leaflet-control-attribution {
   background: rgba(14,17,20,0.75) !important;
   color: var(--text-faint) !important;
   font-size: 0.68rem !important;
 }
- 
+
 .leaflet-control-attribution a { color: var(--text-dim) !important; }
- 
+
 .map-empty-note {
   padding: 10px 4px 0;
   font-size: 0.8rem;
   color: var(--text-faint);
 }
- 
+
 .map-caveat {
   font-size: 0.72rem;
   color: var(--text-faint);
   margin: 10px 0 0;
   line-height: 1.5;
 }
- 
+
 .map-legend {
   display: flex;
   gap: 16px;
@@ -405,11 +405,11 @@ main {
   color: var(--text-dim);
   flex-wrap: wrap;
 }
- 
+
 .map-legend span { display: flex; align-items: center; gap: 6px; }
- 
+
 .dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
- 
+
 /* Lower grid */
 .lower-grid {
   display: grid;
@@ -417,18 +417,18 @@ main {
   gap: 8px;
   padding-bottom: 16px;
 }
- 
+
 @media (min-width: 769px) {
   .lower-grid { grid-template-columns: 1.3fr 1fr; gap: 40px; }
 }
- 
+
 /* Halaman Cuaca */
 .weather-search-wrap {
   position: relative;
   max-width: 420px;
   margin-top: 4px;
 }
- 
+
 #weatherSearch {
   width: 100%;
   background: var(--bg-panel);
@@ -440,15 +440,15 @@ main {
   border-radius: 8px;
   box-sizing: border-box;
 }
- 
+
 #weatherSearch::placeholder { color: var(--text-faint); }
- 
+
 /* Hero — satu angka besar, bukan banyak kartu */
 .weather-hero {
   padding: 24px 0;
   border-bottom: 1px solid var(--border);
 }
- 
+
 .weather-location {
   font-family: var(--font-display);
   font-weight: 600;
@@ -456,35 +456,35 @@ main {
   letter-spacing: 0.02em;
   color: var(--text-dim);
 }
- 
+
 .weather-location-sub {
   font-size: 0.8rem;
   color: var(--text-faint);
   margin-bottom: 12px;
 }
- 
+
 .weather-hero-main {
   display: flex;
   align-items: baseline;
   gap: 20px;
   flex-wrap: wrap;
 }
- 
+
 .weather-hero-temp {
   font-family: var(--font-display);
   font-weight: 700;
   font-size: 4rem;
   line-height: 1;
 }
- 
+
 .weather-hero-meta {
   color: var(--text-dim);
   font-size: 0.95rem;
   line-height: 1.6;
 }
- 
+
 .weather-condition { font-weight: 600; color: var(--text); }
- 
+
 .weather-hero-stats {
   display: flex;
   gap: 16px;
@@ -493,34 +493,34 @@ main {
   font-size: 0.85rem;
   color: var(--text-dim);
 }
- 
+
 /* Kondisi hari ini — 4 angka ringkas, bukan kartu tebal */
 .weather-today {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 16px;
 }
- 
+
 @media (min-width: 600px) {
   .weather-today { grid-template-columns: repeat(4, 1fr); }
 }
- 
+
 .weather-today-item { text-align: left; }
- 
+
 .weather-today-icon { font-size: 1.1rem; margin-bottom: 4px; }
- 
+
 .weather-today-value {
   font-family: var(--font-data);
   font-weight: 600;
   font-size: 1.15rem;
 }
- 
+
 .weather-today-label {
   font-size: 0.75rem;
   color: var(--text-faint);
   margin-top: 2px;
 }
- 
+
 /* Timeline horizontal — 7 hari & per jam */
 .weather-timeline,
 .weather-hourly {
@@ -530,7 +530,7 @@ main {
   padding-bottom: 8px;
   -webkit-overflow-scrolling: touch;
 }
- 
+
 .weather-day,
 .weather-hour {
   flex: 0 0 auto;
@@ -539,36 +539,36 @@ main {
   border-right: 1px solid var(--border-soft);
   min-width: 68px;
 }
- 
+
 .weather-day:last-child,
 .weather-hour:last-child { border-right: none; }
- 
+
 .weather-day-name, .weather-hour-time {
   font-size: 0.75rem;
   color: var(--text-faint);
   margin-bottom: 6px;
 }
- 
+
 .weather-day-icon, .weather-hour-icon { font-size: 1.3rem; margin-bottom: 4px; }
- 
+
 .weather-day-temp, .weather-hour-temp {
   font-family: var(--font-data);
   font-weight: 600;
   font-size: 0.95rem;
 }
- 
+
 .weather-day-temp-min {
   font-family: var(--font-data);
   font-size: 0.8rem;
   color: var(--text-faint);
 }
- 
+
 .weather-day-rain {
   font-size: 0.72rem;
   color: var(--text-dim);
   margin-top: 4px;
 }
- 
+
 /* Konteks — kalimat interpretasi, bukan angka mentah */
 .weather-context-row {
   display: flex;
@@ -576,17 +576,17 @@ main {
   padding: 14px 0;
   border-bottom: 1px solid var(--border);
 }
- 
+
 .weather-context-row:last-child { border-bottom: none; }
- 
+
 .weather-context-icon { font-size: 1.2rem; flex-shrink: 0; }
- 
+
 .weather-context-title {
   font-weight: 600;
   font-size: 0.9rem;
   margin-bottom: 2px;
 }
- 
+
 .weather-context-desc {
   font-size: 0.82rem;
   color: var(--text-dim);
@@ -596,14 +596,14 @@ main {
   padding: 20px 0;
   border-bottom: 1px solid var(--border);
 }
- 
+
 .udara-section h2 {
   font-family: var(--font-display);
   font-weight: 600;
   font-size: 1.05rem;
   margin: 0 0 12px;
 }
- 
+
 #provinsi-search {
   width: 100%;
   max-width: 420px;
@@ -616,9 +616,9 @@ main {
   border-radius: 8px;
   box-sizing: border-box;
 }
- 
+
 #provinsi-search::placeholder { color: var(--text-faint); }
- 
+
 .caveat-text {
   font-size: 0.78rem;
   color: var(--text-faint);
@@ -626,13 +626,120 @@ main {
   margin: 10px 0 0;
   max-width: 60ch;
 }
- 
+
+/* Halaman Udara — redesign berbasis stasiun (bukan provinsi) */
+.udara-search-wrap {
+  position: relative;
+  max-width: 480px;
+  margin-top: 8px;
+}
+
+.udara-search-input {
+  width: 100%;
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  padding: 14px 16px;
+  border-radius: 10px;
+  box-sizing: border-box;
+}
+
+.udara-search-input::placeholder { color: var(--text-faint); }
+
+.udara-hero {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 22px 24px;
+}
+
+.udara-nearest-note {
+  font-size: 0.82rem;
+  color: var(--text-dim);
+  line-height: 1.6;
+  margin-bottom: 14px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.udara-nearest-note strong { color: var(--text); }
+
+.udara-hero-name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+}
+
+.udara-hero-main {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  flex-wrap: wrap;
+}
+
+.udara-hero-number {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 3.6rem;
+  line-height: 1;
+}
+
+.udara-hero-category {
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.03em;
+}
+
+.udara-hero-emoji { font-size: 1rem; }
+
+.udara-hero-updated,
+.udara-hero-source {
+  font-size: 0.8rem;
+  color: var(--text-faint);
+  margin-top: 4px;
+}
+
+.udara-scale {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+@media (min-width: 700px) {
+  .udara-scale { grid-template-columns: repeat(5, 1fr); }
+}
+
+.udara-scale-item {
+  border-left: 3px solid;
+  background: var(--bg-panel);
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+
+.udara-scale-label { font-weight: 600; font-size: 0.85rem; }
+.udara-scale-range { font-size: 0.75rem; color: var(--text-faint); margin-top: 2px; }
+
+.udara-pollutant-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+@media (min-width: 700px) {
+  .udara-pollutant-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+.udara-pollutant-grid > .fallback-text { grid-column: 1 / -1; }
+
 .aqi-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   gap: 12px;
 }
- 
+
 .aqi-card {
   background: var(--bg-panel);
   border: 1px solid var(--border);
@@ -641,63 +748,63 @@ main {
   padding: 16px;
   text-align: center;
 }
- 
+
 .aqi-card-name {
   font-size: 0.82rem;
   color: var(--text-dim);
   margin-bottom: 8px;
   min-height: 2.2em;
 }
- 
+
 .aqi-card-emoji { font-size: 1.6rem; margin-bottom: 4px; }
- 
+
 .aqi-card-number {
   font-family: var(--font-data);
   font-weight: 700;
   font-size: 1.6rem;
 }
- 
+
 .aqi-card-label {
   font-size: 0.75rem;
   color: var(--text-faint);
   margin-top: 4px;
 }
- 
+
 /* Grid kotak untuk halaman Gempa & Udara — otomatis menyesuaikan lebar layar */
 .quake-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   gap: 14px;
 }
- 
+
 .quake-card {
   background: var(--bg-panel);
   border: 1px solid var(--border);
   border-radius: 10px;
   padding: 16px 18px;
 }
- 
+
 .quake-card .event-title { margin-bottom: 6px; }
 .quake-card .event-meta { margin-bottom: 8px; }
 .quake-card .event-time { flex-direction: column; align-items: flex-start; gap: 6px; }
- 
+
 .quake-grid > .fallback-text {
   grid-column: 1 / -1;
 }
- 
+
 /* Events — editorial list, not a card */
 .event-list {
   list-style: none;
   margin: 0;
   padding: 0;
 }
- 
+
 .event-item {
   position: relative;
   padding: 0 0 18px 18px;
   border-left: 1px solid var(--border);
 }
- 
+
 .event-item::before {
   content: "";
   position: absolute;
@@ -708,24 +815,24 @@ main {
   border-radius: 50%;
   background: var(--text-faint);
 }
- 
+
 .event-item.sev-red::before    { background: var(--red); }
 .event-item.sev-orange::before { background: var(--orange); }
 .event-item.sev-yellow::before { background: var(--yellow); }
- 
+
 .event-title {
   font-weight: 600;
   font-size: 0.92rem;
 }
- 
+
 .event-meta {
   color: var(--text-dim);
   font-size: 0.85rem;
   margin-top: 2px;
 }
- 
+
 .event-meta span { display: block; }
- 
+
 .event-time {
   font-size: 0.75rem;
   color: var(--text-faint);
@@ -735,7 +842,7 @@ main {
   gap: 10px;
   flex-wrap: wrap;
 }
- 
+
 .share-btn {
   background: none;
   border: none;
@@ -746,47 +853,47 @@ main {
   cursor: pointer;
   padding: 0;
 }
- 
+
 .share-btn:hover { color: var(--text); }
- 
+
 /* Area readout — compact rows */
 .area-readout {
   border-top: 1px solid var(--border);
 }
- 
+
 .area-row {
   padding: 12px 0;
   border-bottom: 1px solid var(--border);
 }
- 
+
 .area-row-label {
   color: var(--text-faint);
   font-size: 0.78rem;
   margin-bottom: 3px;
 }
- 
+
 .area-row-value .value {
   font-weight: 600;
   font-size: 0.95rem;
   display: block;
 }
- 
+
 .area-row-value .value.is-technical {
   font-family: var(--font-data);
 }
- 
+
 .area-row-value .source {
   display: block;
   font-size: 0.75rem;
   color: var(--text-faint);
   margin-top: 3px;
 }
- 
+
 .value.tone-green  { color: var(--green); }
 .value.tone-yellow { color: var(--yellow); }
 .value.tone-orange { color: var(--orange); }
 .value.tone-red    { color: var(--red); }
- 
+
 /* Footer */
 .site-footer {
   border-top: 1px solid var(--border);
@@ -796,7 +903,7 @@ main {
   max-width: 1100px;
   margin: 0 auto;
 }
- 
+
 .footer-brand {
   font-family: var(--font-display);
   font-weight: 600;
@@ -804,16 +911,16 @@ main {
   color: var(--text);
   margin-bottom: 4px;
 }
- 
+
 .footer-desc { margin: 0 0 16px; }
- 
+
 .footer-label {
   color: var(--text-faint);
   font-size: 0.75rem;
 }
- 
+
 .footer-sources { margin: 0 0 14px; line-height: 1.7; }
- 
+
 .footer-disclaimer {
   color: var(--text-faint);
   font-size: 0.78rem;
@@ -821,13 +928,13 @@ main {
   max-width: 60ch;
   margin: 0 0 16px;
 }
- 
+
 .footer-credit {
   color: var(--text-faint);
   font-size: 0.78rem;
   margin: 0;
 }
- 
+
 /* Desktop refinements */
 @media (min-width: 769px) {
   .site-header {
@@ -836,20 +943,19 @@ main {
     justify-content: space-between;
     padding: 18px 32px;
   }
- 
+
   .header-row { padding-bottom: 0; }
- 
+
   .site-nav {
     padding-bottom: 0;
     overflow: visible;
   }
- 
+
   main { padding: 0 32px; }
- 
+
   .hero { padding: 48px 0 32px; }
- 
+
   .brand-mark { font-size: 2.3rem; }
- 
+
   .site-footer { padding: 32px 32px 40px; }
 }
- 
