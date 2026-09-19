@@ -4,10 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Kualitas udara — Bencanaku</title>
-<meta name="description" content="Kualitas udara terkini di beberapa kota besar Indonesia berdasarkan data WAQI (World Air Quality Index).">
+<meta name="description" content="Pantau indeks kualitas udara (AQI) berdasarkan stasiun pengamatan WAQI yang tersedia di Indonesia.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <link rel="stylesheet" href="style.css">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
@@ -16,11 +17,11 @@
 <meta name="theme-color" content="#0E1114">
 </head>
 <body>
- 
+
 <div class="demo-banner">
   <strong>Data kualitas udara dari WAQI.</strong> Diperbarui otomatis tiap jam lewat GitHub Actions.
 </div>
- 
+
 <header class="site-header">
   <div class="header-row">
     <div class="brand">
@@ -33,83 +34,134 @@
   <nav class="site-nav">
     <a href="gempa.html">Gempa</a>
     <a href="cuaca.html">Cuaca</a>
-    <a href="gunung-api.html">Gunung api</a>
-    <a href="risiko.html">Risiko</a>
     <a href="udara.html" style="color:var(--text); font-weight:600;">Udara</a>
     <a href="tentang.html">Tentang</a>
   </nav>
 </header>
- 
+
 <main>
- 
+
   <section class="hero">
     <h1>Kualitas udara</h1>
-    <p class="hero-lead">AQI beberapa kota besar Indonesia, berdasarkan data WAQI.</p>
-    <p class="last-updated" id="aqiFetchedNote"></p>
+    <p class="hero-lead">Pantau indeks kualitas udara berdasarkan stasiun pengamatan yang tersedia.</p>
+
+    <div class="udara-search-wrap">
+      <input type="text" id="udaraSearch" class="udara-search-input" placeholder="Cari Jakarta, Cijantung, Depok, Bogor…" autocomplete="off">
+      <ul id="udaraSearchResults" class="region-dropdown" hidden></ul>
+    </div>
   </section>
- 
+
+  <!-- Hasil pencarian / lokasi terpilih -->
+  <section>
+    <div id="udaraSelected" class="udara-hero">
+      <p class="fallback-text">Cari lokasi, atau pilih salah satu dari peta / daftar di bawah.</p>
+    </div>
+  </section>
+
+  <!-- Kategori AQI -->
   <section>
     <div class="section-head">
-      <h2>Per kota</h2>
+      <h2>Kategori indeks</h2>
     </div>
-    <div class="quake-grid" id="aqiGrid">
+    <div class="udara-scale">
+      <div class="udara-scale-item" style="border-color:#22c55e">
+        <div class="udara-scale-label" style="color:#22c55e">Baik</div>
+        <div class="udara-scale-range">0–50</div>
+      </div>
+      <div class="udara-scale-item" style="border-color:#eab308">
+        <div class="udara-scale-label" style="color:#eab308">Sedang</div>
+        <div class="udara-scale-range">51–100</div>
+      </div>
+      <div class="udara-scale-item" style="border-color:#f97316">
+        <div class="udara-scale-label" style="color:#f97316">Tidak sehat</div>
+        <div class="udara-scale-range">101–150</div>
+      </div>
+      <div class="udara-scale-item" style="border-color:#ef4444">
+        <div class="udara-scale-label" style="color:#ef4444">Sangat tidak sehat</div>
+        <div class="udara-scale-range">151–200</div>
+      </div>
+      <div class="udara-scale-item" style="border-color:#7f1d1d">
+        <div class="udara-scale-label" style="color:#7f1d1d">Berbahaya</div>
+        <div class="udara-scale-range">201+</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Detail polutan -->
+  <section>
+    <div class="section-head">
+      <h2>Detail polutan</h2>
+    </div>
+    <div id="udaraPollutants" class="udara-pollutant-grid">
+      <p class="fallback-text">Cari atau pilih lokasi untuk melihat detail polutan (jika tersedia).</p>
+    </div>
+  </section>
+
+  <!-- Peta stasiun -->
+  <section class="map-section">
+    <div class="section-head">
+      <h2>Peta stasiun pemantauan</h2>
+      <span class="section-note" id="udaraMapNote"></span>
+    </div>
+    <div class="map-frame">
+      <div id="udaraMap" class="leaflet-map"></div>
+      <p id="udaraMapFallback" class="map-empty-note" hidden>Peta tidak bisa dimuat. Cek koneksi internet lalu muat ulang halaman.</p>
+    </div>
+  </section>
+
+  <!-- Daftar lokasi terpantau -->
+  <section>
+    <div class="section-head">
+      <h2>Lokasi terpantau</h2>
+      <span class="section-note">Menampilkan stasiun yang tersedia dari WAQI, bukan seluruh Indonesia</span>
+    </div>
+    <div id="udaraGrid" class="aqi-grid">
       <p class="fallback-text">Memuat data kualitas udara…</p>
     </div>
   </section>
- 
+
+  <!-- Penjelasan singkat -->
   <section>
     <div class="section-head">
-      <h2>Skala AQI</h2>
+      <h2>Bagaimana membaca indeks udara?</h2>
     </div>
-    <div class="area-readout">
-      <div class="area-row">
-        <div class="area-row-label">0–50</div>
-        <div class="area-row-value"><span class="value tone-green">Baik</span></div>
-      </div>
-      <div class="area-row">
-        <div class="area-row-label">51–100</div>
-        <div class="area-row-value"><span class="value tone-yellow">Sedang</span></div>
-      </div>
-      <div class="area-row">
-        <div class="area-row-label">101–150</div>
-        <div class="area-row-value"><span class="value tone-orange">Tidak sehat bagi kelompok sensitif</span></div>
-      </div>
-      <div class="area-row">
-        <div class="area-row-label">151+</div>
-        <div class="area-row-value"><span class="value tone-red">Tidak sehat</span></div>
-      </div>
-    </div>
+    <p style="color: var(--text-dim); line-height: 1.7; max-width: 65ch;">
+      Semakin tinggi nilai indeks, semakin buruk kualitas udara. Gunakan kategori indeks sebagai gambaran umum kondisi udara di lokasi pengamatan.
+    </p>
+    <p class="caveat-text">
+      Data berasal dari stasiun pengamatan yang tersedia dan tidak selalu mewakili kondisi setiap titik dalam suatu kota.
+    </p>
   </section>
- 
+
   <p class="footer-disclaimer" style="padding: 24px 0;">
-    Data kualitas udara berasal dari <a href="https://aqicn.org" style="color:var(--text-dim);">WAQI (World Air Quality Index)</a>, dikumpulkan dari stasiun pemantauan terdekat tiap kota. Angka bisa berbeda dari pengukuran resmi pemerintah setempat.
+    Sumber data: <a href="https://aqicn.org" style="color:var(--text-dim);">WAQI (World Air Quality Index)</a>. Data kualitas udara dapat mengalami keterlambatan, perubahan, atau tidak tersedia sementara. Indeks kualitas udara pada halaman ini merupakan data dari stasiun/sumber yang tersedia, bukan pengukuran langsung Bencanaku.
   </p>
- 
+
 </main>
- 
+
 <footer class="site-footer">
   <div class="footer-brand">Bencanaku</div>
   <p class="footer-desc">Platform informasi kebencanaan independen.</p>
- 
+
   <p class="footer-sources">
     <span class="footer-label">Sumber data</span><br>
-    BMKG · BNPB/InaRISK · WAQI
+    BMKG · BNPB/InaRISK · WAQI · Open-Meteo
   </p>
- 
+
   <p class="footer-disclaimer">
     Bencanaku bukan lembaga pemerintah. Untuk keputusan keselamatan, selalu rujuk informasi resmi dari instansi terkait.
   </p>
- 
+
   <p class="footer-credit">Founded by Ibnu Farras</p>
 </footer>
- 
+
 <noscript>
   <p style="text-align:center; padding:16px; color:#DD6363; font-size:0.85rem;">
     Bencanaku butuh JavaScript aktif untuk menampilkan data. Aktifkan JavaScript di browser kamu.
   </p>
 </noscript>
- 
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="udara.js"></script>
 </body>
 </html>
- 
