@@ -1,54 +1,22 @@
-// ============================================================
-// Bencanaku — udara.js
-// Peta + grid semua stasiun WAQI + search provinsi (perkiraan area)
-// ============================================================
+/*
+  Bencanaku — udara.js
+  Berbasis STASIUN PENGAMATAN WAQI (data/aqi-stations.json), bukan provinsi.
 
-// Kotak koordinat perkiraan per provinsi (lat_min, lat_max, lon_min, lon_max)
-// CATATAN: ini perkiraan area, bukan batas administratif resmi.
-const PROVINCES = [
-  { name: "Aceh", box: [2, 6, 95, 98.5] },
-  { name: "Sumatera Utara", box: [-0.5, 4.5, 97, 100.5] },
-  { name: "Sumatera Barat", box: [-3.5, 0.5, 98.5, 101.5] },
-  { name: "Riau", box: [-1.5, 2.5, 100, 103.5] },
-  { name: "Kepulauan Riau", box: [-1, 5, 103.5, 109] },
-  { name: "Jambi", box: [-3, 0, 101, 104.5] },
-  { name: "Sumatera Selatan", box: [-4.5, 0, 102, 106] },
-  { name: "Kepulauan Bangka Belitung", box: [-4, 0, 105, 108.5] },
-  { name: "Bengkulu", box: [-5.5, -2, 101, 104] },
-  { name: "Lampung", box: [-6, -3.5, 103.5, 106] },
-  { name: "DKI Jakarta", box: [-6.4, -5.9, 106.6, 107.0] },
-  { name: "Jawa Barat", box: [-7.8, -5.9, 106, 108.9] },
-  { name: "Banten", box: [-7, -5.7, 105.1, 106.8] },
-  { name: "Jawa Tengah", box: [-8.2, -6.5, 108.5, 111.5] },
-  { name: "DI Yogyakarta", box: [-8.3, -7.5, 110, 110.8] },
-  { name: "Jawa Timur", box: [-8.8, -6.9, 111, 114.5] },
-  { name: "Bali", box: [-8.9, -8.0, 114.4, 115.7] },
-  { name: "Nusa Tenggara Barat", box: [-9.1, -8.0, 115.7, 119.3] },
-  { name: "Nusa Tenggara Timur", box: [-11, -8.0, 118.9, 125.2] },
-  { name: "Kalimantan Barat", box: [-3, 3, 108.5, 114.5] },
-  { name: "Kalimantan Tengah", box: [-3.5, -0.5, 110.5, 115.5] },
-  { name: "Kalimantan Selatan", box: [-4.3, -1.5, 114, 116.5] },
-  { name: "Kalimantan Timur", box: [-2.5, 4, 113.5, 119.5] },
-  { name: "Kalimantan Utara", box: [1.5, 4.5, 115, 118.5] },
-  { name: "Sulawesi Utara", box: [-0.5, 4.7, 121.5, 127] },
-  { name: "Gorontalo", box: [0, 1.2, 121.3, 123.6] },
-  { name: "Sulawesi Tengah", box: [-3.5, 1.5, 119, 124.5] },
-  { name: "Sulawesi Barat", box: [-3.5, -0.5, 118.5, 120] },
-  { name: "Sulawesi Selatan", box: [-7.5, -0.5, 118.5, 121.5] },
-  { name: "Sulawesi Tenggara", box: [-6, 2, 120.5, 124] },
-  { name: "Maluku", box: [-8.5, 0, 125, 135] },
-  { name: "Maluku Utara", box: [-1, 3, 124.5, 129.5] },
-  { name: "Papua Barat", box: [-4, 0, 130, 134.5] },
-  { name: "Papua Barat Daya", box: [-4, 0, 130, 133] },
-  { name: "Papua Tengah", box: [-5, -2, 135, 138] },
-  { name: "Papua Pegunungan", box: [-5, -3, 137, 141] },
-  { name: "Papua Selatan", box: [-9, -5, 137, 141] },
-  { name: "Papua", box: [-5, -2, 136, 141] },
-];
+  Alur pencarian:
+  1. Cocokkan teks yang diketik ke nama stasiun WAQI (substring match).
+  2. Kalau tidak ada yang cocok, geocode teks itu (Open-Meteo Geocoding,
+     sudah dipakai di halaman Cuaca, gratis tanpa token) untuk dapat
+     koordinat, lalu cari stasiun WAQI terdekat dari titik itu.
+  3. Kalau stasiun yang ditampilkan bukan match langsung, halaman WAJIB
+     menjelaskan itu ("tidak ada stasiun tepat di lokasi ini") — tidak
+     boleh terkesan seolah AQI itu milik lokasi yang dicari.
 
-// Kategori AQI: batas bawah, label, warna, emoji
+  Prinsip: tidak ada AQI/polutan yang dikarang. Kalau data tidak ada,
+  tampilkan state itu apa adanya.
+*/
+
 const AQI_LEVELS = [
-  { max: 50, label: "Baik", color: "#22c55e", emoji: "😊" },
+  { max: 50,  label: "Baik", color: "#22c55e", emoji: "😊" },
   { max: 100, label: "Sedang", color: "#eab308", emoji: "😐" },
   { max: 150, label: "Tidak sehat", color: "#f97316", emoji: "😷" },
   { max: 200, label: "Sangat tidak sehat", color: "#ef4444", emoji: "🤢" },
@@ -59,38 +27,53 @@ function getAqiLevel(aqi) {
   return AQI_LEVELS.find((lvl) => aqi <= lvl.max) || AQI_LEVELS[AQI_LEVELS.length - 1];
 }
 
+function distanceKm(lat1, lon1, lat2, lon2) {
+  const R = 6371;
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLon = (lon2 - lon1) * Math.PI / 180;
+  const a = Math.sin(dLat / 2) ** 2 +
+    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+    Math.sin(dLon / 2) ** 2;
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
+
 let map;
 let markers = [];
 let allStations = [];
+let fetchedAtUTC = null;
 
-// Data sekarang berbentuk { fetchedAtUTC, stations: [...] } — bukan array
-// langsung — hasil dari workflow update-aqi-stations.yml (WAQI map/bounds).
+// ---------- Ambil data stasiun ----------
+
 async function loadStationsData() {
   const res = await fetch("data/aqi-stations.json", { cache: "no-store" });
-  if (!res.ok) throw new Error("Gagal memuat data stasiun");
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 }
 
-function setFetchedNote(fetchedAtUTC) {
-  const note = document.getElementById("aqiFetchedNote");
-  if (!note) return;
-  if (fetchedAtUTC) {
-    const fetchedLocal = new Date(fetchedAtUTC).toLocaleString("id-ID", {
-      hour: "2-digit", minute: "2-digit", day: "2-digit", month: "short", timeZone: "Asia/Jakarta"
-    });
-    note.textContent = `Data terakhir diambil ${fetchedLocal} WIB`;
-  } else {
-    note.textContent = "Menunggu pengambilan data pertama dari WAQI.";
-  }
+function fetchedTimeLabel() {
+  if (!fetchedAtUTC) return "";
+  return new Date(fetchedAtUTC).toLocaleString("id-ID", {
+    hour: "2-digit", minute: "2-digit", day: "2-digit", month: "short", timeZone: "Asia/Jakarta"
+  }) + " WIB";
 }
 
+// ---------- Peta ----------
+
 function initMap() {
-  map = L.map("aqi-map", {
+  const container = document.getElementById("udaraMap");
+  const fallback = document.getElementById("udaraMapFallback");
+  if (!container) return;
+
+  if (typeof L === "undefined") {
+    console.error("Bencanaku (udara): Leaflet gagal dimuat.");
+    if (fallback) fallback.hidden = false;
+    return;
+  }
+
+  map = L.map(container, {
     minZoom: 4,
-    maxBounds: [
-      [-13, 90],
-      [8, 142],
-    ],
+    maxBounds: [[-13, 90], [8, 142]],
+    scrollWheelZoom: false,
   }).setView([-2.5, 118], 5);
 
   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -103,124 +86,271 @@ function clearMarkers() {
   markers = [];
 }
 
-function renderMap(stations) {
+function renderMapMarkers(stations) {
+  if (!map) return;
   clearMarkers();
+
   stations.forEach((s) => {
     const level = getAqiLevel(s.aqi);
     const marker = L.circleMarker([s.lat, s.lon], {
       radius: 6,
-      color: level.color,
-      fillColor: level.color,
-      fillOpacity: 0.8,
+      color: "#fff",
       weight: 1,
-    }).bindPopup(
-      `<strong>${s.name}</strong><br>AQI ${s.aqi} — ${level.label} ${level.emoji}`
-    );
+      fillColor: level.color,
+      fillOpacity: 0.85,
+    }).bindPopup(`<b>${s.name}</b><br>AQI ${s.aqi} — ${level.label} ${level.emoji}`);
+
+    marker.on("click", () => selectStation(s, { exact: true }));
     marker.addTo(map);
     markers.push(marker);
   });
 }
 
-function renderGrid(stations, titleSuffix) {
-  const grid = document.getElementById("aqi-grid");
-  const title = document.getElementById("grid-title");
-  title.textContent = titleSuffix ? `Stasiun di ${titleSuffix}` : "Semua stasiun";
+// ---------- Render bagian-bagian halaman ----------
 
-  if (stations.length === 0) {
-    if (titleSuffix) {
-      grid.innerHTML = "<p>Tidak ada stasiun WAQI yang ditemukan di area ini.</p>";
-    } else {
-      grid.innerHTML = "<p>Data stasiun belum tersedia saat ini. Coba muat ulang beberapa saat lagi.</p>";
-    }
+function renderSelected(station, meta) {
+  const el = document.getElementById("udaraSelected");
+  if (!el) return;
+
+  if (!station) {
+    el.innerHTML = `<p class="fallback-text">Tidak ada stasiun yang ditemukan untuk lokasi tersebut.</p>`;
     return;
   }
 
-  grid.innerHTML = stations
-    .map((s) => {
-      const level = getAqiLevel(s.aqi);
-      return `
-        <div class="aqi-card" style="border-color:${level.color}">
-          <div class="aqi-card-name">${s.name}</div>
-          <div class="aqi-card-emoji" style="color:${level.color}">${level.emoji}</div>
-          <div class="aqi-card-number" style="color:${level.color}">${s.aqi}</div>
-          <div class="aqi-card-label">${level.label}</div>
-        </div>
-      `;
-    })
-    .join("");
+  const level = getAqiLevel(station.aqi);
+  const updatedLine = fetchedAtUTC ? `Diperbarui ${fetchedTimeLabel()}` : "";
+
+  const nearestNote = meta && !meta.exact ? `
+    <div class="udara-nearest-note">
+      <strong>${meta.queryLabel}</strong><br>
+      Tidak ada stasiun pengamatan tepat di lokasi ini.
+      Menampilkan data dari stasiun terdekat${meta.distanceKm ? ` (~${Math.round(meta.distanceKm)} km)` : ""}:
+    </div>
+  ` : "";
+
+  el.innerHTML = `
+    ${nearestNote}
+    <div class="udara-hero-name">${station.name}</div>
+    <div class="udara-hero-main">
+      <div class="udara-hero-number" style="color:${level.color}">${station.aqi}</div>
+      <div class="udara-hero-meta">
+        <div class="udara-hero-category" style="color:${level.color}">${level.label.toUpperCase()} <span class="udara-hero-emoji">${level.emoji}</span></div>
+        ${updatedLine ? `<div class="udara-hero-updated">${updatedLine}</div>` : ""}
+        <div class="udara-hero-source">Sumber: WAQI</div>
+      </div>
+    </div>
+  `;
+
+  // Detail polutan — belum tersedia dari pipeline data saat ini (lihat catatan di udaraPollutants)
+  renderPollutants(null);
 }
 
-function findProvince(query) {
+function renderPollutants(pollutants) {
+  const el = document.getElementById("udaraPollutants");
+  if (!el) return;
+
+  if (!pollutants) {
+    el.innerHTML = `<p class="fallback-text">Detail polutan (PM2.5, PM10, O₃, dll) belum tersedia untuk stasiun ini di Bencanaku.</p>`;
+    return;
+  }
+
+  // Struktur ini siap dipakai kalau nanti data per-polutan sudah diambil
+  const items = [
+    { key: "pm25", label: "PM2.5", unit: "µg/m³" },
+    { key: "pm10", label: "PM10", unit: "µg/m³" },
+    { key: "o3", label: "O₃", unit: "" },
+    { key: "no2", label: "NO₂", unit: "" },
+    { key: "co", label: "CO", unit: "" },
+    { key: "so2", label: "SO₂", unit: "" },
+  ];
+
+  const available = items.filter(i => pollutants[i.key] != null);
+  if (available.length === 0) {
+    el.innerHTML = `<p class="fallback-text">Detail polutan tidak tersedia untuk stasiun ini.</p>`;
+    return;
+  }
+
+  el.innerHTML = available.map(i => `
+    <div class="quake-card">
+      <div class="event-title">${i.label}</div>
+      <div class="udara-hero-number" style="font-size:1.4rem;">${pollutants[i.key]}${i.unit ? " " + i.unit : ""}</div>
+    </div>
+  `).join("");
+}
+
+function renderGrid(stations) {
+  const grid = document.getElementById("udaraGrid");
+  if (!grid) return;
+
+  if (!Array.isArray(stations) || stations.length === 0) {
+    grid.innerHTML = `<p class="fallback-text">Data kualitas udara tidak dapat dimuat saat ini.</p>`;
+    return;
+  }
+
+  grid.innerHTML = stations.map((s, i) => {
+    const level = getAqiLevel(s.aqi);
+    return `
+      <div class="aqi-card" style="border-color:${level.color}; cursor:pointer;" data-station-index="${i}">
+        <div class="aqi-card-name">${s.name}</div>
+        <div class="aqi-card-emoji" style="color:${level.color}">${level.emoji}</div>
+        <div class="aqi-card-number" style="color:${level.color}">${s.aqi}</div>
+        <div class="aqi-card-label">${level.label}</div>
+      </div>
+    `;
+  }).join("");
+
+  grid.querySelectorAll("[data-station-index]").forEach(card => {
+    card.addEventListener("click", () => {
+      const s = stations[Number(card.dataset.stationIndex)];
+      selectStation(s, { exact: true });
+    });
+  });
+}
+
+function selectStation(station, meta) {
+  renderSelected(station, meta);
+  if (map && station) {
+    map.setView([station.lat, station.lon], 9);
+    const marker = markers.find(m => {
+      const ll = m.getLatLng();
+      return ll.lat === station.lat && ll.lng === station.lon;
+    });
+    if (marker) marker.openPopup();
+  }
+}
+
+// ---------- Pencarian ----------
+
+async function geocodeQuery(query) {
+  const url = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(query)}&count=1&language=id&format=json&country=ID`;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  const data = await res.json();
+  return Array.isArray(data.results) && data.results.length > 0 ? data.results[0] : null;
+}
+
+function findDirectStationMatch(query) {
   const q = query.trim().toLowerCase();
   if (!q) return null;
-  return PROVINCES.find((p) => p.name.toLowerCase().includes(q));
+  return allStations.find(s => s.name.toLowerCase().includes(q)) || null;
 }
 
-function filterByBox(stations, box) {
-  const [latMin, latMax, lonMin, lonMax] = box;
-  return stations.filter(
-    (s) => s.lat >= latMin && s.lat <= latMax && s.lon >= lonMin && s.lon <= lonMax
-  );
+function findNearestStation(lat, lon) {
+  if (allStations.length === 0) return null;
+  let nearest = allStations[0];
+  let minDist = distanceKm(lat, lon, nearest.lat, nearest.lon);
+  for (const s of allStations.slice(1)) {
+    const d = distanceKm(lat, lon, s.lat, s.lon);
+    if (d < minDist) { minDist = d; nearest = s; }
+  }
+  return { station: nearest, distanceKm: minDist };
 }
 
-function handleSearch(query) {
-  const province = findProvince(query);
-  if (!province) {
-    // provinsi tidak ketemu / input kosong -> tampilkan semua
-    renderGrid(allStations, null);
-    if (map) map.setView([-2.5, 118], 5);
-    renderMap(allStations);
+async function handleSearch(query) {
+  if (!query.trim()) return;
+
+  const direct = findDirectStationMatch(query);
+  if (direct) {
+    selectStation(direct, { exact: true });
     return;
   }
-  const filtered = filterByBox(allStations, province.box);
-  renderGrid(filtered, province.name);
-  if (map) {
-    const [latMin, latMax, lonMin, lonMax] = province.box;
-    map.fitBounds([
-      [latMin, lonMin],
-      [latMax, lonMax],
-    ]);
+
+  try {
+    const geo = await geocodeQuery(query);
+    if (!geo) {
+      renderSelected(null);
+      return;
+    }
+    const nearest = findNearestStation(geo.latitude, geo.longitude);
+    if (!nearest) {
+      renderSelected(null);
+      return;
+    }
+    selectStation(nearest.station, {
+      exact: false,
+      queryLabel: `${geo.name}${geo.admin1 ? ", " + geo.admin1 : ""}`,
+      distanceKm: nearest.distanceKm,
+    });
+  } catch (err) {
+    console.error("Bencanaku (udara): pencarian gagal —", err);
+    renderSelected(null);
   }
-  renderMap(filtered.length ? filtered : allStations);
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+function setupSearch() {
+  const input = document.getElementById("udaraSearch");
+  const list = document.getElementById("udaraSearchResults");
+  if (!input || !list) return;
+
+  let debounceTimer;
+  input.addEventListener("input", () => {
+    clearTimeout(debounceTimer);
+    const q = input.value.trim();
+    if (q.length < 2) { list.hidden = true; return; }
+
+    debounceTimer = setTimeout(() => {
+      const matches = allStations.filter(s => s.name.toLowerCase().includes(q.toLowerCase())).slice(0, 6);
+      if (matches.length === 0) {
+        list.hidden = true;
+        return;
+      }
+      list.innerHTML = matches.map((s, i) => `<li data-index="${i}">${s.name}</li>`).join("");
+      list.hidden = false;
+
+      list.querySelectorAll("li[data-index]").forEach(li => {
+        li.addEventListener("click", () => {
+          const s = matches[Number(li.dataset.index)];
+          input.value = s.name;
+          list.hidden = true;
+          selectStation(s, { exact: true });
+        });
+      });
+    }, 250);
+  });
+
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      list.hidden = true;
+      handleSearch(input.value);
+    }
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!list.contains(e.target) && e.target !== input) list.hidden = true;
+  });
+}
+
+// ---------- Init ----------
+
+document.addEventListener("DOMContentLoaded", async () => {
   try {
     initMap();
   } catch (err) {
-    console.error("Gagal memuat peta:", err);
-    document.getElementById("aqi-map").innerHTML =
-      "<p>Peta gagal dimuat.</p>";
+    console.error("Bencanaku (udara): gagal init peta —", err);
   }
 
   try {
-    loadStationsData()
-      .then((data) => {
-        const stations = Array.isArray(data.stations) ? data.stations : [];
-        setFetchedNote(data.fetchedAtUTC);
-        allStations = stations.sort((a, b) => b.aqi - a.aqi);
-        renderGrid(allStations, null);
-        renderMap(allStations);
-      })
-      .catch((err) => {
-        console.error(err);
-        document.getElementById("aqi-grid").innerHTML =
-          "<p>Data stasiun belum tersedia.</p>";
-        const note = document.getElementById("aqiFetchedNote");
-        if (note) note.textContent = "Gagal memuat data. Coba muat ulang halaman.";
-      });
+    const data = await loadStationsData();
+    allStations = Array.isArray(data.stations) ? data.stations : [];
+    fetchedAtUTC = data.fetchedAtUTC || null;
+
+    const note = document.getElementById("udaraMapNote");
+    if (note && fetchedAtUTC) note.textContent = `Diperbarui ${fetchedTimeLabel()}`;
+
+    allStations.sort((a, b) => b.aqi - a.aqi);
+    renderMapMarkers(allStations);
+    renderGrid(allStations);
+
+    if (allStations.length === 0) {
+      renderSelected(null);
+    }
   } catch (err) {
-    console.error("Gagal memuat data stasiun:", err);
+    console.error("Bencanaku (udara): gagal memuat data stasiun —", err);
+    document.getElementById("udaraGrid").innerHTML =
+      `<p class="fallback-text">Data kualitas udara tidak dapat dimuat saat ini.</p>`;
+    document.getElementById("udaraSelected").innerHTML =
+      `<p class="fallback-text">Data kualitas udara tidak dapat dimuat saat ini.</p>`;
   }
 
-  try {
-    const searchInput = document.getElementById("provinsi-search");
-    let debounceTimer;
-    searchInput.addEventListener("input", (e) => {
-      clearTimeout(debounceTimer);
-      debounceTimer = setTimeout(() => handleSearch(e.target.value), 300);
-    });
-  } catch (err) {
-    console.error("Gagal memasang search:", err);
-  }
+  setupSearch();
 });
