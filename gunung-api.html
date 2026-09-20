@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gunung Api — Bencanaku</title>
+<meta name="description" content="Aktivitas gunung api Indonesia — status, peta, dan sebaran abu vulkanik berdasarkan sumber resmi yang tersedia.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="style.css">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="theme-color" content="#0E1114">
+</head>
+<body>
+ 
+<div class="demo-banner">
+  <strong>Data contoh (mock).</strong> Belum ada sumber PVMBG/MAGMA yang bisa diakses secara sah dan otomatis — lihat bagian "Tentang data" di bawah.
+</div>
+ 
+<header class="site-header">
+  <div class="header-row">
+    <div class="brand">
+      <a href="index.html" class="brand-link">
+        <span class="brand-mark">Bencanaku</span>
+        <span class="brand-sub">Platform informasi kebencanaan</span>
+      </a>
+    </div>
+  </div>
+  <nav class="site-nav">
+    <a href="gempa.html">Gempa</a>
+    <a href="cuaca.html">Cuaca</a>
+    <a href="udara.html">Udara</a>
+    <a href="gunung-api.html" style="color:var(--text); font-weight:600;">Gunung api</a>
+    <a href="banjir.html">Banjir</a>
+    <a href="tentang.html">Tentang</a>
+  </nav>
+</header>
+ 
+<main>
+ 
+  <section class="hero">
+    <div class="volcano-hero-top">
+      <div>
+        <h1>Gunung Api</h1>
+        <p class="hero-lead">Aktivitas gunung api Indonesia berdasarkan data resmi PVMBG dan sumber pengamatan atmosfer terkait.</p>
+      </div>
+      <div class="volcano-hero-meta">
+        <div><span class="volcano-hero-meta-label">Terakhir diperbarui</span><br><span id="volcanoUpdatedAt">—</span></div>
+        <div><span class="volcano-hero-meta-label">Sumber data</span><br>PVMBG / MAGMA Indonesia<br>BMKG · VAAC Darwin</div>
+      </div>
+    </div>
+ 
+    <div class="udara-search-wrap">
+      <input type="text" id="volcanoSearch" class="udara-search-input" placeholder="Cari gunung, provinsi, atau wilayah…" autocomplete="off">
+      <ul id="volcanoSearchResults" class="region-dropdown" hidden></ul>
+    </div>
+  </section>
+ 
+  <!-- Summary status -->
+  <section>
+    <div id="volcanoSummary" class="volcano-summary-grid">
+      <div class="skeleton-card"></div>
+      <div class="skeleton-card"></div>
+      <div class="skeleton-card"></div>
+      <div class="skeleton-card"></div>
+    </div>
+  </section>
+ 
+  <!-- Peta + panel gunung terpilih -->
+  <section class="map-section">
+    <div class="section-head">
+      <h2>Peta Aktivitas Gunung Api</h2>
+      <span class="section-note">Sebaran gunung api dan status aktivitas terkini</span>
+    </div>
+ 
+    <div class="volcano-map-toggle">
+      <button class="segmented-btn active" data-layer="status">Status Aktivitas</button>
+      <button class="segmented-btn" data-layer="ash">Sebaran Abu Vulkanik</button>
+    </div>
+ 
+    <div class="volcano-map-layout">
+      <div class="map-frame" style="flex: 1.4;">
+        <div id="volcanoMap" class="leaflet-map"></div>
+        <p id="volcanoMapFallback" class="map-empty-note" hidden>Peta tidak bisa dimuat. Cek koneksi internet lalu muat ulang halaman.</p>
+        <div class="map-legend">
+          <span><i class="dot" style="background:var(--red)"></i>Level IV — Awas</span>
+          <span><i class="dot" style="background:var(--orange)"></i>Level III — Siaga</span>
+          <span><i class="dot" style="background:var(--yellow)"></i>Level II — Waspada</span>
+          <span><i class="dot" style="background:var(--green)"></i>Level I — Normal</span>
+        </div>
+      </div>
+ 
+      <div id="volcanoPanel" class="volcano-panel">
+        <p class="fallback-text">Pilih gunung di peta atau daftar di bawah untuk melihat detail.</p>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- Daftar gunung -->
+  <section>
+    <div class="section-head">
+      <h2>Daftar Gunung Api</h2>
+      <span class="section-note">Berdasarkan status aktivitas terbaru</span>
+    </div>
+    <div id="volcanoList" class="volcano-list-grid">
+      <div class="skeleton-card" style="height:180px;"></div>
+      <div class="skeleton-card" style="height:180px;"></div>
+      <div class="skeleton-card" style="height:180px;"></div>
+    </div>
+  </section>
+ 
+  <!-- Sebaran abu -->
+  <section>
+    <div class="section-head">
+      <h2>Sebaran Abu Vulkanik</h2>
+      <span class="section-note">Citra dan analisis berdasarkan sumber pengamatan yang tersedia</span>
+    </div>
+    <div id="volcanoAsh" class="volcano-ash-box">
+      <p class="fallback-text">Belum ada citra sebaran abu vulkanik yang tersedia untuk periode ini.</p>
+    </div>
+  </section>
+ 
+  <!-- Tentang data -->
+  <section>
+    <div class="section-head">
+      <h2>Tentang data</h2>
+    </div>
+    <p style="color: var(--text-dim); line-height: 1.7; max-width: 65ch;">
+      Informasi aktivitas gunung api bersumber dari data resmi dan/atau produk pengamatan yang tersedia. Kondisi gunung api dapat berubah sewaktu-waktu. Ikuti informasi resmi PVMBG/BMKG untuk informasi terbaru.
+    </p>
+    <p class="caveat-text">
+      Situs resmi MAGMA Indonesia (PVMBG) saat ini tidak menyediakan akses data otomatis untuk pihak ketiga (dibatasi lewat robots.txt), sehingga data pada halaman ini masih berupa contoh (mock) sambil kami mencari jalur akses resmi yang sah.
+    </p>
+    <p class="footer-disclaimer" style="padding: 16px 0 0;">
+      Sumber: PVMBG / MAGMA Indonesia · BMKG · VAAC Darwin
+    </p>
+  </section>
+ 
+</main>
+ 
+<footer class="site-footer">
+  <div class="footer-brand">Bencanaku</div>
+  <p class="footer-desc">Platform informasi kebencanaan independen.</p>
+  <p class="footer-sources">
+    <span class="footer-label">Sumber data</span><br>
+    BMKG · BNPB/InaRISK · WAQI · Open-Meteo
+  </p>
+  <p class="footer-disclaimer">
+    Bencanaku bukan lembaga pemerintah. Untuk keputusan keselamatan, selalu rujuk informasi resmi dari instansi terkait.
+  </p>
+  <p class="footer-credit">Founded by Ibnu Farras</p>
+</footer>
+ 
+<noscript>
+  <p style="text-align:center; padding:16px; color:#DD6363; font-size:0.85rem;">
+    Bencanaku butuh JavaScript aktif untuk menampilkan data. Aktifkan JavaScript di browser kamu.
+  </p>
+</noscript>
+ 
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="gunung-api.js"></script>
+</body>
+</html>
+ 
