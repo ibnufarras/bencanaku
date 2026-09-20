@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mitigasi & Kesiapsiagaan — Bencanaku</title>
+<meta name="description" content="Pusat edukasi kesiapsiagaan bencana Bencanaku — kenali langkah sebelum, saat, dan setelah bencana untuk gempa, tsunami, gunung api, banjir, dan lainnya.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="theme-color" content="#0E1114">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-row">
+    <div class="brand">
+      <a href="index.html" class="brand-link">
+        <span class="brand-mark">Bencanaku</span>
+        <span class="brand-sub">Platform informasi kebencanaan</span>
+      </a>
+    </div>
+  </div>
+  <nav class="site-nav">
+    <a href="gempa.html">Gempa</a>
+    <a href="cuaca.html">Cuaca</a>
+    <a href="udara.html">Udara</a>
+    <a href="gunung-api.html">Gunung api</a>
+    <a href="banjir.html">Banjir</a>
+    <a href="karhutla.html">Karhutla</a>
+    <a href="mitigasi.html" style="color:var(--text); font-weight:600;">Mitigasi</a>
+    <a href="tentang.html">Tentang</a>
+  </nav>
+</header>
+
+<main>
+
+  <!-- Hero -->
+  <section class="hero mitigasi-hero">
+    <svg class="mitigasi-hero-pattern" viewBox="0 0 400 120" aria-hidden="true">
+      <circle cx="30" cy="90" r="2" fill="var(--green)" opacity="0.5"/>
+      <circle cx="80" cy="60" r="2" fill="var(--green)" opacity="0.3"/>
+      <circle cx="140" cy="95" r="2" fill="var(--green)" opacity="0.4"/>
+      <circle cx="200" cy="50" r="2" fill="var(--green)" opacity="0.3"/>
+      <circle cx="260" cy="85" r="2" fill="var(--green)" opacity="0.5"/>
+      <circle cx="320" cy="65" r="2" fill="var(--green)" opacity="0.3"/>
+      <circle cx="370" cy="100" r="2" fill="var(--green)" opacity="0.4"/>
+      <path d="M10 90 Q 60 40 110 70 T 210 60 T 310 75 T 390 55" stroke="var(--border)" stroke-width="1" fill="none"/>
+    </svg>
+    <h1>Mitigasi &amp; Kesiapsiagaan</h1>
+    <p class="hero-lead">Kenali langkah yang dapat dilakukan sebelum, saat, dan setelah bencana.</p>
+    <p class="mitigasi-hero-support">Informasi ringkas untuk membantu memahami risiko, mempersiapkan diri, dan merespons situasi kebencanaan.</p>
+  </section>
+
+  <!-- Quick action: 3 fase -->
+  <section>
+    <div class="section-head">
+      <h2>Mulai dari yang kamu butuhkan</h2>
+    </div>
+    <div class="mitigasi-phase-grid">
+      <button class="mitigasi-phase-btn" data-phase="sebelum">
+        <span class="mitigasi-phase-title">Sebelum bencana</span>
+        <span class="mitigasi-phase-desc">Persiapkan diri dan lingkungan.</span>
+      </button>
+      <button class="mitigasi-phase-btn" data-phase="saat">
+        <span class="mitigasi-phase-title">Saat bencana</span>
+        <span class="mitigasi-phase-desc">Ketahui langkah dasar ketika situasi terjadi.</span>
+      </button>
+      <button class="mitigasi-phase-btn" data-phase="setelah">
+        <span class="mitigasi-phase-title">Setelah bencana</span>
+        <span class="mitigasi-phase-desc">Ketahui hal yang perlu diperhatikan setelah kejadian.</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- Search -->
+  <section>
+    <div class="udara-search-wrap" style="max-width:100%;">
+      <input type="text" id="mitigasiSearch" class="udara-search-input" placeholder="Cari bencana atau topik…" autocomplete="off">
+    </div>
+  </section>
+
+  <!-- Kategori -->
+  <section id="kategoriSection">
+    <div class="section-head">
+      <h2>Pelajari berdasarkan bencana</h2>
+    </div>
+    <div id="mitigasiGrid" class="mitigasi-grid"></div>
+    <p id="mitigasiEmpty" class="fallback-text" hidden>Topik belum ditemukan.<br>Coba kata kunci lain.</p>
+  </section>
+
+  <!-- Detail panel -->
+  <section id="mitigasiDetailSection" hidden>
+    <div id="mitigasiDetail" class="mitigasi-detail"></div>
+  </section>
+
+  <!-- Checklist -->
+  <section>
+    <div class="section-head">
+      <h2>Checklist kesiapsiagaan</h2>
+    </div>
+    <p class="hero-lead" style="margin-bottom:16px;">Periksa beberapa hal dasar yang sudah kamu siapkan.</p>
+    <div class="mitigasi-checklist-box">
+      <div class="mitigasi-progress-row">
+        <div class="mitigasi-progress-track"><div id="mitigasiProgressFill" class="mitigasi-progress-fill"></div></div>
+        <span id="mitigasiProgressText" class="mitigasi-progress-text">0 dari 5 selesai</span>
+      </div>
+      <ul id="mitigasiChecklist" class="mitigasi-checklist"></ul>
+      <button id="mitigasiResetBtn" class="region-change-btn" type="button">Reset checklist</button>
+    </div>
+  </section>
+
+  <!-- Decision helper -->
+  <section>
+    <div class="section-head">
+      <h2>Apa yang ingin kamu lakukan?</h2>
+    </div>
+    <div class="mitigasi-decision-grid">
+      <button class="mitigasi-decision-btn" data-decision="sebelum">Saya ingin bersiap</button>
+      <button class="mitigasi-decision-btn" data-decision="saat">Saya sedang menghadapi situasi</button>
+      <button class="mitigasi-decision-btn" data-decision="setelah">Saya ingin tahu apa yang dilakukan setelahnya</button>
+      <button class="mitigasi-decision-btn" data-decision="pahami">Saya ingin memahami suatu bencana</button>
+    </div>
+  </section>
+
+  <!-- Sumber resmi -->
+  <section>
+    <div class="section-head">
+      <h2>Sumber &amp; panduan resmi</h2>
+    </div>
+    <p style="color: var(--text-dim); line-height: 1.7; max-width: 65ch; margin-bottom: 16px;">
+      Ringkasan Bencanaku disusun dengan merujuk pada sumber resmi kebencanaan. Untuk informasi terbaru dan instruksi saat keadaan darurat, selalu periksa sumber resmi terkait.
+    </p>
+    <div class="mitigasi-source-grid">
+      <div class="mitigasi-source-card">
+        <div class="mitigasi-source-name">BNPB</div>
+        <div class="mitigasi-source-desc">Badan Nasional Penanggulangan Bencana</div>
+        <a href="https://bnpb.go.id" class="mitigasi-source-link">Lihat sumber resmi →</a>
+      </div>
+      <div class="mitigasi-source-card">
+        <div class="mitigasi-source-name">BMKG</div>
+        <div class="mitigasi-source-desc">Badan Meteorologi, Klimatologi, dan Geofisika</div>
+        <a href="https://www.bmkg.go.id" class="mitigasi-source-link">Lihat sumber resmi →</a>
+      </div>
+      <div class="mitigasi-source-card">
+        <div class="mitigasi-source-name">Badan Geologi / PVMBG</div>
+        <div class="mitigasi-source-desc">Informasi kebencanaan geologi dan gunung api</div>
+        <a href="https://vsi.esdm.go.id" class="mitigasi-source-link">Lihat sumber resmi →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Informasi darurat -->
+  <section>
+    <div class="section-head">
+      <h2>Informasi darurat</h2>
+    </div>
+    <p class="caveat-text" style="max-width:65ch;">
+      Informasi di Bencanaku bersifat edukatif. Bencanaku bukan otoritas kebencanaan. Dalam situasi darurat, ikuti peringatan dan instruksi dari otoritas resmi setempat.
+    </p>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-brand">Bencanaku</div>
+  <p class="footer-desc">Platform informasi kebencanaan</p>
+
+  <div class="mitigasi-footer-cols">
+    <div>
+      <div class="footer-label" style="margin-bottom:8px;">Mitigasi</div>
+      <a href="#" class="mitigasi-footer-link" data-topic="gempa">Gempa</a>
+      <a href="#" class="mitigasi-footer-link" data-topic="tsunami">Tsunami</a>
+      <a href="#" class="mitigasi-footer-link" data-topic="gunung-api">Gunung Api</a>
+      <a href="#" class="mitigasi-footer-link" data-topic="banjir">Banjir</a>
+      <a href="#" class="mitigasi-footer-link" data-topic="karhutla">Karhutla</a>
+      <a href="#" class="mitigasi-footer-link" data-topic="cuaca-ekstrem">Cuaca Ekstrem</a>
+      <a href="#" class="mitigasi-footer-link" data-topic="kekeringan">Kekeringan</a>
+      <a href="#" class="mitigasi-footer-link" data-topic="longsor">Tanah Longsor</a>
+    </div>
+    <div>
+      <div class="footer-label" style="margin-bottom:8px;">Sumber</div>
+      <a href="https://bnpb.go.id" class="mitigasi-footer-link">BNPB</a>
+      <a href="https://www.bmkg.go.id" class="mitigasi-footer-link">BMKG</a>
+      <a href="https://vsi.esdm.go.id" class="mitigasi-footer-link">Badan Geologi / PVMBG</a>
+    </div>
+  </div>
+
+  <p class="footer-disclaimer" style="margin-top:16px;">
+    Konten edukasi tidak menggantikan arahan resmi saat keadaan darurat.
+  </p>
+
+  <p class="footer-credit">© 2026 Ibnu Farras</p>
+</footer>
+
+<noscript>
+  <p style="text-align:center; padding:16px; color:#DD6363; font-size:0.85rem;">
+    Bencanaku butuh JavaScript aktif untuk menampilkan halaman ini. Aktifkan JavaScript di browser kamu.
+  </p>
+</noscript>
+
+<script src="mitigasi.js"></script>
+</body>
+</html>
