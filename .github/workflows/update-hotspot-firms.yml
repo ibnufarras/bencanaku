@@ -1,0 +1,79 @@
+name: Update hotspot data (NASA FIRMS)
+ 
+on:
+  schedule:
+    - cron: "20 * * * *"
+  workflow_dispatch: {}
+ 
+permissions:
+  contents: write
+ 
+jobs:
+  update-hotspot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+ 
+      - name: Ambil data hotspot dari NASA FIRMS
+        env:
+          FIRMS_MAP_KEY: ${{ secrets.FIRMS_MAP_KEY }}
+        run: |
+          if [ -z "$FIRMS_MAP_KEY" ]; then
+            echo "::warning::FIRMS_MAP_KEY belum diisi di Settings > Secrets. Melewati update hotspot."
+            exit 0
+          fi
+ 
+          mkdir -p data
+ 
+          # Kotak koordinat Indonesia: west,south,east,north
+          # VIIRS_NOAA20_NRT, 1 hari terakhir
+          curl -sSL "https://firms.modaps.eosdis.nasa.gov/api/area/csv/${FIRMS_MAP_KEY}/VIIRS_NOAA20_NRT/92,-11,145,7/1" \
+            -o /tmp/hotspot.csv
+ 
+          python3 << 'PYEOF'
+          import csv, json, datetime
+ 
+          rows = []
+          try:
+              with open("/tmp/hotspot.csv", newline="") as f:
+                  reader = csv.DictReader(f)
+                  for r in reader:
+                      try:
+                          rows.append({
+                              "lat": float(r.get("latitude", 0)),
+                              "lon": float(r.get("longitude", 0)),
+                              "acq_date": r.get("acq_date", ""),
+                              "acq_time": r.get("acq_time", ""),
+                              "satellite": r.get("satellite", ""),
+                              "instrument": r.get("instrument", ""),
+                              "confidence": r.get("confidence", ""),
+                              "frp": r.get("frp", ""),
+                          })
+                      except (ValueError, TypeError):
+                          continue
+          except FileNotFoundError:
+              rows = []
+ 
+          output = {
+              "fetchedAtUTC": datetime.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ"),
+              "source": "NASA FIRMS (VIIRS NOAA-20 NRT)",
+              "hotspots": rows,
+          }
+ 
+          with open("data/hotspot-firms.json", "w") as f:
+              json.dump(output, f)
+ 
+          print(f"Ditemukan {len(rows)} hotspot")
+          PYEOF
+ 
+      - name: Commit jika ada perubahan
+        run: |
+          git config user.name "bencanaku-bot"
+          git config user.email "actions@github.com"
+          if [ -f data/hotspot-firms.json ]; then
+            git add data/hotspot-firms.json
+            git diff --cached --quiet || git commit -m "chore: update data hotspot NASA FIRMS"
+            git push
+          fi
+ 
