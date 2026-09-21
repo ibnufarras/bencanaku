@@ -2,6 +2,18 @@
   "Infogempa": {
     "gempa": [
       {
+        "Tanggal": "22 Sep 2026",
+        "Jam": "06:48:13 WIB",
+        "DateTime": "2026-09-21T23:48:13+00:00",
+        "Coordinates": "4.74,125.30",
+        "Lintang": "4.74 LU",
+        "Bujur": "125.30 BT",
+        "Magnitude": "5.2",
+        "Kedalaman": "10 km",
+        "Wilayah": "127 km BaratLaut TAHUNA-KEP.SANGIHE-SULUT",
+        "Potensi": "Tidak berpotensi tsunami"
+      },
+      {
         "Tanggal": "21 Sep 2026",
         "Jam": "14:31:07 WIB",
         "DateTime": "2026-09-21T07:31:07+00:00",
@@ -168,20 +180,8 @@
         "Kedalaman": "10 km",
         "Wilayah": "77 km Tenggara CILACAP-JATENG",
         "Potensi": "Tidak berpotensi tsunami"
-      },
-      {
-        "Tanggal": "02 Sep 2026",
-        "Jam": "07:04:55 WIB",
-        "DateTime": "2026-09-02T00:04:55+00:00",
-        "Coordinates": "-3.15,139.41",
-        "Lintang": "3.15 LS",
-        "Bujur": "139.41 BT",
-        "Magnitude": "5.5",
-        "Kedalaman": "100 km",
-        "Wilayah": "69 km TimurLaut KOBAGMA-PAPUAPGNGN",
-        "Potensi": "Tidak berpotensi tsunami"
       }
     ]
   },
-  "fetchedAtUTC": "2026-09-21T20:52:12Z"
+  "fetchedAtUTC": "2026-09-21T23:55:16Z"
 }
