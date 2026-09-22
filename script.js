@@ -1,486 +1,1900 @@
-/*
-  Bencanaku — homepage (script.js)
+
+Merancang struktur file, panel detail, dan fitur interaktif halaman.
+Ini beda dari halaman-halaman sebelumnya — murni konten editorial, nggak butuh API/data live sama sekali. Jadi risikonya jauh lebih rendah (nggak ada urusan CORS/token/pipeline yang bisa gagal), dan bisa aku selesaikan penuh sekaligus.
+
+Dua catatan jujur sebelum mulai:
+
+Spec-nya nyebut navbar sederhana ("Beranda/Pantau/Tentang") — itu nggak sesuai kenyataan, navbar kita sekarang udah lumayan panjang (Gempa/Cuaca/Udara/Gunung api/Banjir/Karhutla/Tentang). Aku tetap tambah "Mitigasi" ke situ apa adanya, nggak restrukturisasi nav (itu di luar scope halaman ini, dan berarti ngubah halaman lain).
+Spec nyebut "accent biru Bencanaku yang sudah ada" — kita sebenarnya nggak punya aksen biru di manapun, cuma sistem warna status (hijau/kuning/oranye/merah). Aku pakai hijau sebagai aksen interaktif halaman ini (tombol, tab aktif, progress bar) biar tetap konsisten sama palet yang udah ada, bukan nambah warna baru.
+Lanjut build:
+
+Ran a command
+lanjut mitigasi
+
+Ran 3 commands, edited a file, shared files
+Ringkasan — 3 file (2 baru, style.css diganti)
+Tidak ada API, tidak ada GitHub Actions, tidak ada token — halaman ini murni statis, jadi risiko gagalnya jauh lebih kecil dari halaman-halaman sebelumnya.
+
+Isinya:
+
+8 kategori bencana (Gempa, Tsunami, Gunung Api, Banjir, Longsor, Karhutla, Cuaca Ekstrem, Kekeringan), masing-masing dengan konten SEBELUM/SAAT/SETELAH yang ditulis ulang orisinal (bukan copy-paste), bahasa hedged ("disarankan", "ikuti arahan") — sesuai instruksi, nggak ada klaim keselamatan absolut
+Search real-time filter kategori (client-side, tanpa API)
+3 tombol fase cepat + 4 tombol "decision helper" — nyetel tab default terus scroll ke bagian kategori
+Klik kartu bencana → panel detail muncul dengan tab Sebelum/Saat/Setelah
+Checklist 5 item + progress bar, tersimpan di localStorage (nggak hilang pas refresh), tombol reset
+Link sumber resmi (BNPB, BMKG, PVMBG) — URL asli, sudah aku cek bukan karangan
+Footer dengan link ke tiap topik mitigasi, klik langsung buka detailnya
+Cara upload:
+
+Buat baru: mitigasi.html, mitigasi.js
+Replace: style.css
+Nav di halaman lain kamu urus sendiri (tambah link "Mitigasi") kayak biasa
+Setelah ini upload, coba cek satu per satu: search, klik kartu, ganti tab, centang checklist terus refresh halaman (harus tetap kecentang), tombol reset.
+
+
+Mitigasi
+Code·HTML 
+
+Mitigasi
+JS 
+
+Style
+Code·CSS 
+
+PROJECT: Bencanaku TASK: Build the FINAL SUPER HOMEPAGE for Bencanaku IMPORTANT: Do NOT redesign or modify the other monitoring pages unless absolutely necessary for shared navigation compatibility. The existing project already contains: - Gempa - Cuaca - Udara - Banjir - Karhutla - Gu
+
+pasted
+
+Menyiapkan penulisan ulang penuh index.html dan script.js.
+Ini spesifikasi terbesar sejauh ini — homepage jadi hub pusat yang narik data dari semua halaman yang udah kita bangun (Gempa, Cuaca, Udara, Banjir, Karhutla). Kabar baiknya: infrastrukturnya sebagian besar udah ada (peta dengan layer gempa+udara udah jalan di homepage saat ini) — ini perluasan, bukan bangun dari nol. Aku kerjakan sebagai rewrite penuh index.html + script.js (bukan tempel-tempel patch) biar rapi dan gampang divalidasi, plus tambahan CSS.
+
+Satu penyesuaian: "Wilayah kamu" yang sekarang masih dropdown 4 kota tetap, aku upgrade jadi search bebas (kayak di Cuaca/Udara/Banjir) sesuai spec — lebih konsisten dan sekalian ngilangin data mock risiko yang emang udah lama pengen dibersihin.
+
+Ran 5 commands, read a file, and 2 more tools
+Ringkasan — 3 file, semua diganti total (index.html, script.js, style.css)
+Halaman lain tidak disentuh sama sekali.
+
+Yang dibangun sesuai spec:
+Nav "Pantau" dropdown — keyboard accessible, Escape & klik-luar buat nutup
+Hero ringan — cuma teks + 2 CTA, nggak nunggu data buat render (biar cepat)
+"Situasi saat ini" — 6 kartu, semua dari data asli: Gempa (jumlah dari BMKG), Cuaca (live fetch Jakarta dari Open-Meteo), Udara (cari stasiun "Jakarta" di data WAQI), Karhutla (jumlah hotspot asli dari FIRMS), Banjir & Gunung Api (teks statis, sesuai instruksi khusus di spec buat Gunung Api — sengaja nggak ada angka status, karena memang belum ada sumber live yang sah)
+6 kartu monitor interaktif dengan warna kategori sesuai spec, muncul pas hover doang (nggak penuh warna)
+Peta digabung 3 layer: Gempa (biru) + Hotspot FIRMS (oranye) + Udara (ijo/AQI), toggle checkbox tiap layer. Layer "Sebaran asap" sengaja disabled dengan catatan jujur "belum tersedia" — bukan pura-pura ada
+Wilayah kamu di-upgrade dari dropdown 4 kota jadi search bebas — reuse geocoding yang sama kayak Cuaca/Udara/Banjir. Data mock risiko lama udah dibuang total
+Mitigasi teaser, Sumber data (6 sumber, clickable), footer sesuai struktur spec
+SEO: title/description/canonical/OG tags diperbarui
+Satu catatan jujur:
+Kartu Cuaca & fetch Wilayah kamu nambah panggilan API ke Open-Meteo pas homepage dibuka (buat data live) — ini konsisten sama arsitektur yang udah ada, tapi kalau kerasa lambat pas pertama load, itu penyebabnya. Kabari kalau perlu dioptimasi lebih lanjut (misal skip fetch cuaca otomatis, tunggu user search dulu).
+
+Coba upload dan tes: dropdown Pantau, klik kartu monitor, toggle 3 layer peta, search wilayah kayak "Bandung" di kotak Wilayah Kamu.
+
+
+Index
+Code·HTML 
+
+Script
+JS 
+
+Style
+Code·CSS 
+
+You are out of free messages until 1:10 PM
+
+
+Claude is AI and can make mistakes.
+Style · CSS
+:root {
+  --bg: #0E1114;
+  --bg-panel: #161A1F;
+  --border: #262B32;
+  --border-soft: #1D2127;
+  --text: #E6E8EB;
+  --text-dim: #9BA1A9;
+  --text-faint: #6B7178;
  
-  Prinsip:
-  - Homepage = ringkasan cepat, bukan duplikat halaman detail.
-  - Semua angka di sini berasal dari data asli (gempa-bmkg.json,
-    hotspot-firms.json, aqi-stations.json, atau fetch live Open-Meteo).
-    Kalau data gagal/API belum tersedia, tampilkan itu apa adanya.
-  - Gunung Api sengaja TIDAK punya angka status — tidak ada sumber live
-    yang bisa dipakai secara sah (lihat catatan di halaman Gunung Api).
-*/
+  --green: #4CC989;
+  --yellow: #E3B94F;
+  --orange: #E38F4F;
+  --red: #DD6363;
  
-const JAKARTA_DEFAULT = { name: "Jakarta", lat: -6.2088, lon: 106.8456 };
- 
-let mapInstance = null;
-let quakeLayer = null;
-let hotspotLayer = null;
-let aqiLayer = null;
-let lastQuakeList = [];
-let lastAqiStations = [];
- 
-// ---------- Util ----------
- 
-function safeSet(id, html) {
-  const el = document.getElementById(id);
-  if (el) el.innerHTML = html;
+  --font-display: "Space Grotesk", sans-serif;
+  --font-body: "IBM Plex Sans", sans-serif;
+  --font-data: "IBM Plex Mono", monospace;
 }
  
-function formatRelativeTime(isoString) {
-  try {
-    const then = new Date(isoString).getTime();
-    const diffMin = Math.round((Date.now() - then) / 60000);
-    if (diffMin < 1) return "baru saja";
-    if (diffMin < 60) return `${diffMin} menit lalu`;
-    const diffHour = Math.round(diffMin / 60);
-    if (diffHour < 24) return `${diffHour} jam lalu`;
-    const diffDay = Math.round(diffHour / 24);
-    return `${diffDay} hari lalu`;
-  } catch (err) {
-    return "";
+* { box-sizing: border-box; }
+ 
+html, body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+ 
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  line-height: 1.55;
+  font-size: 15px;
+  -webkit-font-smoothing: antialiased;
+}
+ 
+a { color: inherit; }
+ 
+:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 2px;
+}
+ 
+img, svg { max-width: 100%; }
+ 
+/* Demo banner */
+.demo-banner {
+  background: #14181C;
+  color: var(--text-dim);
+  font-size: 0.78rem;
+  text-align: center;
+  padding: 8px 16px;
+  border-bottom: 1px solid var(--border);
+}
+ 
+.demo-banner strong { color: var(--text); font-weight: 600; }
+ 
+/* Header */
+.site-header {
+  border-bottom: 1px solid var(--border);
+  padding: 14px 16px 0;
+}
+ 
+.header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 10px;
+}
+ 
+.brand { display: flex; flex-direction: column; line-height: 1.2; min-width: 0; }
+ 
+.brand-link {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+}
+ 
+.brand-mark {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.9rem;
+  letter-spacing: -0.02em;
+}
+ 
+.brand-sub {
+  font-size: 0.7rem;
+  color: var(--text-faint);
+  margin-top: 1px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+ 
+.region-select {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+ 
+.region-select svg { color: var(--text-faint); transition: transform 0.15s ease; }
+ 
+.region-select[aria-expanded="true"] svg { transform: rotate(180deg); }
+ 
+.region-wrap { position: relative; flex-shrink: 0; }
+ 
+.region-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  min-width: 200px;
+  max-height: 260px;
+  overflow-y: auto;
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  list-style: none;
+  margin: 0;
+  padding: 4px;
+  z-index: 20;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+}
+ 
+.region-dropdown li {
+  padding: 9px 12px;
+  font-size: 0.85rem;
+  border-radius: 5px;
+  cursor: pointer;
+  color: var(--text-dim);
+}
+ 
+.region-dropdown li:hover,
+.region-dropdown li:focus {
+  background: var(--border-soft);
+  color: var(--text);
+}
+ 
+.region-dropdown li[aria-selected="true"] {
+  color: var(--green);
+}
+ 
+.fallback-text {
+  color: var(--text-faint);
+  font-size: 0.85rem;
+  padding: 4px 0;
+  margin: 0;
+  grid-column: 1 / -1;
+}
+ 
+.site-header.is-stuck {
+  position: sticky;
+  top: 0;
+  background: rgba(14, 17, 20, 0.92);
+  backdrop-filter: blur(6px);
+  z-index: 30;
+}
+ 
+.site-nav {
+  display: flex;
+  gap: 18px;
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  overflow-x: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  padding-bottom: 10px;
+  white-space: nowrap;
+}
+ 
+.site-nav::-webkit-scrollbar { display: none; }
+ 
+.site-nav a {
+  text-decoration: none;
+  flex-shrink: 0;
+}
+ 
+.site-nav a:hover { color: var(--text); }
+ 
+/* Main container */
+main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 16px;
+  width: 100%;
+}
+ 
+/* Hero */
+.hero {
+  padding: 28px 0 24px;
+  border-bottom: 1px solid var(--border);
+}
+ 
+.hero h1 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.75rem, 6vw, 2.5rem);
+  margin: 0 0 6px;
+}
+ 
+.hero-lead {
+  color: var(--text-dim);
+  font-size: 0.95rem;
+  margin: 0 0 20px;
+  max-width: 46ch;
+}
+ 
+.status-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+ 
+.status-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 14px;
+  background: var(--bg-panel);
+}
+ 
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+ 
+.status-count {
+  font-family: var(--font-data);
+  font-weight: 600;
+  font-size: 1rem;
+}
+ 
+.status-label {
+  color: var(--text-dim);
+  font-size: 0.78rem;
+  line-height: 1.3;
+}
+ 
+.dot-green { background: var(--green); }
+.dot-yellow { background: var(--yellow); }
+.dot-orange { background: var(--orange); }
+.dot-red { background: var(--red); }
+ 
+.status-summary {
+  font-size: 0.95rem;
+  color: var(--text-dim);
+  line-height: 1.6;
+  margin: 0 0 4px;
+  padding: 14px 16px;
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+ 
+.last-updated {
+  font-size: 0.75rem;
+  color: var(--text-faint);
+  margin: 10px 2px 0;
+}
+ 
+.area-location {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 2px 0 14px;
+  flex-wrap: wrap;
+}
+ 
+.area-pin {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+ 
+.region-change-btn {
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  font-size: 0.8rem;
+  font-family: var(--font-body);
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0;
+}
+ 
+.region-change-btn:hover { color: var(--text); }
+ 
+/* Section heads */
+.section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin: 28px 0 14px;
+}
+ 
+.section-head h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.05rem;
+  margin: 0;
+}
+ 
+.section-note {
+  font-size: 0.78rem;
+  color: var(--text-faint);
+}
+ 
+/* Map — plain section, not a heavy card */
+.map-layer-toggles {
+  display: flex;
+  gap: 18px;
+  margin-bottom: 10px;
+  font-size: 0.85rem;
+  color: var(--text-dim);
+}
+ 
+.map-layer-toggles label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+ 
+.map-frame {
+  position: relative;
+}
+ 
+.map-svg { display: none; } /* deprecated, kept only to avoid layout break if cached */
+ 
+.leaflet-map {
+  width: 100%;
+  height: 280px;
+  border: 1px solid var(--border-soft);
+  border-radius: 8px;
+  background: var(--bg-panel);
+}
+ 
+@media (min-width: 769px) {
+  .leaflet-map { height: 420px; }
+}
+ 
+/* Dark-theme overrides for Leaflet's default light UI */
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+  background: var(--bg-panel);
+  color: var(--text);
+}
+ 
+.leaflet-popup-content {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+ 
+.leaflet-popup-content b {
+  font-family: var(--font-display);
+}
+ 
+.leaflet-container a.leaflet-popup-close-button {
+  color: var(--text-dim);
+}
+ 
+.leaflet-control-attribution {
+  background: rgba(14,17,20,0.75) !important;
+  color: var(--text-faint) !important;
+  font-size: 0.68rem !important;
+}
+ 
+.leaflet-control-attribution a { color: var(--text-dim) !important; }
+ 
+.map-empty-note {
+  padding: 10px 4px 0;
+  font-size: 0.8rem;
+  color: var(--text-faint);
+}
+ 
+.map-caveat {
+  font-size: 0.72rem;
+  color: var(--text-faint);
+  margin: 10px 0 0;
+  line-height: 1.5;
+}
+ 
+.map-legend {
+  display: flex;
+  gap: 16px;
+  margin-top: 10px;
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  flex-wrap: wrap;
+}
+ 
+.map-legend span { display: flex; align-items: center; gap: 6px; }
+ 
+.dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
+ 
+/* Lower grid */
+.lower-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  padding-bottom: 16px;
+}
+ 
+@media (min-width: 769px) {
+  .lower-grid { grid-template-columns: 1.3fr 1fr; gap: 40px; }
+}
+ 
+/* Homepage — nav dropdown "Pantau" */
+.main-nav { align-items: center; }
+ 
+.nav-active { color: var(--text) !important; font-weight: 600; }
+ 
+.nav-dropdown-wrap { position: relative; flex-shrink: 0; }
+ 
+.nav-dropdown-btn {
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  padding: 0;
+}
+ 
+.nav-dropdown-btn svg { transition: transform 0.15s ease; }
+.nav-dropdown-btn[aria-expanded="true"] svg { transform: rotate(180deg); }
+ 
+.nav-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  list-style: none;
+  margin: 0;
+  padding: 4px;
+  min-width: 160px;
+  z-index: 30;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+}
+ 
+.nav-dropdown-menu li a {
+  display: block;
+  padding: 9px 12px;
+  border-radius: 5px;
+  color: var(--text-dim);
+  text-decoration: none;
+  font-size: 0.88rem;
+}
+ 
+.nav-dropdown-menu li a:hover { background: var(--border-soft); color: var(--text); }
+ 
+/* Hero CTA */
+.super-hero-cta { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 18px; }
+ 
+.hero-btn-primary,
+.hero-btn-secondary {
+  display: inline-block;
+  padding: 11px 20px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+ 
+.hero-btn-primary { background: var(--green); color: #0E1114; }
+.hero-btn-secondary { background: var(--bg-panel); color: var(--text); border: 1px solid var(--border); }
+ 
+/* Situasi saat ini — snapshot cards */
+.snapshot-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+ 
+@media (min-width: 700px) {
+  .snapshot-grid { grid-template-columns: repeat(3, 1fr); }
+}
+ 
+@media (min-width: 1000px) {
+  .snapshot-grid { grid-template-columns: repeat(6, 1fr); }
+}
+ 
+.snapshot-card {
+  display: block;
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-top: 2px solid var(--cat-color, var(--border));
+  border-radius: 8px;
+  padding: 12px 14px;
+  text-decoration: none;
+  color: var(--text);
+}
+ 
+.snapshot-card:hover { border-color: var(--cat-color, var(--border)); }
+ 
+.snapshot-card-name { font-size: 0.75rem; color: var(--text-faint); margin-bottom: 4px; }
+.snapshot-card-value { font-size: 0.85rem; font-weight: 600; line-height: 1.4; }
+ 
+/* Apa yang ingin kamu pantau — monitor cards */
+.monitor-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+ 
+@media (min-width: 640px) {
+  .monitor-grid { grid-template-columns: repeat(2, 1fr); }
+}
+ 
+@media (min-width: 1000px) {
+  .monitor-grid { grid-template-columns: repeat(3, 1fr); }
+}
+ 
+.monitor-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px;
+  text-decoration: none;
+  color: var(--text);
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+ 
+.monitor-card:hover,
+.monitor-card:focus-visible {
+  border-color: var(--cat-color);
+  transform: translateY(-2px);
+}
+ 
+.monitor-card-icon { color: var(--cat-color); }
+.monitor-card-name { font-weight: 600; font-size: 1rem; }
+.monitor-card-desc { font-size: 0.82rem; color: var(--text-faint); line-height: 1.5; }
+ 
+.monitor-card-arrow {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  color: var(--text-faint);
+  transition: transform 0.15s ease;
+}
+ 
+.monitor-card:hover .monitor-card-arrow { transform: translateX(3px); color: var(--cat-color); }
+ 
+@media (prefers-reduced-motion: reduce) {
+  .monitor-card, .monitor-card-arrow { transition: none; }
+  .monitor-card:hover { transform: none; }
+}
+ 
+/* Layer toggle disabled state */
+.layer-toggle-disabled { opacity: 0.5; cursor: not-allowed; }
+.layer-toggle-disabled input { cursor: not-allowed; }
+ 
+/* Mitigasi teaser chips */
+.mitigasi-teaser-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+ 
+.mitigasi-chip {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+}
+ 
+.mitigasi-teaser-cta {
+  color: var(--green);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+ 
+.mitigasi-teaser-cta:hover { text-decoration: underline; }
+ 
+/* Sumber data — 6 kolom di homepage */
+.source-grid-6 { grid-template-columns: 1fr; }
+ 
+@media (min-width: 640px) {
+  .source-grid-6 { grid-template-columns: repeat(2, 1fr); }
+}
+ 
+@media (min-width: 1000px) {
+  .source-grid-6 { grid-template-columns: repeat(3, 1fr); }
+}
+ 
+.mitigasi-source-card[href] { text-decoration: none; display: block; }
+.mitigasi-source-card[href]:hover { border-color: var(--text-faint); }
+.mitigasi-hero { position: relative; }
+ 
+.mitigasi-hero-pattern {
+  width: 100%;
+  height: auto;
+  max-width: 420px;
+  margin-bottom: 12px;
+  display: block;
+}
+ 
+.mitigasi-hero-support {
+  color: var(--text-faint);
+  font-size: 0.85rem;
+  max-width: 55ch;
+  line-height: 1.6;
+  margin-top: -4px;
+}
+ 
+.mitigasi-phase-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+ 
+@media (min-width: 700px) {
+  .mitigasi-phase-grid { grid-template-columns: repeat(3, 1fr); }
+}
+ 
+.mitigasi-phase-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px 18px;
+  cursor: pointer;
+  font-family: var(--font-body);
+  text-align: left;
+}
+ 
+.mitigasi-phase-btn:hover,
+.mitigasi-phase-btn:focus-visible { border-color: var(--green); }
+ 
+.mitigasi-phase-title { font-weight: 600; font-size: 0.95rem; color: var(--text); }
+.mitigasi-phase-desc { font-size: 0.8rem; color: var(--text-faint); }
+ 
+.mitigasi-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+ 
+@media (min-width: 640px) {
+  .mitigasi-grid { grid-template-columns: repeat(2, 1fr); }
+}
+ 
+@media (min-width: 1000px) {
+  .mitigasi-grid { grid-template-columns: repeat(3, 1fr); }
+}
+ 
+.mitigasi-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px;
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--font-body);
+  color: var(--text);
+  width: 100%;
+}
+ 
+.mitigasi-card:hover,
+.mitigasi-card:focus-visible { border-color: var(--green); }
+ 
+.mitigasi-card-icon {
+  flex-shrink: 0;
+  color: var(--green);
+  margin-top: 2px;
+}
+ 
+.mitigasi-card-body { flex: 1; min-width: 0; }
+ 
+.mitigasi-card-name { display: block; font-weight: 600; font-size: 0.95rem; margin-bottom: 4px; }
+.mitigasi-card-desc { display: block; font-size: 0.8rem; color: var(--text-faint); line-height: 1.5; }
+.mitigasi-card-arrow { color: var(--text-faint); flex-shrink: 0; }
+ 
+.mitigasi-detail {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 22px 24px;
+}
+ 
+.mitigasi-detail-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-soft);
+}
+ 
+.mitigasi-detail-header .mitigasi-card-icon { color: var(--green); }
+ 
+.mitigasi-detail-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.1rem;
+  letter-spacing: 0.02em;
+}
+ 
+.mitigasi-detail-source {
+  font-size: 0.75rem;
+  color: var(--text-faint);
+  text-decoration: underline;
+}
+ 
+.mitigasi-tabs {
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  width: fit-content;
+  margin-bottom: 16px;
+}
+ 
+.mitigasi-tab {
+  background: transparent;
+  border: none;
+  border-right: 1px solid var(--border);
+  color: var(--text-dim);
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+ 
+.mitigasi-tab:last-child { border-right: none; }
+ 
+.mitigasi-tab.active { background: var(--green); color: #0E1114; }
+ 
+.mitigasi-detail-list {
+  color: var(--text-dim);
+  line-height: 1.8;
+  padding-left: 20px;
+  margin: 0;
+}
+ 
+.mitigasi-checklist-box {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px 22px;
+}
+ 
+.mitigasi-progress-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+ 
+.mitigasi-progress-track {
+  flex: 1;
+  height: 8px;
+  background: var(--border-soft);
+  border-radius: 4px;
+  overflow: hidden;
+}
+ 
+.mitigasi-progress-fill {
+  height: 100%;
+  background: var(--green);
+  width: 0%;
+  transition: width 0.3s ease;
+}
+ 
+.mitigasi-progress-text {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+ 
+.mitigasi-checklist { list-style: none; margin: 0 0 16px; padding: 0; }
+ 
+.mitigasi-checklist-item { padding: 8px 0; border-bottom: 1px solid var(--border-soft); }
+.mitigasi-checklist-item:last-child { border-bottom: none; }
+ 
+.mitigasi-checklist-item label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: var(--text-dim);
+}
+ 
+.mitigasi-checklist-item input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--green);
+  cursor: pointer;
+}
+ 
+.mitigasi-decision-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+ 
+@media (min-width: 700px) {
+  .mitigasi-decision-grid { grid-template-columns: repeat(2, 1fr); }
+}
+ 
+.mitigasi-decision-btn {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  text-align: left;
+  cursor: pointer;
+}
+ 
+.mitigasi-decision-btn:hover,
+.mitigasi-decision-btn:focus-visible { border-color: var(--green); }
+ 
+.mitigasi-source-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+ 
+@media (min-width: 700px) {
+  .mitigasi-source-grid { grid-template-columns: repeat(3, 1fr); }
+}
+ 
+.mitigasi-source-card {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px;
+}
+ 
+.mitigasi-source-name { font-weight: 600; font-size: 0.95rem; margin-bottom: 4px; }
+.mitigasi-source-desc { font-size: 0.8rem; color: var(--text-faint); margin-bottom: 10px; line-height: 1.5; }
+.mitigasi-source-link { font-size: 0.82rem; color: var(--green); text-decoration: none; }
+.mitigasi-source-link:hover { text-decoration: underline; }
+ 
+.mitigasi-footer-cols {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin: 16px 0;
+  max-width: 400px;
+}
+ 
+.mitigasi-footer-link {
+  display: block;
+  font-size: 0.82rem;
+  color: var(--text-faint);
+  text-decoration: none;
+  padding: 4px 0;
+}
+ 
+.mitigasi-footer-link:hover { color: var(--text-dim); }
+ 
+@media (prefers-reduced-motion: reduce) {
+  .mitigasi-progress-fill { transition: none; }
+}
+.volcano-hero-top {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+ 
+@media (min-width: 769px) {
+  .volcano-hero-top { flex-direction: row; justify-content: space-between; align-items: flex-start; }
+}
+ 
+.volcano-hero-meta {
+  display: flex;
+  gap: 24px;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  flex-wrap: wrap;
+}
+ 
+.volcano-hero-meta-label {
+  color: var(--text-faint);
+  font-size: 0.72rem;
+}
+ 
+/* Skeleton loader — bentuknya menyerupai card asli, bukan teks "Loading..." */
+.skeleton-card {
+  height: 90px;
+  border-radius: 10px;
+  background: linear-gradient(90deg, var(--bg-panel) 25%, var(--border-soft) 37%, var(--bg-panel) 63%);
+  background-size: 400% 100%;
+  animation: skeleton-shimmer 1.4s ease infinite;
+}
+ 
+@keyframes skeleton-shimmer {
+  0% { background-position: 100% 50%; }
+  100% { background-position: 0 50%; }
+}
+ 
+@media (prefers-reduced-motion: reduce) {
+  .skeleton-card { animation: none; }
+}
+ 
+/* Summary cards (dipakai Gunung Api & Karhutla) */
+.volcano-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+ 
+@media (min-width: 769px) {
+  .volcano-summary-grid { grid-template-columns: repeat(4, 1fr); }
+}
+ 
+.volcano-summary-card {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-left: 3px solid;
+  border-radius: 8px;
+  padding: 14px 16px;
+}
+ 
+.volcano-summary-count {
+  font-family: var(--font-data);
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+ 
+.volcano-summary-label {
+  font-size: 0.75rem;
+  color: var(--text-faint);
+  margin-top: 4px;
+  line-height: 1.4;
+}
+ 
+/* Segmented control untuk toggle layer peta */
+.volcano-map-toggle {
+  display: flex;
+  gap: 0;
+  margin-bottom: 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  width: fit-content;
+}
+ 
+.segmented-btn {
+  background: var(--bg-panel);
+  border: none;
+  color: var(--text-dim);
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  padding: 8px 14px;
+  cursor: pointer;
+  border-right: 1px solid var(--border);
+}
+ 
+.segmented-btn:last-child { border-right: none; }
+ 
+.segmented-btn.active {
+  background: var(--border-soft);
+  color: var(--text);
+  font-weight: 600;
+}
+ 
+/* Layout peta + panel gunung terpilih */
+.volcano-map-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+ 
+@media (min-width: 900px) {
+  .volcano-map-layout { flex-direction: row; align-items: flex-start; }
+}
+ 
+.volcano-panel {
+  flex: 1;
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px;
+  min-width: 0;
+}
+ 
+.volcano-panel-visual {
+  width: 100%;
+  height: 100px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+ 
+.volcano-panel-name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.05rem;
+  margin-top: 10px;
+}
+ 
+.volcano-panel-province {
+  font-size: 0.8rem;
+  color: var(--text-faint);
+  margin-bottom: 4px;
+}
+ 
+.volcano-badge {
+  display: inline-block;
+  color: #0E1114;
+  font-weight: 700;
+  font-size: 0.7rem;
+  letter-spacing: 0.03em;
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+ 
+/* Daftar gunung */
+.volcano-list-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+ 
+@media (min-width: 640px) {
+  .volcano-list-grid { grid-template-columns: repeat(2, 1fr); }
+}
+ 
+@media (min-width: 1000px) {
+  .volcano-list-grid { grid-template-columns: repeat(3, 1fr); }
+}
+ 
+.volcano-card {
+  display: flex;
+  gap: 12px;
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px;
+  cursor: pointer;
+}
+ 
+.volcano-card:hover { border-color: var(--text-faint); }
+ 
+.volcano-card-visual {
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+ 
+.volcano-card-body { min-width: 0; }
+ 
+.volcano-card-name {
+  font-weight: 600;
+  font-size: 0.92rem;
+  margin-top: 6px;
+}
+ 
+.volcano-card-province {
+  font-size: 0.75rem;
+  color: var(--text-faint);
+}
+ 
+.volcano-card-update {
+  font-size: 0.72rem;
+  color: var(--text-faint);
+  margin-top: 4px;
+}
+ 
+.volcano-marker-icon { background: transparent; border: none; }
+ 
+.volcano-ash-box {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 24px;
+  text-align: center;
+}
+ 
+/* Karhutla — citra FWI/FFMC BMKG */
+.karhutla-fwi-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+ 
+@media (min-width: 700px) {
+  .karhutla-fwi-grid { grid-template-columns: repeat(2, 1fr); }
+}
+ 
+.karhutla-fwi-item {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+ 
+.karhutla-fwi-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+  background: #fff;
+}
+ 
+.karhutla-fwi-caption {
+  padding: 10px 14px;
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  line-height: 1.5;
+}
+.flood-hero {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 22px 24px;
+}
+ 
+.flood-hero-location {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text-dim);
+  letter-spacing: 0.02em;
+}
+ 
+.flood-hero-label {
+  font-size: 0.85rem;
+  color: var(--text-faint);
+  margin-top: 10px;
+}
+ 
+.flood-hero-value {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 2.6rem;
+  line-height: 1.2;
+  color: var(--green);
+}
+ 
+.flood-hero-date {
+  font-size: 0.8rem;
+  color: var(--text-faint);
+  margin-top: 4px;
+}
+ 
+.flood-hero-note {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-soft);
+  line-height: 1.5;
+}
+ 
+.flood-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+ 
+@media (min-width: 600px) {
+  .flood-stats-grid { grid-template-columns: repeat(4, 1fr); }
+}
+ 
+.flood-stat-item {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px;
+}
+ 
+.flood-stat-value {
+  font-family: var(--font-data);
+  font-weight: 600;
+  font-size: 1rem;
+}
+ 
+.flood-stat-label {
+  font-size: 0.75rem;
+  color: var(--text-faint);
+  margin-top: 4px;
+}
+ 
+.flood-chart-wrap {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px;
+}
+ 
+.flood-chart-svg { width: 100%; height: auto; display: block; }
+ 
+.flood-trend-box {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px 18px;
+}
+ 
+.flood-trend-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.92rem;
+  color: var(--text-dim);
+}
+ 
+.flood-trend-icon { font-size: 1.2rem; }
+ 
+.flood-table-wrap { overflow-x: auto; }
+ 
+.flood-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+ 
+.flood-table th {
+  text-align: left;
+  color: var(--text-faint);
+  font-weight: 500;
+  font-size: 0.75rem;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--border);
+}
+ 
+.flood-table td {
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--border-soft);
+  white-space: nowrap;
+}
+ 
+.flood-table-num { font-family: var(--font-data); color: var(--text-dim); }
+ 
+.flood-explainer-list {
+  color: var(--text-dim);
+  line-height: 1.7;
+  max-width: 65ch;
+  padding-left: 20px;
+  margin: 0;
+}
+ 
+.flood-explainer-list li { margin-bottom: 8px; }
+.weather-search-wrap {
+  position: relative;
+  max-width: 420px;
+  margin-top: 4px;
+}
+ 
+#weatherSearch {
+  width: 100%;
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  padding: 10px 14px;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+ 
+#weatherSearch::placeholder { color: var(--text-faint); }
+ 
+/* Hero — satu angka besar, bukan banyak kartu */
+.weather-hero {
+  padding: 24px 0;
+  border-bottom: 1px solid var(--border);
+}
+ 
+.weather-location {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+  color: var(--text-dim);
+}
+ 
+.weather-location-sub {
+  font-size: 0.8rem;
+  color: var(--text-faint);
+  margin-bottom: 12px;
+}
+ 
+.weather-hero-main {
+  display: flex;
+  align-items: baseline;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+ 
+.weather-hero-temp {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 4rem;
+  line-height: 1;
+}
+ 
+.weather-hero-meta {
+  color: var(--text-dim);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+ 
+.weather-condition { font-weight: 600; color: var(--text); }
+ 
+.weather-hero-stats {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+  font-size: 0.85rem;
+  color: var(--text-dim);
+}
+ 
+/* Kondisi hari ini — 4 angka ringkas, bukan kartu tebal */
+.weather-today {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+ 
+@media (min-width: 600px) {
+  .weather-today { grid-template-columns: repeat(4, 1fr); }
+}
+ 
+.weather-today-item { text-align: left; }
+ 
+.weather-today-icon { font-size: 1.1rem; margin-bottom: 4px; }
+ 
+.weather-today-value {
+  font-family: var(--font-data);
+  font-weight: 600;
+  font-size: 1.15rem;
+}
+ 
+.weather-today-label {
+  font-size: 0.75rem;
+  color: var(--text-faint);
+  margin-top: 2px;
+}
+ 
+/* Timeline horizontal — 7 hari & per jam */
+.weather-timeline,
+.weather-hourly {
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  -webkit-overflow-scrolling: touch;
+}
+ 
+.weather-day,
+.weather-hour {
+  flex: 0 0 auto;
+  text-align: center;
+  padding: 12px 14px;
+  border-right: 1px solid var(--border-soft);
+  min-width: 68px;
+}
+ 
+.weather-day:last-child,
+.weather-hour:last-child { border-right: none; }
+ 
+.weather-day-name, .weather-hour-time {
+  font-size: 0.75rem;
+  color: var(--text-faint);
+  margin-bottom: 6px;
+}
+ 
+.weather-day-icon, .weather-hour-icon { font-size: 1.3rem; margin-bottom: 4px; }
+ 
+.weather-day-temp, .weather-hour-temp {
+  font-family: var(--font-data);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+ 
+.weather-day-temp-min {
+  font-family: var(--font-data);
+  font-size: 0.8rem;
+  color: var(--text-faint);
+}
+ 
+.weather-day-rain {
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  margin-top: 4px;
+}
+ 
+/* Konteks — kalimat interpretasi, bukan angka mentah */
+.weather-context-row {
+  display: flex;
+  gap: 12px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+}
+ 
+.weather-context-row:last-child { border-bottom: none; }
+ 
+.weather-context-icon { font-size: 1.2rem; flex-shrink: 0; }
+ 
+.weather-context-title {
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 2px;
+}
+ 
+.weather-context-desc {
+  font-size: 0.82rem;
+  color: var(--text-dim);
+  line-height: 1.5;
+}
+.udara-section {
+  padding: 20px 0;
+  border-bottom: 1px solid var(--border);
+}
+ 
+.udara-section h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.05rem;
+  margin: 0 0 12px;
+}
+ 
+#provinsi-search {
+  width: 100%;
+  max-width: 420px;
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  padding: 10px 14px;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+ 
+#provinsi-search::placeholder { color: var(--text-faint); }
+ 
+.caveat-text {
+  font-size: 0.78rem;
+  color: var(--text-faint);
+  line-height: 1.6;
+  margin: 10px 0 0;
+  max-width: 60ch;
+}
+ 
+/* Halaman Udara — redesign berbasis stasiun (bukan provinsi) */
+.udara-search-wrap {
+  position: relative;
+  max-width: 480px;
+  margin-top: 8px;
+}
+ 
+.udara-search-input {
+  width: 100%;
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  padding: 14px 16px;
+  border-radius: 10px;
+  box-sizing: border-box;
+}
+ 
+.udara-search-input::placeholder { color: var(--text-faint); }
+ 
+.udara-hero {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 22px 24px;
+}
+ 
+.udara-nearest-note {
+  font-size: 0.82rem;
+  color: var(--text-dim);
+  line-height: 1.6;
+  margin-bottom: 14px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border-soft);
+}
+ 
+.udara-nearest-note strong { color: var(--text); }
+ 
+.udara-hero-name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+}
+ 
+.udara-hero-main {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  flex-wrap: wrap;
+}
+ 
+.udara-hero-number {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 3.6rem;
+  line-height: 1;
+}
+ 
+.udara-hero-category {
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.03em;
+}
+ 
+.udara-hero-emoji { font-size: 1rem; }
+ 
+.udara-hero-updated,
+.udara-hero-source {
+  font-size: 0.8rem;
+  color: var(--text-faint);
+  margin-top: 4px;
+}
+ 
+.udara-scale {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+ 
+@media (min-width: 700px) {
+  .udara-scale { grid-template-columns: repeat(5, 1fr); }
+}
+ 
+.udara-scale-item {
+  border-left: 3px solid;
+  background: var(--bg-panel);
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+ 
+.udara-scale-label { font-weight: 600; font-size: 0.85rem; }
+.udara-scale-range { font-size: 0.75rem; color: var(--text-faint); margin-top: 2px; }
+ 
+.udara-pollutant-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+ 
+@media (min-width: 700px) {
+  .udara-pollutant-grid { grid-template-columns: repeat(3, 1fr); }
+}
+ 
+.udara-pollutant-grid > .fallback-text { grid-column: 1 / -1; }
+ 
+.aqi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 12px;
+}
+ 
+.aqi-card {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-left: 3px solid;
+  border-radius: 10px;
+  padding: 16px;
+  text-align: center;
+}
+ 
+.aqi-card-name {
+  font-size: 0.82rem;
+  color: var(--text-dim);
+  margin-bottom: 8px;
+  min-height: 2.2em;
+}
+ 
+.aqi-card-emoji { font-size: 1.6rem; margin-bottom: 4px; }
+ 
+.aqi-card-number {
+  font-family: var(--font-data);
+  font-weight: 700;
+  font-size: 1.6rem;
+}
+ 
+.aqi-card-label {
+  font-size: 0.75rem;
+  color: var(--text-faint);
+  margin-top: 4px;
+}
+ 
+/* Grid kotak untuk halaman Gempa & Udara — otomatis menyesuaikan lebar layar */
+.quake-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 14px;
+}
+ 
+.quake-card {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px 18px;
+}
+ 
+.quake-card .event-title { margin-bottom: 6px; }
+.quake-card .event-meta { margin-bottom: 8px; }
+.quake-card .event-time { flex-direction: column; align-items: flex-start; gap: 6px; }
+ 
+.quake-grid > .fallback-text {
+  grid-column: 1 / -1;
+}
+ 
+/* Events — editorial list, not a card */
+.event-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+ 
+.event-item {
+  position: relative;
+  padding: 0 0 18px 18px;
+  border-left: 1px solid var(--border);
+}
+ 
+.event-item::before {
+  content: "";
+  position: absolute;
+  left: -3.5px;
+  top: 5px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--text-faint);
+}
+ 
+.event-item.sev-red::before    { background: var(--red); }
+.event-item.sev-orange::before { background: var(--orange); }
+.event-item.sev-yellow::before { background: var(--yellow); }
+ 
+.event-title {
+  font-weight: 600;
+  font-size: 0.92rem;
+}
+ 
+.event-meta {
+  color: var(--text-dim);
+  font-size: 0.85rem;
+  margin-top: 2px;
+}
+ 
+.event-meta span { display: block; }
+ 
+.event-time {
+  font-size: 0.75rem;
+  color: var(--text-faint);
+  margin-top: 6px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+ 
+.share-btn {
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  font-size: 0.75rem;
+  font-family: var(--font-body);
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0;
+}
+ 
+.share-btn:hover { color: var(--text); }
+ 
+/* Area readout — compact rows */
+.area-readout {
+  border-top: 1px solid var(--border);
+}
+ 
+.area-row {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+ 
+.area-row-label {
+  color: var(--text-faint);
+  font-size: 0.78rem;
+  margin-bottom: 3px;
+}
+ 
+.area-row-value .value {
+  font-weight: 600;
+  font-size: 0.95rem;
+  display: block;
+}
+ 
+.area-row-value .value.is-technical {
+  font-family: var(--font-data);
+}
+ 
+.area-row-value .source {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--text-faint);
+  margin-top: 3px;
+}
+ 
+.value.tone-green  { color: var(--green); }
+.value.tone-yellow { color: var(--yellow); }
+.value.tone-orange { color: var(--orange); }
+.value.tone-red    { color: var(--red); }
+ 
+/* Footer */
+.site-footer {
+  border-top: 1px solid var(--border);
+  padding: 28px 16px 32px;
+  font-size: 0.82rem;
+  color: var(--text-dim);
+  max-width: 1100px;
+  margin: 0 auto;
+}
+ 
+.footer-brand {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+ 
+.footer-desc { margin: 0 0 16px; }
+ 
+.footer-label {
+  color: var(--text-faint);
+  font-size: 0.75rem;
+}
+ 
+.footer-sources { margin: 0 0 14px; line-height: 1.7; }
+ 
+.footer-disclaimer {
+  color: var(--text-faint);
+  font-size: 0.78rem;
+  line-height: 1.6;
+  max-width: 60ch;
+  margin: 0 0 16px;
+}
+ 
+.footer-credit {
+  color: var(--text-faint);
+  font-size: 0.78rem;
+  margin: 0;
+}
+ 
+/* Desktop refinements */
+@media (min-width: 769px) {
+  .site-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 32px;
   }
-}
  
-function parseDirectionalCoord(str) {
-  if (!str) return NaN;
-  const m = String(str).match(/(-?\d+(?:\.\d+)?)\s*([A-Za-z]+)/);
-  if (!m) return NaN;
-  let val = parseFloat(m[1]);
-  const dir = m[2].toUpperCase();
-  if (dir === "LS" || dir === "BB" || dir === "S" || dir === "W") val = -Math.abs(val);
-  else val = Math.abs(val);
-  return val;
-}
+  .header-row { padding-bottom: 0; }
  
-function parseQuakeCoords(item) {
-  const lat = parseDirectionalCoord(item.Lintang);
-  const lon = parseDirectionalCoord(item.Bujur);
-  if (!isNaN(lat) && !isNaN(lon)) return [lat, lon];
-  if (item.Coordinates) {
-    const parts = String(item.Coordinates).split(",").map(s => parseFloat(s.trim()));
-    if (parts.length === 2 && !parts.some(isNaN)) return [parts[0], parts[1]];
-  }
-  return null;
-}
- 
-function distanceKm(lat1, lon1, lat2, lon2) {
-  const R = 6371;
-  const dLat = (lat2 - lat1) * Math.PI / 180;
-  const dLon = (lon2 - lon1) * Math.PI / 180;
-  const a = Math.sin(dLat / 2) ** 2 +
-    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLon / 2) ** 2;
-  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-}
- 
-function aqiColorFromValue(aqi) {
-  if (aqi <= 50) return "#22c55e";
-  if (aqi <= 100) return "#eab308";
-  if (aqi <= 150) return "#f97316";
-  if (aqi <= 200) return "#ef4444";
-  return "#7f1d1d";
-}
- 
-function aqiLabelFromValue(aqi) {
-  if (aqi <= 50) return "Baik";
-  if (aqi <= 100) return "Sedang";
-  if (aqi <= 150) return "Tidak sehat";
-  if (aqi <= 200) return "Sangat tidak sehat";
-  return "Berbahaya";
-}
- 
-// ---------- Nav dropdown "Pantau" ----------
- 
-function setupNavDropdown() {
-  const btn = document.getElementById("pantauBtn");
-  const menu = document.getElementById("pantauMenu");
-  if (!btn || !menu) return;
- 
-  function close() { menu.hidden = true; btn.setAttribute("aria-expanded", "false"); }
-  function open() { menu.hidden = false; btn.setAttribute("aria-expanded", "true"); }
- 
-  btn.addEventListener("click", () => { menu.hidden ? open() : close(); });
-  document.addEventListener("click", (e) => {
-    if (!menu.contains(e.target) && e.target !== btn && !btn.contains(e.target)) close();
-  });
-  document.addEventListener("keydown", (e) => { if (e.key === "Escape") close(); });
-}
- 
-// ---------- Data: Gempa ----------
- 
-async function loadGempaData() {
-  try {
-    const res = await fetch("data/gempa-bmkg.json", { cache: "no-store" });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const data = await res.json();
-    const list = data && data.Infogempa && data.Infogempa.gempa;
-    if (!Array.isArray(list) || list.length === 0) throw new Error("Data gempa kosong");
-    lastQuakeList = list;
-    return { list, fetchedAtUTC: data.fetchedAtUTC || null };
-  } catch (err) {
-    console.warn("Bencanaku: gempa belum tersedia —", err.message);
-    lastQuakeList = [];
-    return { list: [], fetchedAtUTC: null };
-  }
-}
- 
-function renderEvents(list) {
-  safeSet("eventList", "");
-  const el = document.getElementById("eventList");
-  if (!el) return;
- 
-  if (list.length === 0) {
-    el.innerHTML = `<li class="fallback-text">Data gempa BMKG belum tersedia saat ini. Coba muat ulang halaman sesaat lagi.</li>`;
-    return;
+  .site-nav {
+    padding-bottom: 0;
+    overflow: visible;
   }
  
-  el.innerHTML = list.slice(0, 5).map(item => {
-    const time = item.DateTime ? formatRelativeTime(item.DateTime) : (item.Jam || "");
-    const timeActual = `${item.Jam || ""} · ${item.Tanggal || ""}`.trim();
-    return `
-      <li class="event-item sev-red">
-        <div class="event-title">Gempa M${item.Magnitude || "?"}</div>
-        <div class="event-meta">
-          <span>${item.Wilayah || "Lokasi tidak diketahui"}</span>
-          <span>Kedalaman ${item.Kedalaman || "?"}${item.Potensi ? " · " + item.Potensi : ""}</span>
-        </div>
-        <div class="event-time">${time} · ${timeActual} · Sumber: BMKG</div>
-      </li>
-    `;
-  }).join("");
+  main { padding: 0 32px; }
+ 
+  .hero { padding: 48px 0 32px; }
+ 
+  .brand-mark { font-size: 2.3rem; }
+ 
+  .site-footer { padding: 32px 32px 40px; }
 }
- 
-// ---------- Data: Hotspot (FIRMS) ----------
- 
-async function loadHotspotData() {
-  try {
-    const res = await fetch("data/hotspot-firms.json", { cache: "no-store" });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const data = await res.json();
-    const hotspots = Array.isArray(data.hotspots) ? data.hotspots : [];
-    return { hotspots, fetchedAtUTC: data.fetchedAtUTC || null };
-  } catch (err) {
-    console.warn("Bencanaku: hotspot belum tersedia —", err.message);
-    return { hotspots: [], fetchedAtUTC: null };
-  }
-}
- 
-// ---------- Data: Udara (WAQI stations) ----------
- 
-async function loadAqiStations() {
-  try {
-    const res = await fetch("data/aqi-stations.json", { cache: "no-store" });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const data = await res.json();
-    const stations = Array.isArray(data.stations) ? data.stations : [];
-    lastAqiStations = stations;
-    return stations;
-  } catch (err) {
-    console.warn("Bencanaku: data udara belum tersedia —", err.message);
-    lastAqiStations = [];
-    return [];
-  }
-}
- 
-// ---------- Data: Cuaca (Open-Meteo, live) ----------
- 
-async function fetchCurrentWeather(lat, lon) {
-  const params = new URLSearchParams({
-    latitude: lat, longitude: lon,
-    current: "temperature_2m,weather_code",
-    timezone: "auto",
-  });
-  const res = await fetch(`https://api.open-meteo.com/v1/forecast?${params.toString()}`);
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return res.json();
-}
- 
-// ---------- Situasi saat ini (snapshot) ----------
- 
-async function renderSnapshot(gempaResult, hotspotResult, aqiStations) {
-  const grid = document.getElementById("snapshotGrid");
-  if (!grid) return;
- 
-  // Cuaca: fetch live untuk Jakarta sebagai representasi nasional
-  let cuacaText = "Data sementara tidak tersedia";
-  try {
-    const wx = await fetchCurrentWeather(JAKARTA_DEFAULT.lat, JAKARTA_DEFAULT.lon);
-    if (wx.current) cuacaText = `Jakarta · ${Math.round(wx.current.temperature_2m)}°C`;
-  } catch (err) {
-    console.warn("Bencanaku: snapshot cuaca gagal —", err.message);
-  }
- 
-  // Udara: cari stasiun yang namanya mengandung "Jakarta"
-  let udaraText = "Data sementara tidak tersedia";
-  const jakartaStation = aqiStations.find(s => s.name.toLowerCase().includes("jakarta"));
-  if (jakartaStation) udaraText = `${jakartaStation.name} · AQI ${jakartaStation.aqi}`;
-  else if (aqiStations.length > 0) udaraText = `${aqiStations.length} stasiun terpantau`;
- 
-  const cards = [
-    { name: "Gempa", color: "#3B82F6", value: gempaResult.list.length > 0 ? `${gempaResult.list.length} kejadian terbaru` : "Data sementara tidak tersedia", href: "gempa.html" },
-    { name: "Cuaca", color: "#38BDF8", value: cuacaText, href: "cuaca.html" },
-    { name: "Udara", color: "#22C55E", value: udaraText, href: "udara.html" },
-    { name: "Banjir", color: "#2563EB", value: "Data debit sungai tersedia", href: "banjir.html" },
-    { name: "Karhutla", color: "#F97316", value: hotspotResult.fetchedAtUTC ? `${hotspotResult.hotspots.length} titik panas terdeteksi` : "Data sementara tidak tersedia", href: "karhutla.html" },
-    { name: "Gunung Api", color: "#A855F7", value: "Perkembangan resmi terbaru", href: "gunung-api.html" },
-  ];
- 
-  grid.innerHTML = cards.map(c => `
-    <a href="${c.href}" class="snapshot-card" style="--cat-color:${c.color}">
-      <div class="snapshot-card-name">${c.name}</div>
-      <div class="snapshot-card-value">${c.value}</div>
-    </a>
-  `).join("");
-}
- 
-// ---------- Peta gabungan ----------
- 
-function ensureMapReady() {
-  const container = document.getElementById("leafletMap");
-  const fallbackNote = document.getElementById("mapFallbackNote");
-  if (!container) return false;
- 
-  if (typeof L === "undefined") {
-    console.error("Bencanaku: Leaflet gagal dimuat.");
-    if (fallbackNote) fallbackNote.hidden = false;
-    return false;
-  }
- 
-  if (!mapInstance) {
-    const indonesiaBounds = L.latLngBounds([-11.5, 92], [7, 145]);
-    mapInstance = L.map(container, {
-      scrollWheelZoom: false,
-      minZoom: 4,
-      maxBounds: indonesiaBounds.pad(0.25),
-      maxBoundsViscosity: 0.8,
-    }).fitBounds(indonesiaBounds);
- 
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      maxZoom: 18,
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    }).addTo(mapInstance);
- 
-    quakeLayer = L.layerGroup().addTo(mapInstance);
-    hotspotLayer = L.layerGroup().addTo(mapInstance);
-    aqiLayer = L.layerGroup().addTo(mapInstance);
-  }
-  return true;
-}
- 
-function renderQuakeLayer(quakeList) {
-  if (!ensureMapReady()) return;
-  quakeLayer.clearLayers();
- 
-  quakeList.slice(0, 15).forEach(item => {
-    const coords = parseQuakeCoords(item);
-    if (!coords) return;
-    const mag = parseFloat(item.Magnitude) || 3;
-    const radius = Math.min(12, Math.max(4, mag * 1.6));
- 
-    const marker = L.circleMarker(coords, { radius, color: "#3B82F6", weight: 1, fillColor: "#3B82F6", fillOpacity: 0.6 });
-    marker.bindPopup(`
-      <b>Gempa M${item.Magnitude || "?"}</b><br>
-      ${item.Wilayah || "Lokasi tidak diketahui"}<br>
-      ${item.Jam || ""} · ${item.Tanggal || ""}<br>
-      Sumber: BMKG
-    `);
-    quakeLayer.addLayer(marker);
-  });
-}
- 
-function renderHotspotLayer(hotspots) {
-  if (!ensureMapReady()) return;
-  hotspotLayer.clearLayers();
- 
-  hotspots.slice(0, 1000).forEach(h => {
-    const marker = L.circleMarker([h.lat, h.lon], { radius: 3, color: "#F97316", weight: 1, fillColor: "#F97316", fillOpacity: 0.75 });
-    marker.bindPopup(`
-      <b>Hotspot terdeteksi</b><br>
-      ${h.acq_date || ""} ${h.acq_time || ""}<br>
-      ${h.satellite ? "Satelit: " + h.satellite + "<br>" : ""}
-      Sumber: NASA FIRMS<br>
-      <span style="font-size:11px;">Deteksi anomali panas, bukan konfirmasi kebakaran.</span>
-    `);
-    hotspotLayer.addLayer(marker);
-  });
-}
- 
-function renderAqiLayerOnMap(stations) {
-  if (!ensureMapReady()) return;
-  aqiLayer.clearLayers();
- 
-  stations.forEach(s => {
-    if (typeof s.lat !== "number" || typeof s.lon !== "number") return;
-    const color = aqiColorFromValue(s.aqi);
-    const marker = L.circleMarker([s.lat, s.lon], { radius: 5, color: "#fff", weight: 1, fillColor: color, fillOpacity: 0.85 });
-    marker.bindPopup(`<b>${s.name}</b><br>AQI ${s.aqi} · Sumber: WAQI`);
-    aqiLayer.addLayer(marker);
-  });
-}
- 
-function setupMapLayerToggles() {
-  const quakeToggle = document.getElementById("toggleLayerGempa");
-  const hotspotToggle = document.getElementById("toggleLayerHotspot");
-  const aqiToggle = document.getElementById("toggleLayerUdara");
- 
-  if (quakeToggle) quakeToggle.addEventListener("change", () => {
-    if (!mapInstance) return;
-    quakeToggle.checked ? mapInstance.addLayer(quakeLayer) : mapInstance.removeLayer(quakeLayer);
-  });
-  if (hotspotToggle) hotspotToggle.addEventListener("change", () => {
-    if (!mapInstance) return;
-    hotspotToggle.checked ? mapInstance.addLayer(hotspotLayer) : mapInstance.removeLayer(hotspotLayer);
-  });
-  if (aqiToggle) aqiToggle.addEventListener("change", () => {
-    if (!mapInstance) return;
-    aqiToggle.checked ? mapInstance.addLayer(aqiLayer) : mapInstance.removeLayer(aqiLayer);
-  });
- 
-  // Layer "Sebaran asap" memang belum ada sumber datanya — tampilkan itu
-  // apa adanya, bukan pura-pura jadi toggle yang berfungsi.
-  const asapNote = document.getElementById("asapEmptyNote");
-  if (asapNote) asapNote.hidden = false;
-}
- 
-// ---------- Wilayah kamu (search bebas) ----------
- 
-async function geocodeQuery(query) {
-  const url = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(query)}&count=1&language=id&format=json&country=ID`;
-  const res = await fetch(url);
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  const data = await res.json();
-  return Array.isArray(data.results) && data.results.length > 0 ? data.results[0] : null;
-}
- 
-function findGempaMention(query) {
-  const q = query.toLowerCase();
-  return lastQuakeList.find(item => (item.Wilayah || "").toLowerCase().includes(q));
-}
- 
-function findNearestAqiStation(lat, lon) {
-  if (lastAqiStations.length === 0) return null;
-  let nearest = lastAqiStations[0];
-  let minDist = distanceKm(lat, lon, nearest.lat, nearest.lon);
-  for (const s of lastAqiStations.slice(1)) {
-    const d = distanceKm(lat, lon, s.lat, s.lon);
-    if (d < minDist) { minDist = d; nearest = s; }
-  }
-  return minDist < 100 ? nearest : null; // hanya pakai kalau cukup dekat
-}
- 
-async function renderWilayah(name, lat, lon) {
-  const el = document.getElementById("areaReadout");
-  if (!el) return;
-  el.innerHTML = `<p class="fallback-text">Memuat data wilayah…</p>`;
- 
-  const rows = [];
- 
-  // Cuaca — live
-  try {
-    const wx = await fetchCurrentWeather(lat, lon);
-    rows.push({ label: "Cuaca", value: wx.current ? `${Math.round(wx.current.temperature_2m)}°C` : "Data wilayah ini belum tersedia." });
-  } catch (err) {
-    rows.push({ label: "Cuaca", value: "Data wilayah ini belum tersedia." });
-  }
- 
-  // Udara — stasiun terdekat
-  const nearestStation = findNearestAqiStation(lat, lon);
-  rows.push({
-    label: "Udara",
-    value: nearestStation ? `AQI ${nearestStation.aqi} (${nearestStation.name})` : "Data wilayah ini belum tersedia.",
-  });
- 
-  // Gempa — cek penyebutan wilayah di data terbaru
-  const gempaMention = findGempaMention(name);
-  rows.push({
-    label: "Gempa",
-    value: gempaMention ? `M${gempaMention.Magnitude} — ${gempaMention.Wilayah}` : "Tidak ada kejadian signifikan terbaru di dekat wilayah ini.",
-  });
- 
-  // Banjir — tidak fetch ulang di sini (hindari duplikasi API), cukup info arah
-  rows.push({ label: "Banjir", value: "Data debit sungai tersedia di halaman Banjir." });
- 
-  el.innerHTML = rows.map(r => `
-    <div class="area-row">
-      <div class="area-row-label">${r.label}</div>
-      <div class="area-row-value"><span class="value">${r.value}</span></div>
-    </div>
-  `).join("");
-}
- 
-function setupWilayahSearch() {
-  const input = document.getElementById("wilayahSearch");
-  const list = document.getElementById("wilayahSearchResults");
-  if (!input || !list) return;
- 
-  let debounceTimer;
-  input.addEventListener("input", () => {
-    clearTimeout(debounceTimer);
-    const q = input.value.trim();
-    if (q.length < 3) { list.hidden = true; return; }
- 
-    debounceTimer = setTimeout(async () => {
-      try {
-        const url = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(q)}&count=6&language=id&format=json&country=ID`;
-        const res = await fetch(url);
-        const data = await res.json();
-        const results = Array.isArray(data.results) ? data.results : [];
- 
-        if (results.length === 0) {
-          list.innerHTML = `<li style="cursor:default; color:var(--text-faint);">Tidak ditemukan</li>`;
-          list.hidden = false;
-          return;
-        }
- 
-        list.innerHTML = results.map((r, i) => `<li data-index="${i}">${r.name}${r.admin1 ? ", " + r.admin1 : ""}</li>`).join("");
-        list.hidden = false;
- 
-        list.querySelectorAll("li[data-index]").forEach(li => {
-          li.addEventListener("click", () => {
-            const r = results[Number(li.dataset.index)];
-            input.value = `${r.name}${r.admin1 ? ", " + r.admin1 : ""}`;
-            list.hidden = true;
-            renderWilayah(r.name, r.latitude, r.longitude);
-          });
-        });
-      } catch (err) {
-        console.error("Bencanaku: pencarian wilayah gagal —", err);
-      }
-    }, 350);
-  });
- 
-  document.addEventListener("click", (e) => {
-    if (!list.contains(e.target) && e.target !== input) list.hidden = true;
-  });
-}
- 
-// ---------- Init ----------
- 
-document.addEventListener("DOMContentLoaded", async () => {
-  setupNavDropdown();
-  setupWilayahSearch();
- 
-  let gempaResult = { list: [], fetchedAtUTC: null };
-  let hotspotResult = { hotspots: [], fetchedAtUTC: null };
-  let aqiStations = [];
- 
-  try { gempaResult = await loadGempaData(); } catch (e) { console.error("loadGempaData gagal", e); }
-  try { hotspotResult = await loadHotspotData(); } catch (e) { console.error("loadHotspotData gagal", e); }
-  try { aqiStations = await loadAqiStations(); } catch (e) { console.error("loadAqiStations gagal", e); }
- 
-  try { renderEvents(gempaResult.list); } catch (e) { console.error("renderEvents gagal", e); }
- 
-  const quakeNote = document.getElementById("quakeUpdatedNote");
-  if (quakeNote && gempaResult.fetchedAtUTC) {
-    quakeNote.textContent = `Data diambil ${new Date(gempaResult.fetchedAtUTC).toLocaleTimeString("id-ID", { hour: "2-digit", minute: "2-digit", timeZone: "Asia/Jakarta" })} WIB`;
-  }
- 
-  try { await renderSnapshot(gempaResult, hotspotResult, aqiStations); } catch (e) { console.error("renderSnapshot gagal", e); }
- 
-  try {
-    renderQuakeLayer(gempaResult.list);
-    renderHotspotLayer(hotspotResult.hotspots);
-    renderAqiLayerOnMap(aqiStations);
-    setupMapLayerToggles();
-  } catch (e) { console.error("render map gagal", e); }
-});
  
