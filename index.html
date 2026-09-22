@@ -3,8 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bencanaku — Situasi kebencanaan Indonesia dalam satu layar</title>
-<meta name="description" content="Bencanaku mengumpulkan data gempa, cuaca, gunung api, dan kualitas udara dari sumber resmi Indonesia, lalu menyajikannya dalam bahasa yang sederhana.">
+<title>Bencanaku — Informasi Kebencanaan Indonesia</title>
+<meta name="description" content="Bencanaku adalah platform informasi kebencanaan Indonesia untuk memantau gempa, cuaca, kualitas udara, banjir, karhutla, gunung api, dan panduan mitigasi.">
+<link rel="canonical" href="https://ibnufarras.github.io/bencanaku/">
+<meta property="og:title" content="Bencanaku — Informasi Kebencanaan Indonesia">
+<meta property="og:description" content="Pantau informasi kebencanaan, kondisi lingkungan, dan perkembangan terbaru dari berbagai sumber resmi dan data terbuka.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ibnufarras.github.io/bencanaku/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
@@ -18,10 +23,6 @@
 </head>
 <body>
  
-<div class="demo-banner">
-  <strong>Memuat data.</strong> Mengambil data gempa terbaru dari BMKG…
-</div>
- 
 <header class="site-header">
   <div class="header-row">
     <div class="brand">
@@ -29,46 +30,134 @@
       <span class="brand-sub">Platform informasi kebencanaan</span>
     </div>
   </div>
-  <nav class="site-nav">
-    <a href="gempa.html">Gempa</a>
-    <a href="gunung-api.html">Gunung api</a>
-    <a href="cuaca.html">Cuaca</a>
-    <a href="banjir.html">Banjir</a>
-    <a href="karhutla.html">Karhutla</a>
-    <a href="udara.html">Udara</a>
+  <nav class="site-nav main-nav">
+    <a href="index.html" class="nav-active">Beranda</a>
+    <div class="nav-dropdown-wrap">
+      <button class="nav-dropdown-btn" id="pantauBtn" aria-haspopup="true" aria-expanded="false">
+        Pantau <svg width="9" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+      <ul class="nav-dropdown-menu" id="pantauMenu" hidden>
+        <li><a href="gempa.html">Gempa</a></li>
+        <li><a href="cuaca.html">Cuaca</a></li>
+        <li><a href="udara.html">Udara</a></li>
+        <li><a href="banjir.html">Banjir</a></li>
+        <li><a href="karhutla.html">Karhutla</a></li>
+        <li><a href="gunung-api.html">Gunung Api</a></li>
+      </ul>
+    </div>
+    <a href="mitigasi.html">Mitigasi</a>
     <a href="tentang.html">Tentang</a>
   </nav>
 </header>
  
 <main>
  
-  <section class="hero">
-    <h1>Indonesia, sekarang</h1>
-    <p class="hero-lead">Ringkasan situasi kebencanaan berdasarkan sumber resmi.</p>
-    <p class="status-summary" id="statusSummary">Memuat ringkasan status…</p>
-    <p class="last-updated" id="lastUpdated"></p>
+  <!-- Hero -->
+  <section class="hero super-hero">
+    <svg class="mitigasi-hero-pattern" viewBox="0 0 400 100" aria-hidden="true">
+      <circle cx="30" cy="70" r="2" fill="var(--text-faint)" opacity="0.6"/>
+      <circle cx="90" cy="40" r="2" fill="var(--text-faint)" opacity="0.4"/>
+      <circle cx="150" cy="75" r="2" fill="var(--text-faint)" opacity="0.5"/>
+      <circle cx="210" cy="35" r="2" fill="var(--text-faint)" opacity="0.4"/>
+      <circle cx="270" cy="65" r="2" fill="var(--text-faint)" opacity="0.6"/>
+      <circle cx="330" cy="45" r="2" fill="var(--text-faint)" opacity="0.4"/>
+      <circle cx="380" cy="80" r="2" fill="var(--text-faint)" opacity="0.5"/>
+      <path d="M10 70 Q 60 25 110 55 T 210 45 T 310 60 T 390 40" stroke="var(--border)" stroke-width="1" fill="none"/>
+    </svg>
+    <h1>Situasi Indonesia, sekarang.</h1>
+    <p class="hero-lead">Pantau informasi kebencanaan, kondisi lingkungan, dan perkembangan terbaru dari berbagai sumber resmi dan data terbuka.</p>
+    <div class="super-hero-cta">
+      <a href="#pantauSection" class="hero-btn-primary">Mulai memantau</a>
+      <a href="mitigasi.html" class="hero-btn-secondary">Lihat mitigasi</a>
+    </div>
   </section>
  
+  <!-- Situasi saat ini -->
+  <section>
+    <div class="section-head">
+      <h2>Situasi saat ini</h2>
+    </div>
+    <div id="snapshotGrid" class="snapshot-grid">
+      <div class="skeleton-card"></div>
+      <div class="skeleton-card"></div>
+      <div class="skeleton-card"></div>
+      <div class="skeleton-card"></div>
+      <div class="skeleton-card"></div>
+      <div class="skeleton-card"></div>
+    </div>
+  </section>
+ 
+  <!-- Apa yang ingin kamu pantau -->
+  <section id="pantauSection">
+    <div class="section-head">
+      <h2>Apa yang ingin kamu pantau?</h2>
+    </div>
+    <div class="monitor-grid">
+      <a href="gempa.html" class="monitor-card" style="--cat-color:#3B82F6;">
+        <span class="monitor-card-icon"><svg width="26" height="26" viewBox="0 0 24 24"><path d="M3 12h4l2-6 3 12 2-8 2 4h5" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="monitor-card-name">Gempa</span>
+        <span class="monitor-card-desc">Gempa terbaru di Indonesia</span>
+        <span class="monitor-card-arrow">→</span>
+      </a>
+      <a href="cuaca.html" class="monitor-card" style="--cat-color:#38BDF8;">
+        <span class="monitor-card-icon"><svg width="26" height="26" viewBox="0 0 24 24"><path d="M7 16a4 4 0 010-8 5 5 0 019.6-1.5A4.5 4.5 0 0117 16H7z" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linejoin="round"/></svg></span>
+        <span class="monitor-card-name">Cuaca</span>
+        <span class="monitor-card-desc">Kondisi dan prakiraan cuaca</span>
+        <span class="monitor-card-arrow">→</span>
+      </a>
+      <a href="udara.html" class="monitor-card" style="--cat-color:#22C55E;">
+        <span class="monitor-card-icon"><svg width="26" height="26" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M12 8v4l3 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>
+        <span class="monitor-card-name">Udara</span>
+        <span class="monitor-card-desc">Kualitas udara di berbagai wilayah</span>
+        <span class="monitor-card-arrow">→</span>
+      </a>
+      <a href="banjir.html" class="monitor-card" style="--cat-color:#2563EB;">
+        <span class="monitor-card-icon"><svg width="26" height="26" viewBox="0 0 24 24"><path d="M2 8h20M2 13c2-2 4-2 6 0s4 2 6 0 4-2 6 0" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg></span>
+        <span class="monitor-card-name">Banjir</span>
+        <span class="monitor-card-desc">Kondisi dan prakiraan debit sungai</span>
+        <span class="monitor-card-arrow">→</span>
+      </a>
+      <a href="karhutla.html" class="monitor-card" style="--cat-color:#F97316;">
+        <span class="monitor-card-icon"><svg width="26" height="26" viewBox="0 0 24 24"><path d="M12 3c2 3-1 4-1 7a3 3 0 106 0c0-1-0.5-2-1-2 1 4-2 5-2 8a4 4 0 11-8 0c0-3 2-4 2-7 0-2-1-3 0-6z" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linejoin="round"/></svg></span>
+        <span class="monitor-card-name">Karhutla</span>
+        <span class="monitor-card-desc">Titik panas dan kondisi atmosfer</span>
+        <span class="monitor-card-arrow">→</span>
+      </a>
+      <a href="gunung-api.html" class="monitor-card" style="--cat-color:#A855F7;">
+        <span class="monitor-card-icon"><svg width="26" height="26" viewBox="0 0 24 24"><path d="M3 19 L10 6 L13 11 L15 8 L21 19 Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/></svg></span>
+        <span class="monitor-card-name">Gunung Api</span>
+        <span class="monitor-card-desc">Perkembangan aktivitas gunung api</span>
+        <span class="monitor-card-arrow">→</span>
+      </a>
+    </div>
+  </section>
+ 
+  <!-- Situasi Indonesia map -->
   <section class="map-section">
     <div class="section-head">
-      <h2>Peta kejadian terkini</h2>
-      <span class="section-note" id="mapUpdatedNote">Gempa &amp; kualitas udara</span>
+      <h2>Situasi Indonesia</h2>
+      <span class="section-note" id="mapUpdatedNote">Gempa · Hotspot · Kualitas udara</span>
     </div>
     <div class="map-layer-toggles">
       <label><input type="checkbox" id="toggleLayerGempa" checked> Gempa</label>
-      <label><input type="checkbox" id="toggleLayerUdara" checked> Kualitas udara</label>
+      <label><input type="checkbox" id="toggleLayerHotspot" checked> Hotspot</label>
+      <label><input type="checkbox" id="toggleLayerUdara" checked> Udara</label>
+      <label class="layer-toggle-disabled"><input type="checkbox" id="toggleLayerAsap" disabled> Sebaran asap</label>
     </div>
     <div class="map-frame" id="mapFrame">
-      <div id="leafletMap" class="leaflet-map" role="img" aria-label="Peta interaktif Indonesia dengan titik gempa BMKG dan kualitas udara WAQI"></div>
+      <div id="leafletMap" class="leaflet-map" role="img" aria-label="Peta interaktif Indonesia dengan titik gempa BMKG, hotspot NASA FIRMS, dan kualitas udara WAQI"></div>
       <p id="mapFallbackNote" class="map-empty-note" hidden>Peta tidak bisa dimuat. Cek koneksi internet lalu muat ulang halaman.</p>
+      <p id="asapEmptyNote" class="map-empty-note" hidden>Data sebaran asap belum tersedia.</p>
       <div class="map-legend">
-        <span><i class="dot dot-red"></i>Gempa (ukuran = magnitudo)</span>
-        <span><i class="dot" style="background:#22c55e; border:1px solid #fff;"></i>Udara — bulat kecil, warna sesuai AQI</span>
+        <span><i class="dot" style="background:#3B82F6"></i>Gempa (ukuran = magnitudo)</span>
+        <span><i class="dot" style="background:#F97316"></i>Hotspot (NASA FIRMS)</span>
+        <span><i class="dot" style="background:#22C55E; border:1px solid #fff;"></i>Udara (warna sesuai AQI)</span>
       </div>
-      <p class="map-caveat">Titik gempa: ukurannya sekadar mewakili besar magnitudo, bukan area terdampak. Titik udara: warna sesuai level AQI stasiun WAQI terdekat. Sumber lain (cuaca ekstrem, tsunami) menyusul. Klik titik untuk detail. Peta: OpenStreetMap / Leaflet.</p>
+      <p class="map-caveat">Hotspot adalah deteksi anomali panas satelit, bukan konfirmasi kebakaran. Klik titik untuk detail. Peta: OpenStreetMap / Leaflet.</p>
     </div>
   </section>
  
+  <!-- Kejadian terbaru + Wilayah kamu -->
   <section class="lower-grid">
  
     <div class="events-panel">
@@ -85,33 +174,92 @@
       <div class="section-head">
         <h2>Wilayah kamu</h2>
       </div>
-      <div class="area-location">
-        <span class="area-pin">📍 <span id="regionLabel">Jakarta Timur</span></span>
-        <div class="region-wrap">
-          <button class="region-change-btn" id="regionSelect" aria-haspopup="listbox" aria-expanded="false">Ganti wilayah</button>
-          <ul class="region-dropdown" id="regionDropdown" role="listbox" hidden></ul>
-        </div>
+      <div class="udara-search-wrap" style="margin-bottom:14px;">
+        <input type="text" id="wilayahSearch" class="udara-search-input" placeholder="Cari kota atau wilayah…" autocomplete="off">
+        <ul id="wilayahSearchResults" class="region-dropdown" hidden></ul>
       </div>
       <div class="area-readout" id="areaReadout">
-        <p class="fallback-text">Memuat data wilayah…</p>
+        <p class="fallback-text">Cari wilayah untuk melihat ringkasan kondisinya.</p>
       </div>
     </div>
  
+  </section>
+ 
+  <!-- Mitigasi teaser -->
+  <section>
+    <div class="section-head">
+      <h2>Siap sebelum terjadi.</h2>
+    </div>
+    <p class="hero-lead" style="margin-bottom:14px;">Kenali apa yang perlu dilakukan sebelum, saat, dan setelah bencana.</p>
+    <div class="mitigasi-teaser-chips">
+      <span class="mitigasi-chip">Gempa</span>
+      <span class="mitigasi-chip">Tsunami</span>
+      <span class="mitigasi-chip">Banjir</span>
+      <span class="mitigasi-chip">Karhutla</span>
+      <span class="mitigasi-chip">Gunung Api</span>
+      <span class="mitigasi-chip">Cuaca Ekstrem</span>
+    </div>
+    <a href="mitigasi.html" class="mitigasi-teaser-cta">Lihat panduan mitigasi →</a>
+  </section>
+ 
+  <!-- Sumber data -->
+  <section>
+    <div class="section-head">
+      <h2>Sumber data</h2>
+    </div>
+    <p style="color: var(--text-dim); line-height: 1.7; max-width: 65ch; margin-bottom: 16px;">
+      Data pada Bencanaku berasal dari berbagai sumber. Ketersediaan, waktu pembaruan, dan cakupan dapat berbeda pada setiap layanan.
+    </p>
+    <div class="mitigasi-source-grid source-grid-6">
+      <a href="https://www.bmkg.go.id" class="mitigasi-source-card">
+        <div class="mitigasi-source-name">BMKG</div>
+        <div class="mitigasi-source-desc">Gempa, cuaca, fire weather</div>
+      </a>
+      <a href="https://bnpb.go.id" class="mitigasi-source-card">
+        <div class="mitigasi-source-name">BNPB / InaRISK</div>
+        <div class="mitigasi-source-desc">Risiko wilayah, rekap karhutla</div>
+      </a>
+      <a href="https://firms.modaps.eosdis.nasa.gov" class="mitigasi-source-card">
+        <div class="mitigasi-source-name">NASA FIRMS</div>
+        <div class="mitigasi-source-desc">Titik panas satelit</div>
+      </a>
+      <a href="https://aqicn.org" class="mitigasi-source-card">
+        <div class="mitigasi-source-name">WAQI</div>
+        <div class="mitigasi-source-desc">Kualitas udara</div>
+      </a>
+      <a href="https://open-meteo.com" class="mitigasi-source-card">
+        <div class="mitigasi-source-name">Open-Meteo</div>
+        <div class="mitigasi-source-desc">Cuaca &amp; debit sungai</div>
+      </a>
+      <a href="https://vsi.esdm.go.id" class="mitigasi-source-card">
+        <div class="mitigasi-source-name">Badan Geologi / PVMBG</div>
+        <div class="mitigasi-source-desc">Gunung api &amp; geologi</div>
+      </a>
+    </div>
   </section>
  
 </main>
  
 <footer class="site-footer">
   <div class="footer-brand">Bencanaku</div>
-  <p class="footer-desc">Platform informasi kebencanaan independen.</p>
+  <p class="footer-desc">Platform informasi kebencanaan Indonesia.</p>
+ 
+  <div class="mitigasi-footer-cols" style="max-width:300px;">
+    <div>
+      <a href="index.html" class="mitigasi-footer-link">Beranda</a>
+      <a href="gempa.html" class="mitigasi-footer-link">Pantau</a>
+      <a href="mitigasi.html" class="mitigasi-footer-link">Mitigasi</a>
+      <a href="tentang.html" class="mitigasi-footer-link">Tentang</a>
+    </div>
+  </div>
  
   <p class="footer-sources">
     <span class="footer-label">Sumber data</span><br>
-    BMKG · BNPB/InaRISK · WAQI
+    BMKG · BNPB/InaRISK · NASA FIRMS · WAQI · Open-Meteo · Badan Geologi/PVMBG
   </p>
  
   <p class="footer-disclaimer">
-    Bencanaku bukan lembaga pemerintah. Untuk keputusan keselamatan, selalu rujuk informasi resmi dari instansi terkait.
+    Bencanaku mengagregasikan informasi dari berbagai sumber. Data dapat mengalami keterlambatan, perubahan, atau gangguan layanan. Untuk informasi resmi dan keputusan keselamatan, selalu rujuk kepada instansi terkait.
   </p>
  
   <p class="footer-credit">Founded by Ibnu Farras</p>
