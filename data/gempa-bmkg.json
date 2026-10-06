@@ -2,6 +2,18 @@
   "Infogempa": {
     "gempa": [
       {
+        "Tanggal": "07 Okt 2026",
+        "Jam": "03:15:26 WIB",
+        "DateTime": "2026-10-06T20:15:26+00:00",
+        "Coordinates": "-8.77,116.14",
+        "Lintang": "8.77 LS",
+        "Bujur": "116.14 BT",
+        "Magnitude": "5.2",
+        "Kedalaman": "92 km",
+        "Wilayah": "9 km Tenggara LOMBOKBARAT-NTB",
+        "Potensi": "Tidak berpotensi tsunami"
+      },
+      {
         "Tanggal": "06 Okt 2026",
         "Jam": "20:11:23 WIB",
         "DateTime": "2026-10-06T13:11:23+00:00",
@@ -168,20 +180,8 @@
         "Kedalaman": "124 km",
         "Wilayah": "227 km BaratLaut TANIMBAR",
         "Potensi": "Tidak berpotensi tsunami"
-      },
-      {
-        "Tanggal": "12 Sep 2026",
-        "Jam": "04:23:56 WIB",
-        "DateTime": "2026-09-11T21:23:56+00:00",
-        "Coordinates": "-5.81,106.56",
-        "Lintang": "5.81 LS",
-        "Bujur": "106.56 BT",
-        "Magnitude": "5.9",
-        "Kedalaman": "376 km",
-        "Wilayah": "6 km Tenggara KEPSERIBU-DKI",
-        "Potensi": "Tidak berpotensi tsunami"
       }
     ]
   },
-  "fetchedAtUTC": "2026-10-06T20:04:15Z"
+  "fetchedAtUTC": "2026-10-06T23:44:39Z"
 }
