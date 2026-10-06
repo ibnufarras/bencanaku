@@ -2,6 +2,18 @@
   "Infogempa": {
     "gempa": [
       {
+        "Tanggal": "06 Okt 2026",
+        "Jam": "20:11:23 WIB",
+        "DateTime": "2026-10-06T13:11:23+00:00",
+        "Coordinates": "4.94,118.77",
+        "Lintang": "4.94 LU",
+        "Bujur": "118.77 BT",
+        "Magnitude": "5.3",
+        "Kedalaman": "10 km",
+        "Wilayah": "219 km TimurLaut TARAKAN-KALTARA",
+        "Potensi": "Tidak berpotensi tsunami"
+      },
+      {
         "Tanggal": "04 Okt 2026",
         "Jam": "06:37:31 WIB",
         "DateTime": "2026-10-03T23:37:31+00:00",
@@ -168,20 +180,8 @@
         "Kedalaman": "376 km",
         "Wilayah": "6 km Tenggara KEPSERIBU-DKI",
         "Potensi": "Tidak berpotensi tsunami"
-      },
-      {
-        "Tanggal": "11 Sep 2026",
-        "Jam": "18:56:24 WIB",
-        "DateTime": "2026-09-11T11:56:24+00:00",
-        "Coordinates": "-7.44,129.11",
-        "Lintang": "7.44 LS",
-        "Bujur": "129.11 BT",
-        "Magnitude": "6.2",
-        "Kedalaman": "143 km",
-        "Wilayah": "166 km TimurLaut MALUKUBRTDAYA",
-        "Potensi": "Tidak berpotensi tsunami"
       }
     ]
   },
-  "fetchedAtUTC": "2026-10-06T07:20:23Z"
+  "fetchedAtUTC": "2026-10-06T14:53:17Z"
 }
