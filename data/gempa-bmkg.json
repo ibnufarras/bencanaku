@@ -2,6 +2,18 @@
   "Infogempa": {
     "gempa": [
       {
+        "Tanggal": "20 Okt 2026",
+        "Jam": "23:29:35 WIB",
+        "DateTime": "2026-10-20T16:29:35+00:00",
+        "Coordinates": "3.79,95.72",
+        "Lintang": "3.79 LU",
+        "Bujur": "95.72 BT",
+        "Magnitude": "5.4",
+        "Kedalaman": "74 km",
+        "Wilayah": "59 km BaratDaya MEULABOH-ACEHBARAT",
+        "Potensi": "Tidak berpotensi tsunami"
+      },
+      {
         "Tanggal": "18 Okt 2026",
         "Jam": "15:00:08 WIB",
         "DateTime": "2026-10-18T08:00:08+00:00",
@@ -168,20 +180,8 @@
         "Kedalaman": "10 km",
         "Wilayah": "33 km TimurLaut SARMI-PAPUA",
         "Potensi": "Tidak berpotensi tsunami"
-      },
-      {
-        "Tanggal": "18 Sep 2026",
-        "Jam": "21:36:17 WIB",
-        "DateTime": "2026-09-18T14:36:17+00:00",
-        "Coordinates": "-8.64,105.74",
-        "Lintang": "8.64 LS",
-        "Bujur": "105.74 BT",
-        "Magnitude": "5.2",
-        "Kedalaman": "10 km",
-        "Wilayah": "198 km BaratDaya BAYAH-BANTEN",
-        "Potensi": "Tidak berpotensi tsunami"
       }
     ]
   },
-  "fetchedAtUTC": "2026-10-20T14:48:59Z"
+  "fetchedAtUTC": "2026-10-20T19:02:17Z"
 }
