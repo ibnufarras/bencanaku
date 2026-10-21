@@ -2,6 +2,18 @@
   "Infogempa": {
     "gempa": [
       {
+        "Tanggal": "21 Okt 2026",
+        "Jam": "14:44:15 WIB",
+        "DateTime": "2026-10-21T07:44:15+00:00",
+        "Coordinates": "-7.75,128.18",
+        "Lintang": "7.75 LS",
+        "Bujur": "128.18 BT",
+        "Magnitude": "5.1",
+        "Kedalaman": "96 km",
+        "Wilayah": "62 km TimurLaut MALUKUBRTDAYA",
+        "Potensi": "Tidak berpotensi tsunami"
+      },
+      {
         "Tanggal": "20 Okt 2026",
         "Jam": "23:29:35 WIB",
         "DateTime": "2026-10-20T16:29:35+00:00",
@@ -168,20 +180,8 @@
         "Kedalaman": "10 km",
         "Wilayah": "34 km TimurLaut RUTENG-MANGGARAI-NTT",
         "Potensi": "Tidak berpotensi tsunami"
-      },
-      {
-        "Tanggal": "19 Sep 2026",
-        "Jam": "11:18:36 WIB",
-        "DateTime": "2026-09-19T04:18:36+00:00",
-        "Coordinates": "-1.60,138.88",
-        "Lintang": "1.60 LS",
-        "Bujur": "138.88 BT",
-        "Magnitude": "5.1",
-        "Kedalaman": "10 km",
-        "Wilayah": "33 km TimurLaut SARMI-PAPUA",
-        "Potensi": "Tidak berpotensi tsunami"
       }
     ]
   },
-  "fetchedAtUTC": "2026-10-21T07:16:46Z"
+  "fetchedAtUTC": "2026-10-21T13:34:59Z"
 }
