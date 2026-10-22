@@ -2,6 +2,18 @@
   "Infogempa": {
     "gempa": [
       {
+        "Tanggal": "22 Okt 2026",
+        "Jam": "17:57:49 WIB",
+        "DateTime": "2026-10-22T10:57:49+00:00",
+        "Coordinates": "-3.11,102.14",
+        "Lintang": "3.11 LS",
+        "Bujur": "102.14 BT",
+        "Magnitude": "5.2",
+        "Kedalaman": "120 km",
+        "Wilayah": "6 km BaratLaut LEBONG-BENGKULU",
+        "Potensi": "Tidak berpotensi tsunami"
+      },
+      {
         "Tanggal": "21 Okt 2026",
         "Jam": "14:44:15 WIB",
         "DateTime": "2026-10-21T07:44:15+00:00",
@@ -168,20 +180,8 @@
         "Kedalaman": "10 km",
         "Wilayah": "26 km BaratDaya PULAUPUAH-SULTENG",
         "Potensi": "Tidak berpotensi tsunami"
-      },
-      {
-        "Tanggal": "21 Sep 2026",
-        "Jam": "08:41:37 WIB",
-        "DateTime": "2026-09-21T01:41:37+00:00",
-        "Coordinates": "-8.33,120.59",
-        "Lintang": "8.33 LS",
-        "Bujur": "120.59 BT",
-        "Magnitude": "5.3",
-        "Kedalaman": "10 km",
-        "Wilayah": "34 km TimurLaut RUTENG-MANGGARAI-NTT",
-        "Potensi": "Tidak berpotensi tsunami"
       }
     ]
   },
-  "fetchedAtUTC": "2026-10-22T07:17:55Z"
+  "fetchedAtUTC": "2026-10-22T13:36:41Z"
 }
