@@ -2,6 +2,18 @@
   "Infogempa": {
     "gempa": [
       {
+        "Tanggal": "27 Okt 2026",
+        "Jam": "21:43:13 WIB",
+        "DateTime": "2026-10-27T14:43:13+00:00",
+        "Coordinates": "-9.20,110.39",
+        "Lintang": "9.20 LS",
+        "Bujur": "110.39 BT",
+        "Magnitude": "5.4",
+        "Kedalaman": "10 km",
+        "Wilayah": "136 km BaratDaya GUNUNGKIDUL-DIY",
+        "Potensi": "Tidak berpotensi tsunami"
+      },
+      {
         "Tanggal": "22 Okt 2026",
         "Jam": "17:57:49 WIB",
         "DateTime": "2026-10-22T10:57:49+00:00",
@@ -168,20 +180,8 @@
         "Kedalaman": "10 km",
         "Wilayah": "127 km BaratLaut TAHUNA-KEP.SANGIHE-SULUT",
         "Potensi": "Tidak berpotensi tsunami"
-      },
-      {
-        "Tanggal": "21 Sep 2026",
-        "Jam": "14:31:07 WIB",
-        "DateTime": "2026-09-21T07:31:07+00:00",
-        "Coordinates": "-0.70,122.45",
-        "Lintang": "0.70 LS",
-        "Bujur": "122.45 BT",
-        "Magnitude": "5.3",
-        "Kedalaman": "10 km",
-        "Wilayah": "26 km BaratDaya PULAUPUAH-SULTENG",
-        "Potensi": "Tidak berpotensi tsunami"
       }
     ]
   },
-  "fetchedAtUTC": "2026-10-27T14:09:58Z"
+  "fetchedAtUTC": "2026-10-27T19:55:30Z"
 }
