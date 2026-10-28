@@ -2,6 +2,18 @@
   "Infogempa": {
     "gempa": [
       {
+        "Tanggal": "28 Okt 2026",
+        "Jam": "08:11:54 WIB",
+        "DateTime": "2026-10-28T01:11:54+00:00",
+        "Coordinates": "5.59,125.27",
+        "Lintang": "5.59 LU",
+        "Bujur": "125.27 BT",
+        "Magnitude": "5.4",
+        "Kedalaman": "10 km",
+        "Wilayah": "221 km BaratLaut PULAUKARATUNG-SULUT",
+        "Potensi": "Tidak berpotensi tsunami"
+      },
+      {
         "Tanggal": "27 Okt 2026",
         "Jam": "21:43:13 WIB",
         "DateTime": "2026-10-27T14:43:13+00:00",
@@ -168,20 +180,8 @@
         "Kedalaman": "10 km",
         "Wilayah": "111 km Tenggara SELAYAR-SULSEL",
         "Potensi": "Tidak berpotensi tsunami"
-      },
-      {
-        "Tanggal": "22 Sep 2026",
-        "Jam": "06:48:13 WIB",
-        "DateTime": "2026-09-21T23:48:13+00:00",
-        "Coordinates": "4.74,125.30",
-        "Lintang": "4.74 LU",
-        "Bujur": "125.30 BT",
-        "Magnitude": "5.2",
-        "Kedalaman": "10 km",
-        "Wilayah": "127 km BaratLaut TAHUNA-KEP.SANGIHE-SULUT",
-        "Potensi": "Tidak berpotensi tsunami"
       }
     ]
   },
-  "fetchedAtUTC": "2026-10-27T23:37:57Z"
+  "fetchedAtUTC": "2026-10-28T04:45:53Z"
 }
