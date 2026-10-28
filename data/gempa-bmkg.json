@@ -2,6 +2,18 @@
   "Infogempa": {
     "gempa": [
       {
+        "Tanggal": "29 Okt 2026",
+        "Jam": "05:06:47 WIB",
+        "DateTime": "2026-10-28T22:06:47+00:00",
+        "Coordinates": "-6.34,130.52",
+        "Lintang": "6.34 LS",
+        "Bujur": "130.52 BT",
+        "Magnitude": "6.4",
+        "Kedalaman": "160 km",
+        "Wilayah": "201 km BaratLaut TANIMBAR",
+        "Potensi": "Tidak berpotensi tsunami"
+      },
+      {
         "Tanggal": "28 Okt 2026",
         "Jam": "16:32:49 WIB",
         "DateTime": "2026-10-28T09:32:49+00:00",
@@ -168,20 +180,8 @@
         "Kedalaman": "26 km",
         "Wilayah": "68 km BaratDaya CALANG-ACEHJAYA",
         "Potensi": "Tidak berpotensi tsunami"
-      },
-      {
-        "Tanggal": "04 Okt 2026",
-        "Jam": "05:55:52 WIB",
-        "DateTime": "2026-10-03T22:55:52+00:00",
-        "Coordinates": "-9.70,118.92",
-        "Lintang": "9.70 LS",
-        "Bujur": "118.92 BT",
-        "Magnitude": "6.1",
-        "Kedalaman": "10 km",
-        "Wilayah": "14 km BaratDaya KODI-SUMBABARATDAYA-NTT",
-        "Potensi": "Tidak berpotensi tsunami"
       }
     ]
   },
-  "fetchedAtUTC": "2026-10-28T18:05:08Z"
+  "fetchedAtUTC": "2026-10-28T22:59:24Z"
 }
