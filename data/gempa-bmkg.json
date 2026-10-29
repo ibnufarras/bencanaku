@@ -3,6 +3,18 @@
     "gempa": [
       {
         "Tanggal": "29 Okt 2026",
+        "Jam": "10:26:49 WIB",
+        "DateTime": "2026-10-29T03:26:49+00:00",
+        "Coordinates": "-5.45,141.90",
+        "Lintang": "5.45 LS",
+        "Bujur": "141.90 BT",
+        "Magnitude": "6.0",
+        "Kedalaman": "120 km",
+        "Wilayah": "153 km Tenggara OKSIBIL-PAPUAPGNGN",
+        "Potensi": "Tidak berpotensi tsunami"
+      },
+      {
+        "Tanggal": "29 Okt 2026",
         "Jam": "05:06:47 WIB",
         "DateTime": "2026-10-28T22:06:47+00:00",
         "Coordinates": "-6.34,130.52",
@@ -168,20 +180,8 @@
         "Kedalaman": "10 km",
         "Wilayah": "219 km TimurLaut TARAKAN-KALTARA",
         "Potensi": "Tidak berpotensi tsunami"
-      },
-      {
-        "Tanggal": "04 Okt 2026",
-        "Jam": "06:37:31 WIB",
-        "DateTime": "2026-10-03T23:37:31+00:00",
-        "Coordinates": "4.56,94.97",
-        "Lintang": "4.56 LU",
-        "Bujur": "94.97 BT",
-        "Magnitude": "5.9",
-        "Kedalaman": "26 km",
-        "Wilayah": "68 km BaratDaya CALANG-ACEHJAYA",
-        "Potensi": "Tidak berpotensi tsunami"
       }
     ]
   },
-  "fetchedAtUTC": "2026-10-29T02:13:42Z"
+  "fetchedAtUTC": "2026-10-29T09:36:31Z"
 }
