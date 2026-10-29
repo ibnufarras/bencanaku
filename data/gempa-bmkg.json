@@ -2,6 +2,18 @@
   "Infogempa": {
     "gempa": [
       {
+        "Tanggal": "30 Okt 2026",
+        "Jam": "03:32:13 WIB",
+        "DateTime": "2026-10-29T20:32:13+00:00",
+        "Coordinates": "-4.40,132.49",
+        "Lintang": "4.40 LS",
+        "Bujur": "132.49 BT",
+        "Magnitude": "5.3",
+        "Kedalaman": "10 km",
+        "Wilayah": "139 km BaratLaut TUAL-MALUKU",
+        "Potensi": "Tidak berpotensi tsunami"
+      },
+      {
         "Tanggal": "29 Okt 2026",
         "Jam": "10:26:49 WIB",
         "DateTime": "2026-10-29T03:26:49+00:00",
@@ -168,20 +180,8 @@
         "Kedalaman": "92 km",
         "Wilayah": "9 km Tenggara LOMBOKBARAT-NTB",
         "Potensi": "Tidak berpotensi tsunami"
-      },
-      {
-        "Tanggal": "06 Okt 2026",
-        "Jam": "20:11:23 WIB",
-        "DateTime": "2026-10-06T13:11:23+00:00",
-        "Coordinates": "4.94,118.77",
-        "Lintang": "4.94 LU",
-        "Bujur": "118.77 BT",
-        "Magnitude": "5.3",
-        "Kedalaman": "10 km",
-        "Wilayah": "219 km TimurLaut TARAKAN-KALTARA",
-        "Potensi": "Tidak berpotensi tsunami"
       }
     ]
   },
-  "fetchedAtUTC": "2026-10-29T16:44:43Z"
+  "fetchedAtUTC": "2026-10-29T21:38:57Z"
 }
