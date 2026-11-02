@@ -3,6 +3,18 @@
     "gempa": [
       {
         "Tanggal": "02 Nov 2026",
+        "Jam": "15:13:10 WIB",
+        "DateTime": "2026-11-02T08:13:10+00:00",
+        "Coordinates": "1.31,124.83",
+        "Lintang": "1.31 LU",
+        "Bujur": "124.83 BT",
+        "Magnitude": "5.3",
+        "Kedalaman": "148 km",
+        "Wilayah": "1 km BaratDaya TOMOHON-SULUT",
+        "Potensi": "Tidak berpotensi tsunami"
+      },
+      {
+        "Tanggal": "02 Nov 2026",
         "Jam": "07:53:11 WIB",
         "DateTime": "2026-11-02T00:53:11+00:00",
         "Coordinates": "-7.08,130.07",
@@ -168,20 +180,8 @@
         "Kedalaman": "10 km",
         "Wilayah": "125 km Tenggara BITUNG-SULUT",
         "Potensi": "Tidak berpotensi tsunami"
-      },
-      {
-        "Tanggal": "08 Okt 2026",
-        "Jam": "15:07:56 WIB",
-        "DateTime": "2026-10-08T08:07:56+00:00",
-        "Coordinates": "5.66,125.19",
-        "Lintang": "5.66 LU",
-        "Bujur": "125.19 BT",
-        "Magnitude": "5.8",
-        "Kedalaman": "10 km",
-        "Wilayah": "230 km BaratLaut TAHUNA-KEP.SANGIHE-SULUT",
-        "Potensi": "Tidak berpotensi tsunami"
       }
     ]
   },
-  "fetchedAtUTC": "2026-11-02T07:27:45Z"
+  "fetchedAtUTC": "2026-11-02T17:59:31Z"
 }
