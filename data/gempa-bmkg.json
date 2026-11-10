@@ -2,6 +2,18 @@
   "Infogempa": {
     "gempa": [
       {
+        "Tanggal": "10 Nov 2026",
+        "Jam": "08:53:28 WIB",
+        "DateTime": "2026-11-10T01:53:28+00:00",
+        "Coordinates": "-8.02,130.49",
+        "Lintang": "8.02 LS",
+        "Bujur": "130.49 BT",
+        "Magnitude": "5.4",
+        "Kedalaman": "84 km",
+        "Wilayah": "90 km BaratDaya TANIMBAR",
+        "Potensi": "Tidak berpotensi tsunami"
+      },
+      {
         "Tanggal": "09 Nov 2026",
         "Jam": "16:48:29 WIB",
         "DateTime": "2026-11-09T09:48:29+00:00",
@@ -168,20 +180,8 @@
         "Kedalaman": "76 km",
         "Wilayah": "29 km BaratLaut POHUWATO-GORONTALO",
         "Potensi": "Tidak berpotensi tsunami"
-      },
-      {
-        "Tanggal": "11 Okt 2026",
-        "Jam": "10:30:20 WIB",
-        "DateTime": "2026-10-11T03:30:20+00:00",
-        "Coordinates": "-8.73,106.47",
-        "Lintang": "8.73 LS",
-        "Bujur": "106.47 BT",
-        "Magnitude": "5.7",
-        "Kedalaman": "10 km",
-        "Wilayah": "193 km BaratDaya KAB-SUKABUMI-JABAR",
-        "Potensi": "Tidak berpotensi tsunami"
       }
     ]
   },
-  "fetchedAtUTC": "2026-11-09T21:23:40Z"
+  "fetchedAtUTC": "2026-11-10T03:59:07Z"
 }
