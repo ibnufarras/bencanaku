@@ -2,6 +2,18 @@
   "Infogempa": {
     "gempa": [
       {
+        "Tanggal": "17 Nov 2026",
+        "Jam": "04:11:20 WIB",
+        "DateTime": "2026-11-16T21:11:20+00:00",
+        "Coordinates": "-6.03,131.62",
+        "Lintang": "6.03 LS",
+        "Bujur": "131.62 BT",
+        "Magnitude": "7.1",
+        "Kedalaman": "115 km",
+        "Wilayah": "130 km BaratDaya MALUKUTENGGARA",
+        "Potensi": "Tidak berpotensi tsunami"
+      },
+      {
         "Tanggal": "16 Nov 2026",
         "Jam": "03:51:57 WIB",
         "DateTime": "2026-11-15T20:51:57+00:00",
@@ -168,20 +180,8 @@
         "Kedalaman": "10 km",
         "Wilayah": "136 km BaratDaya GUNUNGKIDUL-DIY",
         "Potensi": "Tidak berpotensi tsunami"
-      },
-      {
-        "Tanggal": "22 Okt 2026",
-        "Jam": "17:57:49 WIB",
-        "DateTime": "2026-10-22T10:57:49+00:00",
-        "Coordinates": "-3.11,102.14",
-        "Lintang": "3.11 LS",
-        "Bujur": "102.14 BT",
-        "Magnitude": "5.2",
-        "Kedalaman": "120 km",
-        "Wilayah": "6 km BaratLaut LEBONG-BENGKULU",
-        "Potensi": "Tidak berpotensi tsunami"
       }
     ]
   },
-  "fetchedAtUTC": "2026-11-16T15:12:39Z"
+  "fetchedAtUTC": "2026-11-17T00:03:32Z"
 }
