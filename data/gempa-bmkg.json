@@ -2,6 +2,30 @@
   "Infogempa": {
     "gempa": [
       {
+        "Tanggal": "18 Nov 2026",
+        "Jam": "11:41:32 WIB",
+        "DateTime": "2026-11-18T04:41:32+00:00",
+        "Coordinates": "-8.17,120.54",
+        "Lintang": "8.17 LS",
+        "Bujur": "120.54 BT",
+        "Magnitude": "5.8",
+        "Kedalaman": "10 km",
+        "Wilayah": "49 km TimurLaut RUTENG-MANGGARAI-NTT",
+        "Potensi": "Tidak berpotensi tsunami"
+      },
+      {
+        "Tanggal": "18 Nov 2026",
+        "Jam": "10:24:03 WIB",
+        "DateTime": "2026-11-18T03:24:03+00:00",
+        "Coordinates": "-2.83,136.73",
+        "Lintang": "2.83 LS",
+        "Bujur": "136.73 BT",
+        "Magnitude": "5.3",
+        "Kedalaman": "56 km",
+        "Wilayah": "75 km BaratLaut INTANJAYA-PAPUATENGAH",
+        "Potensi": "Tidak berpotensi tsunami"
+      },
+      {
         "Tanggal": "17 Nov 2026",
         "Jam": "04:11:20 WIB",
         "DateTime": "2026-11-16T21:11:20+00:00",
@@ -156,32 +180,8 @@
         "Kedalaman": "10 km",
         "Wilayah": "187 km BaratLaut TAHUNA-KEP.SANGIHE-SULUT",
         "Potensi": "Tidak berpotensi tsunami"
-      },
-      {
-        "Tanggal": "28 Okt 2026",
-        "Jam": "08:11:54 WIB",
-        "DateTime": "2026-10-28T01:11:54+00:00",
-        "Coordinates": "5.59,125.27",
-        "Lintang": "5.59 LU",
-        "Bujur": "125.27 BT",
-        "Magnitude": "5.4",
-        "Kedalaman": "10 km",
-        "Wilayah": "221 km BaratLaut PULAUKARATUNG-SULUT",
-        "Potensi": "Tidak berpotensi tsunami"
-      },
-      {
-        "Tanggal": "27 Okt 2026",
-        "Jam": "21:43:13 WIB",
-        "DateTime": "2026-10-27T14:43:13+00:00",
-        "Coordinates": "-9.20,110.39",
-        "Lintang": "9.20 LS",
-        "Bujur": "110.39 BT",
-        "Magnitude": "5.4",
-        "Kedalaman": "10 km",
-        "Wilayah": "136 km BaratDaya GUNUNGKIDUL-DIY",
-        "Potensi": "Tidak berpotensi tsunami"
       }
     ]
   },
-  "fetchedAtUTC": "2026-11-18T00:44:09Z"
+  "fetchedAtUTC": "2026-11-18T08:18:25Z"
 }
