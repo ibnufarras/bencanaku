@@ -2,6 +2,18 @@
   "Infogempa": {
     "gempa": [
       {
+        "Tanggal": "21 Nov 2026",
+        "Jam": "16:42:11 WIB",
+        "DateTime": "2026-11-21T09:42:11+00:00",
+        "Coordinates": "-7.88,127.51",
+        "Lintang": "7.88 LS",
+        "Bujur": "127.51 BT",
+        "Magnitude": "7.2",
+        "Kedalaman": "125 km",
+        "Wilayah": "43 km BaratLaut MALUKUBRTDAYA",
+        "Potensi": "Tidak berpotensi tsunami"
+      },
+      {
         "Tanggal": "20 Nov 2026",
         "Jam": "20:09:01 WIB",
         "DateTime": "2026-11-20T13:09:01+00:00",
@@ -168,20 +180,8 @@
         "Kedalaman": "10 km",
         "Wilayah": "139 km BaratLaut TUAL-MALUKU",
         "Potensi": "Tidak berpotensi tsunami"
-      },
-      {
-        "Tanggal": "29 Okt 2026",
-        "Jam": "10:26:49 WIB",
-        "DateTime": "2026-10-29T03:26:49+00:00",
-        "Coordinates": "-5.45,141.90",
-        "Lintang": "5.45 LS",
-        "Bujur": "141.90 BT",
-        "Magnitude": "6.0",
-        "Kedalaman": "120 km",
-        "Wilayah": "153 km Tenggara OKSIBIL-PAPUAPGNGN",
-        "Potensi": "Tidak berpotensi tsunami"
       }
     ]
   },
-  "fetchedAtUTC": "2026-11-21T03:50:01Z"
+  "fetchedAtUTC": "2026-11-21T12:17:13Z"
 }
