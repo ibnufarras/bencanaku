@@ -2,6 +2,18 @@
   "Infogempa": {
     "gempa": [
       {
+        "Tanggal": "22 Nov 2026",
+        "Jam": "14:54:39 WIB",
+        "DateTime": "2026-11-22T07:54:39+00:00",
+        "Coordinates": "3.12,126.57",
+        "Lintang": "3.12 LU",
+        "Bujur": "126.57 BT",
+        "Magnitude": "5.4",
+        "Kedalaman": "10 km",
+        "Wilayah": "98 km BaratDaya MELONGUANE-SULUT",
+        "Potensi": "Tidak berpotensi tsunami"
+      },
+      {
         "Tanggal": "21 Nov 2026",
         "Jam": "16:42:11 WIB",
         "DateTime": "2026-11-21T09:42:11+00:00",
@@ -168,20 +180,8 @@
         "Kedalaman": "130 km",
         "Wilayah": "169 km BaratLaut TANIMBAR",
         "Potensi": "Tidak berpotensi tsunami"
-      },
-      {
-        "Tanggal": "30 Okt 2026",
-        "Jam": "03:32:13 WIB",
-        "DateTime": "2026-10-29T20:32:13+00:00",
-        "Coordinates": "-4.40,132.49",
-        "Lintang": "4.40 LS",
-        "Bujur": "132.49 BT",
-        "Magnitude": "5.3",
-        "Kedalaman": "10 km",
-        "Wilayah": "139 km BaratLaut TUAL-MALUKU",
-        "Potensi": "Tidak berpotensi tsunami"
       }
     ]
   },
-  "fetchedAtUTC": "2026-11-22T07:51:18Z"
+  "fetchedAtUTC": "2026-11-22T16:02:01Z"
 }
