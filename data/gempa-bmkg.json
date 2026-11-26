@@ -2,6 +2,18 @@
   "Infogempa": {
     "gempa": [
       {
+        "Tanggal": "26 Nov 2026",
+        "Jam": "16:08:39 WIB",
+        "DateTime": "2026-11-26T09:08:39+00:00",
+        "Coordinates": "-10.79,117.26",
+        "Lintang": "10.79 LS",
+        "Bujur": "117.26 BT",
+        "Magnitude": "5.6",
+        "Kedalaman": "10 km",
+        "Wilayah": "230 km Tenggara SUMBAWABARAT-NTB",
+        "Potensi": "Tidak berpotensi tsunami"
+      },
+      {
         "Tanggal": "25 Nov 2026",
         "Jam": "19:08:11 WIB",
         "DateTime": "2026-11-25T12:08:11+00:00",
@@ -168,20 +180,8 @@
         "Kedalaman": "10 km",
         "Wilayah": "69 km BaratLaut KEBARMANOKWARI-PAPUABRT",
         "Potensi": "Tidak berpotensi tsunami"
-      },
-      {
-        "Tanggal": "10 Nov 2026",
-        "Jam": "08:53:28 WIB",
-        "DateTime": "2026-11-10T01:53:28+00:00",
-        "Coordinates": "-8.02,130.49",
-        "Lintang": "8.02 LS",
-        "Bujur": "130.49 BT",
-        "Magnitude": "5.4",
-        "Kedalaman": "84 km",
-        "Wilayah": "90 km BaratDaya TANIMBAR",
-        "Potensi": "Tidak berpotensi tsunami"
       }
     ]
   },
-  "fetchedAtUTC": "2026-11-26T04:45:10Z"
+  "fetchedAtUTC": "2026-11-26T14:49:03Z"
 }
